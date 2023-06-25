@@ -56,10 +56,14 @@ class TelescopeServiceProvider extends TelescopeApplicationServiceProvider
      */
     protected function gate(): void
     {
+//        Gate::define('viewTelescope', function ($user) {
+//            return in_array($user->email, [
+//                //
+//            ]);
+//        });
+
         Gate::define('viewTelescope', function ($user) {
-            return in_array($user->email, [
-                //
-            ]);
+            return $user->can('access telescope');
         });
     }
 }
