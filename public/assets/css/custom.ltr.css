@@ -1,0 +1,12 @@
+@font-face {
+
+    /*src: url(../fonts/cairo/Cairo-Bold.woff2);*/
+    /*src: url(../fonts/IBM_Plex_Sans_Arabic/IBMPlexSansArabic-Regular.ttf);*/
+
+}
+*{
+    font-family: Inter, Helvetica, "sans-serif" !important;
+}
+.menu-sub.menu-sub-dropdown.w-175px.py-4.show{
+    inset: 0px auto auto -450px !important;
+}

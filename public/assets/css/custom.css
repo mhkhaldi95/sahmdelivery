@@ -1,0 +1,49 @@
+/*@font-face {*/
+/*    font-family: myFirstFont;*/
+/*    src: url(../fonts/cairo/Cairo-Bold.woff2);*/
+/*    !*src: url(../fonts/IBM_Plex_Sans_Arabic/IBMPlexSansArabic-Regular.ttf);*!*/
+
+/*}*/
+* {
+    font-family: myFirstFont;
+}
+.image-input [data-action=make-master]{
+    position: absolute;
+    right: 49px;
+    top: 129px;
+}
+.d-flex-custom{
+    flex-flow: wrap;
+}
+.d-flex-custom .parent_div_photo{
+    margin-left: 10px;
+    margin-bottom: 39px;
+}
+.remove_photo{
+    position: relative;
+    right: 30%;
+}
+.product-image{
+    height: 120px;
+    background-color: #f9f7f6;
+}
+.bg-img{
+    border-radius: 8px ;
+    background-size: contain !important;
+    background-position: 50% 50%;
+    background-repeat: no-repeat;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    width: 100%;
+}
+#map {
+    height: 100%;
+}
+.ql-toolbar.ql-snow + .ql-container.ql-snow{
+    height: auto; !important;
+}
+
+
+
