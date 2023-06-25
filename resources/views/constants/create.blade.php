@@ -26,7 +26,7 @@
                                         <!--begin::Label-->
                                         <label class="form-label fs-5 fw-bold ">نسبة المكتب</label>
                                         <!--begin::Input-->
-                                        <input type="number" name="ration" style="text-align: right;"
+                                        <input type="number" name="ratio" style="text-align: right;"
                                                class="form-control form-control-solid mb-3 mb-lg-0"
                                                placeholder="النسبة"
                                                step="0.01"
