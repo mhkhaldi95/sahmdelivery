@@ -44,7 +44,7 @@ class TripResource extends JsonResource
         ])->render();;
         $data['payment_type'] = @$this->getType();
         ;
-//        $data['created_at'] = $data['created_at'];
+        $data['created_at'] = Carbon::parse($data['created_at'])->setTimezone('Asia/Gaza')->format('Y-m-d H:i:s');
         $data['status_str'] = $this['status'];
         $data['amount_str'] = $this['amount'];
 
