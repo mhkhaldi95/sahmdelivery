@@ -1,4 +1,5 @@
 <?php
+$path = env('APP_ENV') == 'local'?'public_path':'base_path';
 
 return [
 
@@ -70,7 +71,7 @@ return [
     */
 
     'links' => [
-        public_path('storage') => storage_path('app/public'),
+        $path(env('APP_ENV') == 'local'?'storage':'public_html/storage') => storage_path('app/public') ,
     ],
 
 ];
