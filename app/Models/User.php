@@ -87,9 +87,9 @@ class User extends Authenticatable
         $today = Carbon::today();
 
         $captain_ids = Trip::query()->whereNull('amount')
-            ->orWhere(function ($q) use ($today){
-                $q->where('created_at', '<', $today)->where('status', Enum::PENDING);
-            })
+//            ->orWhere(function ($q) use ($today){
+//                $q->where('created_at', '<', $today)->where('status', Enum::PENDING);
+//            })
             ->pluck('captain_id')
             ->toArray();
         $captain_ids = array_filter($captain_ids, function ($value) {

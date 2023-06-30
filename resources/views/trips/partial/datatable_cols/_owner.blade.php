@@ -1,4 +1,4 @@
-<div class="d-flex align-items-center text-end">
+<div class="d-flex align-items-center">
 
     @php
     $item = isset($item)?$item:null;

@@ -1,4 +1,4 @@
-<div class="d-flex align-items-center text-end">
+<div class="d-flex align-items-center">
 
     <div class="">
         <!--begin::Title-->
