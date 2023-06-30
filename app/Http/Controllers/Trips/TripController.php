@@ -118,10 +118,10 @@ class TripController extends Controller
             $ratio = getConstantByKey($constants,'ratio')->value;
             $fix_amount = getConstantByKey($constants,'fix_amount')->value;
 
-            $date = \DateTime::createFromFormat('m/d/Y', $request->completed_at);
-            $formattedDate = $date->format('Y/m/d');
+//            $date = \DateTime::createFromFormat('m/d/Y', $request->completed_at);
+//            $formattedDate = $date->format('Y/m/d');
            $item =  CompleteTripDaily::query()->create([
-               'completed_at' =>$formattedDate ,
+               'completed_at' =>now() ,
                'ids_trips' => $ids,
                'ratio' => $ratio,
                'fix_amount' => $fix_amount,
