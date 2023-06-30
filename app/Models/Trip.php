@@ -46,6 +46,9 @@ class Trip extends Model
                     case 'date_to':
                         $q->where('created_at', '<=',$value.':00');
                         break;
+                    case 'date':
+                        $q->whereDate('created_at', $this->convetDate($value));
+                        break;
                     case 'open_close':
                         if($value == 'open'){
                             $q->whereNull('amount');

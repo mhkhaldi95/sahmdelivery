@@ -297,6 +297,17 @@
                             className: 'text-end',
                         },
                     ],
+                    rowCallback: function (row, data) {
+                        if (data.status_str === 'completed') {
+                            $(row).addClass('success_row');
+                        } else if (data.status_str === 'pending' && data.amount_str) {
+                            $(row).addClass('primary_row');
+                        } else if (data.status_str === 'pending' && !data.amount_str) {
+                            $(row).addClass('warning_row');
+                        } else if (data.status_str === 'canceled') {
+                            $(row).addClass('danger_row');
+                        }
+                    }
                 });
 
                 table = dt.$;
