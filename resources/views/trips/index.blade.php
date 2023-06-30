@@ -1,7 +1,7 @@
 @extends('layout.master')
 @section('content')
-    <input type="hidden"  value="{{getConstantByKey($constants,'ratio')->value}}" id="ratio">
-    <input type="hidden"  value="{{getConstantByKey($constants,'fix_amount')->value}}" id="fix_amount">
+    <input type="hidden" value="{{getConstantByKey($constants,'ratio')->value}}" id="ratio">
+    <input type="hidden" value="{{getConstantByKey($constants,'fix_amount')->value}}" id="fix_amount">
     <!--begin::Post-->
     <div class="post d-flex flex-column-fluid" id="kt_post">
         <!--begin::Container-->
@@ -36,17 +36,18 @@
                                       data-kt-customer-table-select="selected_count"></span>{{__('lang.selected')}}
                             </div>
                             <button type="button" class="btn btn-danger" data-kt-customer-table-select="delete_selected"
-                                    id="delete_selected">الغاء المحدد</button>
+                                    id="delete_selected">الغاء المحدد
+                            </button>
                         </div>
                         <!--end::Group actions-->
                         <!--begin::Group actions-->
-{{--                        <div class="d-flex justify-content-end align-items-center d-none"--}}
-{{--                             data-kt-customer-table-toolbar="closed_selected">--}}
-{{--                            <div class="fw-bolder me-5">--}}
-{{--                            </div>--}}
-{{--                            <button type="button" class="btn btn-primary" data-kt-customer-table-select="closed_selected"--}}
-{{--                                    id="closed_selected"> اغلاق الرحلات الغير مدخلة</button>--}}
-{{--                        </div>--}}
+                        {{--                        <div class="d-flex justify-content-end align-items-center d-none"--}}
+                        {{--                             data-kt-customer-table-toolbar="closed_selected">--}}
+                        {{--                            <div class="fw-bolder me-5">--}}
+                        {{--                            </div>--}}
+                        {{--                            <button type="button" class="btn btn-primary" data-kt-customer-table-select="closed_selected"--}}
+                        {{--                                    id="closed_selected"> اغلاق الرحلات الغير مدخلة</button>--}}
+                        {{--                        </div>--}}
                         <!--end::Group actions-->
                         <!--begin::Group actions-->
                         <div class="d-flex justify-content-end align-items-center d-none"
@@ -54,8 +55,10 @@
                             <div class="fw-bolder me-5">
 
                             </div>
-                            <button type="button" class="btn btn-success" data-kt-customer-table-select="complete_selected"
-                                    id="complete_selected">اكمال الرحلات المحددة</button>
+                            <button type="button" class="btn btn-success"
+                                    data-kt-customer-table-select="complete_selected"
+                                    id="complete_selected">اكمال الرحلات المحددة
+                            </button>
                         </div>
                         <!--end::Group actions-->
                     </div>
@@ -162,7 +165,7 @@
                                             data-kt-select2="true" data-placeholder="{{__('lang.select')}}"
                                             data-allow-clear="true" id="status_filter">
                                         <option></option>
-                                        <option value="{{\App\Constants\Enum::PENDING}}">غير مكتملة </option>
+                                        <option value="{{\App\Constants\Enum::PENDING}}">غير مكتملة</option>
                                         <option value="{{\App\Constants\Enum::COMPLETED}}">مكتملة</option>
                                         <option value="{{\App\Constants\Enum::CANCELED}}">ملغية</option>
 
@@ -172,25 +175,32 @@
                                 <!--end::Col-->
                                 <!--begin::Col-->
                                 <div class="col-lg-3 mt-1">
-                                    <!--begin::Label-->
-                                    <label class="form-label fs-5 fw-bold ">التاريخ</label>
-                                    <!--end::Label-->
-                                    <!--begin::Input-->
-                                    <input class="form-control form-control-solid" placeholder="اختر التاريخ" id="date"/>
+                                    <label class="form-label fs-5 fw-bold ">من</label>
 
-                                    <!--end::Input-->
+                                    <input type="text" class="form-control form-control-solid" id="date_from"
+                                           placeholder="اختر التاريخ  و الوقت">
+
                                 </div>
+                                <div class="col-lg-3 mt-1">
+                                    <label class="form-label fs-5 fw-bold ">الى</label>
+
+                                    <input type="text" class="form-control form-control-solid" id="date_to"
+                                           placeholder="اختر التاريخ  و الوقت">
+
+                                </div>
+                                <!--begin::Col-->
+
                                 <!--end::Col-->
                                 <!--begin::Col-->
-{{--                                <div class="col-lg-3 mt-1">--}}
-{{--                                    <!--begin::Label-->--}}
-{{--                                    <label class="form-label fs-5 fw-bold ">إلى</label>--}}
-{{--                                    <!--end::Label-->--}}
-{{--                                    <!--begin::Input-->--}}
-{{--                                    <input class="form-control form-control-solid" placeholder="اختر التاريخ" id="date_to"/>--}}
+                                {{--                                <div class="col-lg-3 mt-1">--}}
+                                {{--                                    <!--begin::Label-->--}}
+                                {{--                                    <label class="form-label fs-5 fw-bold ">إلى</label>--}}
+                                {{--                                    <!--end::Label-->--}}
+                                {{--                                    <!--begin::Input-->--}}
+                                {{--                                    <input class="form-control form-control-solid" placeholder="اختر التاريخ" id="date_to"/>--}}
 
-{{--                                    <!--end::Input-->--}}
-{{--                                </div>--}}
+                                {{--                                    <!--end::Input-->--}}
+                                {{--                                </div>--}}
                                 <!--end::Col-->
 
                             </div>
@@ -212,7 +222,9 @@
                         <tr class="text-start text-gray-400 fw-bolder fs-7 text-uppercase gs-0">
                             <th class="w-10px pe-2">
                                 <div class="form-check form-check-sm form-check-custom form-check-solid me-3">
-                                    <input class="form-check-input" id="all_checked" type="checkbox" data-kt-check="true" data-kt-check-target="#kt_customers_table .form-check-input" value="1" />
+                                    <input class="form-check-input" id="all_checked" type="checkbox"
+                                           data-kt-check="true"
+                                           data-kt-check-target="#kt_customers_table .form-check-input" value="1"/>
                                 </div>
                             </th>
                             <th class="min-w-125px">صاحب الطلب</th>
@@ -250,7 +262,7 @@
                 <div class="modal-header">
                 </div>
                 <!-- Modal body -->
-                <div class="modal-body" style="text-align: center" >
+                <div class="modal-body" style="text-align: center">
                     <!--begin::Separator-->
                     <div class="separator separator-dashed mt-6 mb-6"></div>
                     <!--end::Separator-->
@@ -277,7 +289,7 @@
                 </div>
                 <div class="modal-footer" style="justify-content:center">
                     <button type="button" id="submit" class="btn btn-primary">تعديل</button>
-                    <button type="button" id="cancel" class="btn btn-danger" >الغاء</button>
+                    <button type="button" id="cancel" class="btn btn-danger">الغاء</button>
                 </div>
             </div>
             <!-- Modal footer -->
@@ -290,7 +302,7 @@
                 <div class="modal-header">
                 </div>
                 <!-- Modal body -->
-                <div class="modal-body" style="text-align: center" >
+                <div class="modal-body" style="text-align: center">
                     <!--begin::Separator-->
                     <div class="separator separator-dashed mt-6 mb-6"></div>
                     <!--end::Separator-->
@@ -302,7 +314,7 @@
                             <label class="form-label fs-5 fw-bold "> من</label>
                             <!--begin::Input-->
                             <!--begin::Input-->
-                            <textarea name="from" id="from"  class="form-control mb-2"></textarea>
+                            <textarea name="from" id="from" class="form-control mb-2"></textarea>
                             <!--end::Input-->
                         </div>
                         <!--begin::Col-->
@@ -313,7 +325,7 @@
                 </div>
                 <div class="modal-footer" style="justify-content:center">
                     <button type="button" id="submit_from" class="btn btn-primary">تعديل</button>
-                    <button type="button" id="cancel_from" class="btn btn-danger" >الغاء</button>
+                    <button type="button" id="cancel_from" class="btn btn-danger">الغاء</button>
                 </div>
             </div>
             <!-- Modal footer -->
@@ -326,7 +338,7 @@
                 <div class="modal-header">
                 </div>
                 <!-- Modal body -->
-                <div class="modal-body" style="text-align: center" >
+                <div class="modal-body" style="text-align: center">
                     <!--begin::Separator-->
                     <div class="separator separator-dashed mt-6 mb-6"></div>
                     <!--end::Separator-->
@@ -338,7 +350,7 @@
                             <label class="form-label fs-5 fw-bold "> الى</label>
                             <!--begin::Input-->
                             <!--begin::Input-->
-                            <textarea name="to" id="to"  class="form-control mb-2"></textarea>
+                            <textarea name="to" id="to" class="form-control mb-2"></textarea>
                             <!--end::Input-->
                         </div>
                         <!--begin::Col-->
@@ -349,7 +361,7 @@
                 </div>
                 <div class="modal-footer" style="justify-content:center">
                     <button type="button" id="submit_to" class="btn btn-primary">تعديل</button>
-                    <button type="button" id="cancel_to" class="btn btn-danger" >الغاء</button>
+                    <button type="button" id="cancel_to" class="btn btn-danger">الغاء</button>
                 </div>
             </div>
             <!-- Modal footer -->
@@ -380,7 +392,7 @@
                     processing: true,
                     serverSide: true,
                     'pagingType': 'full_numbers',
-                    'lengthMenu': [[10,20, 30, 40, -1], [10, 20, 30, 40, 'الكل']],
+                    'lengthMenu': [[10, 20, 30, 40, -1], [10, 20, 30, 40, 'الكل']],
                     order: [6, 'desc'],
                     stateSave: false,
                     select: {
@@ -462,11 +474,11 @@
                                 }
                             }, 0);
 
-                        var TotalAmountAfterDiscountForOffice = totalAmount? ((totalAmount*ratio)+parseFloat(fix_amount)) : 0;
+                        var TotalAmountAfterDiscountForOffice = totalAmount ? ((totalAmount * ratio) + parseFloat(fix_amount)) : 0;
                         var decimalPart = TotalAmountAfterDiscountForOffice - Math.floor(TotalAmountAfterDiscountForOffice);
-                        if(decimalPart >=0.44){
+                        if (decimalPart >= 0.44) {
                             TotalAmountAfterDiscountForOffice = Math.floor(TotalAmountAfterDiscountForOffice) + 1
-                        }else{
+                        } else {
                             TotalAmountAfterDiscountForOffice = Math.floor(TotalAmountAfterDiscountForOffice)
 
                         }
@@ -485,11 +497,11 @@
                     rowCallback: function (row, data) {
                         if (data.status_str === 'completed') {
                             $(row).addClass('success_row');
-                        }else if(data.status_str === 'pending' && data.amount_str){
+                        } else if (data.status_str === 'pending' && data.amount_str) {
                             $(row).addClass('primary_row');
-                        }else if(data.status_str === 'pending' && !data.amount_str){
+                        } else if (data.status_str === 'pending' && !data.amount_str) {
                             $(row).addClass('warning_row');
-                        }else if(data.status_str === 'canceled'){
+                        } else if (data.status_str === 'canceled') {
                             $(row).addClass('danger_row');
                         }
                     }
@@ -529,43 +541,46 @@
                 addSearchParam('#place_filter', 'place_id');
                 addSearchParam('#open_close_filter', 'open_close');
                 addSearchParam('#date', 'date');
-                // addSearchParam('#date_to', 'date_to');
+                addSearchParam('#date_from', 'date_from');
+                addSearchParam('#date_to', 'date_to');
 
                 var id = null;
                 var amount = null;
                 var from = null;
                 var to = null;
-                $(document).on('dblclick','.amount',function (e) {
-                     amount = $(this).data('amount')
+                $(document).on('dblclick', '.amount', function (e) {
+                    amount = $(this).data('amount')
                     id = $(this).data('id')
                     $('#amount').val(amount)
                     $('#update_amount_modal').modal('show')
                 });
 
 
-                $('#submit').click(function (){
-                    var amount =  $('#amount').val()
-                    if(amount && id){
-                        axios.post('{{route('trips.update_price')}}',{'id':id,'amount':amount}).then(function (response) {
+                $('#submit').click(function () {
+                    var amount = $('#amount').val()
+                    if (amount && id) {
+                        axios.post('{{route('trips.update_price')}}', {
+                            'id': id,
+                            'amount': amount
+                        }).then(function (response) {
                             dt.draw();
                             id = null;
                             amount = null
                             $('#update_amount_modal').modal('hide')
                         })
-                    }else{
+                    } else {
                         alert("السعر مطلوب")
                     }
 
                 })
-                $('#cancel').click(function (){
+                $('#cancel').click(function () {
                     $('#update_amount_modal').modal('hide')
                     id = null;
                     amount = null
                 })
 
 
-
-                $(document).on('dblclick','.from',function (e) {
+                $(document).on('dblclick', '.from', function (e) {
                     from = $(this).data('from')
                     id = $(this).data('id')
                     $('#from').html(from)
@@ -573,28 +588,31 @@
                 });
 
 
-                $('#submit_from').click(function (){
-                     from =  $('#from').val()
-                    if(from && id){
-                        axios.post('{{route('trips.update_from')}}',{'id':id,'from':from}).then(function (response) {
+                $('#submit_from').click(function () {
+                    from = $('#from').val()
+                    if (from && id) {
+                        axios.post('{{route('trips.update_from')}}', {
+                            'id': id,
+                            'from': from
+                        }).then(function (response) {
                             dt.draw();
                             id = null;
                             from = null
                             $('#update_from_modal').modal('hide')
                         })
-                    }else{
+                    } else {
                         alert("أدخل الحقل")
                     }
 
                 })
-                $('#cancel_from').click(function (){
+                $('#cancel_from').click(function () {
                     $('#update_from_modal').modal('hide')
                     id = null;
                     from = null
                 })
 
 
-                $(document).on('dblclick','.to',function (e) {
+                $(document).on('dblclick', '.to', function (e) {
                     to = $(this).data('to')
                     id = $(this).data('id')
                     $('#to').html(to)
@@ -602,21 +620,21 @@
                 });
 
 
-                $('#submit_to').click(function (){
-                    to =  $('#to').val()
-                    if(to && id){
-                        axios.post('{{route('trips.update_to')}}',{'id':id,'to':to}).then(function (response) {
+                $('#submit_to').click(function () {
+                    to = $('#to').val()
+                    if (to && id) {
+                        axios.post('{{route('trips.update_to')}}', {'id': id, 'to': to}).then(function (response) {
                             dt.draw();
                             id = null;
                             to = null
                             $('#update_to_modal').modal('hide')
                         })
-                    }else{
+                    } else {
                         alert("أدخل الحقل")
                     }
 
                 })
-                $('#cancel_to').click(function (){
+                $('#cancel_to').click(function () {
                     $('#update_to_modal').modal('hide')
                     id = null;
                     to = null
@@ -645,10 +663,10 @@
                 });
 
                 // Deleted selected rows
-                completeSelected.addEventListener('click', function ()  {
+                completeSelected.addEventListener('click', function () {
 
                     var captain_id = $('#captain_filter').val();
-                    if(!captain_id){
+                    if (!captain_id) {
                         Swal.fire({
                             text: "يجب ان تختار الكابتن الذي تريد اكمال رحلاته",
                             icon: "warning",
@@ -695,12 +713,16 @@
                                     const ids = [];
                                     const headerCheck = container.querySelectorAll('[type="checkbox"]');
                                     headerCheck.forEach((element) => {
-                                        if(element.checked == true)
+                                        if (element.checked == true)
                                             ids.push(parseInt($(element).val()));
                                     });
                                     var completed_at = $('#date').val()
                                     // delete row data from server and re-draw datatable
-                                    axios.post('{{route('trips.complete_selected')}}',{'ids':ids,'completed_at':completed_at,'captain_id':captain_id}).then(function (response) {
+                                    axios.post('{{route('trips.complete_selected')}}', {
+                                        'ids': ids,
+                                        'completed_at': completed_at,
+                                        'captain_id': captain_id
+                                    }).then(function (response) {
                                         dt.draw();
                                     })
                                 });
@@ -824,11 +846,11 @@
                                     const ids = [];
                                     const headerCheck = container.querySelectorAll('[type="checkbox"]');
                                     headerCheck.forEach((element) => {
-                                        if(element.checked == true)
+                                        if (element.checked == true)
                                             ids.push(parseInt($(element).val()));
                                     });
                                     // delete row data from server and re-draw datatable
-                                    axios.post('{{route('trips.cancel_selected')}}',{'ids':ids}).then(function (response) {
+                                    axios.post('{{route('trips.cancel_selected')}}', {'ids': ids}).then(function (response) {
                                         dt.draw();
                                     })
                                 });
@@ -1014,25 +1036,27 @@
 
     </script>
     <script>
-        $(document).ready(function(){
+        $(document).ready(function () {
 
             $("#date").daterangepicker({
                 singleDatePicker: true,
                 showDropdowns: true,
                 minYear: 1901,
-                maxYear: parseInt(moment().format("YYYY"),12)
+                maxYear: parseInt(moment().format("YYYY"), 12)
             });
-            // $("#date_to").daterangepicker({
-            //     singleDatePicker: true,
-            //     showDropdowns: true,
-            //     minYear: 1901,
-            //     maxYear: parseInt(moment().format("YYYY"),12)
-            // });
+            flatpickr("#date_from", {
+                enableTime: true, // Enables time selection along with the date
+                dateFormat: "Y-m-d H:i", // Customize the date and time format
+            });
+            flatpickr("#date_to", {
+                enableTime: true, // Enables time selection along with the date
+                dateFormat: "Y-m-d H:i", // Customize the date and time format
+            });
+
+
 
         });
 
     </script>
-
-
 
 @endsection

@@ -26,7 +26,6 @@ return new class extends Migration
             $table->tinyInteger('role')->default(Enum::ADMIN); // admin
             $table->boolean('is_deleted')->default(false); // admin
             $table->rememberToken();
-            $table->softDeletes();
             $table->timestamps();
         });
     }

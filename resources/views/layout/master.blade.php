@@ -85,6 +85,8 @@ License: For each use you must have a valid license purchased only from above li
 <!--begin::Javascript-->
 <!--begin::Global Javascript Bundle(used by all pages)-->
 <script src="{{asset('')}}assets/plugins/global/plugins.bundle.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+
 <script src="{{asset('')}}assets/js/scripts.bundle.js"></script>
 <!--end::Global Javascript Bundle-->
 <!--begin::Page Vendors Javascript(used by this page)-->

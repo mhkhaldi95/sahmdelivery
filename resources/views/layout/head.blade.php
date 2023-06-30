@@ -36,7 +36,12 @@
 @endif
 <link href="{{asset('')}}assets/css/custom.css" rel="stylesheet" type="text/css" />
 
-<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
-<script src="{{ asset('js/app.js') }}" defer></script>
+{{--<script src="https://unpkg.com/axios/dist/axios.min.js"></script>--}}
+<script src="{{asset('')}}assets/plugins/global/axios.js"></script>
+{{--<script src="{{ asset('js/app.js') }}" defer></script>--}}
+<link href="{{asset('')}}assets/css/flatpickr.min.css" rel="stylesheet" type="text/css" />
+
+{{--<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">--}}
+
 
 @yield('head')
