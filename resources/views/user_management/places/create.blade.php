@@ -200,20 +200,7 @@
                                     <!--begin::Separator-->
                                     <div class="separator separator-dashed mt-0 mb-0"></div>
                                     <!--end::Separator-->
-                                    <div class="row g-8 mb-3 mt-1">
-                                        <div class="col-lg-4">
-                                            <div id="totalAmount"></div>
-                                        </div>
-                                        <div class="col-lg-4">
-                                            <div id="totalAmountAfterDiscount"></div>
-                                        </div>
-                                        <div class="col-lg-4">
-                                            <div id="totalAmountAfterDiscountForOffice"></div>
-                                        </div>
-                                    </div>
-                                    <!--begin::Separator-->
-                                    <div class="separator separator-dashed mt-0 mb-0"></div>
-                                    <!--end::Separator-->
+
                                     <!--begin::Row-->
                                     <div class="row g-8 mb-3 mt-1">
                                         <!--begin::Row-->
@@ -479,14 +466,14 @@
                         TotalAmountAfterDiscount = totalAmount - TotalAmountAfterDiscountForOffice;
 
                         // Update the sum in the footer row
-                        var html1 = ` <div style="color: red;"> الــمـجـمـوع الكـلـي  : <span class="totalAmount" style="font-size: 20px;color: red;">${totalAmount.toFixed(1)} &#8362;</span> </div>`
-                        var html2 = `<div style="color: red;">المجموع بعد الخصم: <span class="totalAmount" style="font-size: 20px;color: red;">${TotalAmountAfterDiscount.toFixed(1)} &#8362;</span></div>`
-                        var html3 = `<div style="color: red;">  المبلغ المستحق: <span class="totalAmount" style="font-size: 20px;color: red;">${TotalAmountAfterDiscountForOffice.toFixed(1)} &#8362;</span></div>`
+                        // var html1 = ` <div style="color: red;"> الــمـجـمـوع الكـلـي  : <span class="totalAmount" style="font-size: 20px;color: red;">${totalAmount.toFixed(1)} &#8362;</span> </div>`
+                        // var html2 = `<div style="color: red;">المجموع بعد الخصم: <span class="totalAmount" style="font-size: 20px;color: red;">${TotalAmountAfterDiscount.toFixed(1)} &#8362;</span></div>`
+                        // var html3 = `<div style="color: red;">  المبلغ المستحق: <span class="totalAmount" style="font-size: 20px;color: red;">${TotalAmountAfterDiscountForOffice.toFixed(1)} &#8362;</span></div>`
 
-
-                        $('#totalAmount').html(html1)
-                        $('#totalAmountAfterDiscount').html(html2)
-                        $('#totalAmountAfterDiscountForOffice').html(html3)
+                        //
+                        // $('#totalAmount').html(html1)
+                        // $('#totalAmountAfterDiscount').html(html2)
+                        // $('#totalAmountAfterDiscountForOffice').html(html3)
                     },
                 });
 

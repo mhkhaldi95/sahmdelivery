@@ -35,7 +35,7 @@
                                     <!--begin::Heading-->
 
                                     <!--begin::Radio group-->
-                                    <div class="btn-group w-100 w-lg-50" data-kt-buttons="true"
+                                    <div class="btn-group w-100 " data-kt-buttons="true"
                                          data-kt-buttons-target="[data-kt-button]">
                                         <!--begin::Radio-->
                                         <label
