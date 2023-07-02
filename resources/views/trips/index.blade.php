@@ -963,11 +963,12 @@
 
 
             $('#trip_create_btn').click(function () {
+                $('#trip_create_modal').modal('show')
                 var url = '{{route('trips.get-available-captains')}}';
                 axios.get(url).then(function (response) {
                     var captains = response.data.data.captains;
                     addOptions(captains);
-                    $('#trip_create_modal').modal('show')
+
                 })
             })
             $('.close_trip_create_modal').click(function () {
