@@ -212,16 +212,16 @@
                                               غير مكتملة
                                           </label>
                                       </div>
-                                      <div class="form-check form-check-custom form-check-solid me-10">
-                                          <input class="form-check-input h-30px w-30px" type="radio" name="status"
-                                                 @if(isset($item) && $item->status == \App\Constants\Enum::COMPLETED)
-                                                     checked="checked"
-                                                 @endif
-                                                 value="completed" id="flexCheckbox30"/>
-                                          <label class="form-check-label" for="flexCheckbox30">
-                                              مكتملة
-                                          </label>
-                                      </div>
+{{--                                      <div class="form-check form-check-custom form-check-solid me-10">--}}
+{{--                                          <input class="form-check-input h-30px w-30px" type="radio" name="status"--}}
+{{--                                                 @if(isset($item) && $item->status == \App\Constants\Enum::COMPLETED)--}}
+{{--                                                     checked="checked"--}}
+{{--                                                 @endif--}}
+{{--                                                 value="completed" id="flexCheckbox30"/>--}}
+{{--                                          <label class="form-check-label" for="flexCheckbox30">--}}
+{{--                                              مكتملة--}}
+{{--                                          </label>--}}
+{{--                                      </div>--}}
 
                                       <div class=" form-check form-check-custom form-check-solid me-10">
                                           <input class="form-check-input h-30px w-30px" type="radio" name="status"

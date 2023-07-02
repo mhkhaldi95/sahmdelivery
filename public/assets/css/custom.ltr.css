@@ -10,3 +10,6 @@
 .menu-sub.menu-sub-dropdown.w-175px.py-4.show{
     inset: 0px auto auto -450px !important;
 }
+.flatpickr-current-month .numInputWrapper {
+    width: 10ch !important;
+}

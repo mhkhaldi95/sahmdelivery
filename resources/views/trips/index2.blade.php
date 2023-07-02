@@ -23,7 +23,7 @@
 
                             <!--end::Filter-->
                             <!--begin::Add customer-->
-                            <a href="javascript:void(0)" id="trip_create_btn" type="button"
+                            <a href="{{route('trips.create')}}" type="button"
                                class="btn btn-primary">{{__('lang.add')}}</a>
                             <!--end::Add customer-->
                         </div>
@@ -260,26 +260,25 @@
 @endsection
 @section('scripts')
 
+
     <script>
-        var dt;
         $(document).ready(function () {
             "use strict";
 
-            function showTotalsDiv() {
-                var status = $('#status_filter');
-                var captain = $('#captain_filter');
-                var date_from = $('#date_from');
-                var date_to = $('#date_to');
-                return (status && status.val() == 'pending') && captain &&
-                    (date_from && date_from.val()) &&
-                    (date_to && date_to.val());
+            function showTotalsDiv(){
+               var status =  $('#status_filter');
+               var captain =  $('#captain_filter');
+               var date_from =  $('#date_from');
+               var date_to =  $('#date_to');
+               return (status && status.val() == 'pending') && captain &&
+                   (date_from && date_from.val()) &&
+                   (date_to && date_to.val());
             }
-
             // Class definition
             var KTDatatablesServerSide = function () {
                 // Shared variables
                 var table;
-
+                var dt;
                 var filterPayment;
 
                 // Private functions
@@ -425,9 +424,9 @@
                     // Function to add search parameter to the searchParams object
                     function addSearchParam(filterId, column) {
                         $(filterId).change(function () {
-                            if (showTotalsDiv()) {
+                            if(showTotalsDiv()){
                                 $('#totals').show()
-                            } else {
+                            }else{
                                 $('#totals').hide()
                             }
                             searchParams[column] = $(this).val().toLowerCase();
@@ -951,161 +950,8 @@
             });
 
 
-        });
-
-    </script>
-
-    <script>
-        $(document).ready(function () {
-            toastr.options = {
-                "positionClass": "toast-top-left",
-            }
-
-
-            $('#trip_create_btn').click(function () {
-                var url = '{{route('trips.get-available-captains')}}';
-                axios.get(url).then(function (response) {
-                    var captains = response.data.data.captains;
-                    addOptions(captains);
-                    $('#trip_create_modal').modal('show')
-                })
-            })
-            $('.close_trip_create_modal').click(function () {
-                clearInputs()
-                $('#trip_create_modal').modal('hide')
-            })
-            function addOptions(options) {
-                var selectElement = $('#captain_select2').select2();
-                const selectData = options.map(option => ({
-                    id: option.id,
-                    text: option.name + ' - ' + option.phone,
-                }));
-                selectElement.empty();
-                selectData.unshift({ id: '', text: '' });
-
-                selectElement.select2({
-                    data: selectData
-                });
-
-
-
-
-            }
-
-
-            $('#trip_create_submit').click(function () {
-              if(validations()){
-                  return;
-              }
-
-                const owner  = $('input[name="owner"]:checked').val();
-                const customer_id  = $('#customer_select2').val()
-                const place_id  = $('#place_select2').val()
-                const captain_id  = $('#captain_select2').val()
-                const amount  = $('#amount_trip_modal').val()
-                const from  = $('#from_trip_modal').val()
-                const to  = $('#to_trip_modal').val()
-                const status  = $('input[name="status"]:checked').val();
-                var body = {
-                    owner:owner,
-                    customer_id:customer_id,
-                    place_id:place_id,
-                    captain_id:captain_id,
-                    amount:amount,
-                    from:from,
-                    to:to,
-                    status:status,
-                }
-
-                axios.post('{{route('trips.ajax_store')}}', body).then(function (response) {
-                   if(response.data.status){
-                       clearInputs()
-                       dt.draw()
-                       $('#trip_create_modal').modal('hide')
-                       $('#trip_create_btn').click()
-                       toastr.success(response.data.msg)
-                   }else{
-                       toastr.error(response.data.msg)
-                   }
-                }).catch(function (err) {
-
-                })
-
-
-            })
-
-
-            function  clearInputs(){
-                $('#captain_select2').val('')
-                $('#place_select2').val('')
-                $('#customer_select2').val('')
-                $('#amount_trip_modal').val('')
-                $('#from_trip_modal').val('');
-                $('#to_trip_modal').val('')
-                $('#customer_radio_btn').prop('checked', true);
-                $('#customer-label').addClass('active')
-                $('#place_radio_btn').prop('checked', false);
-                $('#place-label').removeClass('active')
-                $('#place').hide();
-                $('#customer').show();
-                // $('#pending_status').prop('checked', true);
-
-            }
-            function validations(){
-                var flag = false;
-
-                const selectedValue  = $('input[name="owner"]:checked').val();
-                const customer_select2  = $('#customer_select2').val()
-                const place_select2  = $('#place_select2').val()
-                const captain_select2  = $('#captain_select2').val()
-                if(selectedValue === 'customer') {
-                    if(!customer_select2){
-                        toastr.warning("اختر زبون");
-                        flag = true
-                    }
-                }else{
-                    if(!place_select2){
-                        toastr.warning("اختر مكان");
-                        flag = true
-                    }
-                }
-                if(!captain_select2){
-                    toastr.warning("اختر كابتن");
-                    flag = true
-                }
-                return flag;
-            }
-
-
-            $('#trip_create_modal').on('shown.bs.modal', function (e) {
-                $(".select-modal").select2({
-                    dropdownParent: $("#trip_create_modal")
-                })
-            })
-
-
-            //----------------------------------
-
-            $('input[name="owner"]').on('change', function () {
-                var selectedValue = $(this).val();
-                if (selectedValue === 'customer') {
-                    $('#place').hide();
-                    $('#customer').show();
-                } else if (selectedValue === 'place') {
-                    $('#customer').hide();
-                    $('#place').show();
-                }
-            });
-            $('#place_select2').on('change', function () {
-                var modal = document.getElementById('trip_create_modal');
-                var textarea = modal.querySelector('#from_trip_modal');
-                textarea.value = $('#place_address_' + $(this).val()).val();
-            });
-            $('#customer_radio_btn').prop('checked', true);
-            $('#place').hide();
 
         });
-
 
     </script>
 

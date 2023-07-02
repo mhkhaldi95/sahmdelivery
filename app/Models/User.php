@@ -83,7 +83,7 @@ class User extends Authenticatable
     public function isAdmin(){
         return in_array($this->role,[Enum::ADMIN,Enum::SUPER_ADMIN]);
     }
-    public static function captainReadyForTrips(){
+    public static function captainReadyForTrips($item = null){
         $today = Carbon::today();
 
         $captain_ids = Trip::query()->whereNull('amount')->where('status','!=',Enum::CANCELED)
@@ -95,8 +95,13 @@ class User extends Authenticatable
         $captain_ids = array_filter($captain_ids, function ($value) {
             return $value !== null;
         });
+
         $captain_ids = array_values($captain_ids);
-        return array_unique($captain_ids);
+        $captain_ids =  array_unique($captain_ids);
+        if(isset($item) && !is_null($item->captain_id)){
+            $captain_ids = array_diff($captain_ids, [$item->captain_id]);
+        }
+        return $captain_ids;
 
     }
     public function scopeFilter($q){

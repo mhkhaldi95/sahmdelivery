@@ -31,6 +31,8 @@ class TripController extends Controller
         $customers = User::query()->customers()->get();
         $places = User::query()->places()->get();
         $captains = User::query()->captains()->get();
+        $active_customers = collect($customers)->where('is_deleted','=',0);
+        $active_places = collect($places)->where('is_deleted','=',0);
         $page_breadcrumbs = [
             ['page' => route('dashboard.index') , 'title' =>'الرئيسية','active' => true],
             ['page' => '#' , 'title' =>'الرحلات','active' => false],
@@ -41,10 +43,13 @@ class TripController extends Controller
             'customers' => $customers,
             'captains' => $captains,
             'places' => $places,
+            'active_customers' => $active_customers,
+            'active_places' => $active_places,
         ]);
     }
     public function create($id = null)
     {
+        $item = null;
         $page_title = __('lang.create');
         if (isset($id)) {
             $page_title = __('lang.edit');
@@ -62,11 +67,7 @@ class TripController extends Controller
 
         $customers = User::query()->active()->customers()->get();
         $places = User::query()->active()->places()->get();
-//        $captains = User::query()->captains()->get();
-        $captain_ids = User::captainReadyForTrips();
-        if(isset($item) && !is_null($item->captain_id)){
-            $captain_ids = array_diff($captain_ids, [$item->captain_id]);
-        }
+        $captain_ids = User::captainReadyForTrips($item);
         $captains = User::query()->active()->captains()->whereNotIn('id',$captain_ids)->get();
 
         return view('trips.create', [
@@ -104,6 +105,43 @@ class TripController extends Controller
         } catch (\Exception $exception) {
             DB::rollBack();
             return $this->returnBackWithSaveDoneFailed();
+        }
+    }
+    public function ajax_store(TripRequest $request, $id = null)
+    {
+      try {
+          $data = $request->only(Trip::FILLABLE);
+          if($request->get('owner',null) == 'place'){
+              $data['owner_id'] = $request->get('place_id',null);
+              $data['is_owner_place'] = 1;
+              $data['payment_type'] = Enum::POSTPAID;
+          }else{
+              $data['owner_id'] = $request->get('customer_id',null);
+              $data['is_owner_place'] = 0;
+              $data['payment_type'] = Enum::IMMEDIATELY;
+          }
+          if($data['amount'] > 0){
+              $data['customer_paid'] = 1;
+          }
+          DB::beginTransaction();
+            $item = Trip::query()->updateOrCreate([
+                'id' => $id,
+            ], $data);
+            DB::commit();
+
+          return response()->json([
+              'status' =>true,
+              'data' =>[
+                  'item' =>$item
+              ],
+              'msg' => 'تمت العملية بنجاح'
+          ]);
+        } catch (\Exception $exception) {
+            DB::rollBack();
+          return response()->json([
+              'false' =>true,
+              'msg' => 'حدث خطأ ما'
+          ]);
         }
     }
 
@@ -256,5 +294,15 @@ class TripController extends Controller
         return $this->response_json(true, StatusCodes::OK, 'تمت العملية بنجاح');
 
 
+    }
+    public function getAvailableCaptains(Request $request){
+        $captain_ids = User::captainReadyForTrips();
+        $captains = User::query()->active()->captains()->whereNotIn('id',$captain_ids)->get();
+        return response()->json([
+            'status' =>true,
+            'data' =>[
+                'captains' =>$captains
+            ]
+        ]);
     }
 }

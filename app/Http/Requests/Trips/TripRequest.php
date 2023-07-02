@@ -42,18 +42,22 @@ class TripRequest extends FormRequest
             ],
             'captain_id' => ['required', 'numeric', 'exists:users,id'],
             'amount' => ['nullable', 'numeric', 'max:9999'],
-            'from' => [ 'nullable','string', 'max:255'],
+            'from' => ['nullable', 'string', 'max:255'],
             'to' => ['nullable', 'string', 'max:255'],
-            'status' => ['required', Rule::in([Enum::PENDING, Enum::COMPLETED, Enum::CANCELED])],
+            'status' => [
+                Rule::requiredIf(function () use ($id){
+                    return isset($id);
+                }), Rule::in([Enum::PENDING, Enum::COMPLETED, Enum::CANCELED])],
         ];
     }
+
     public function messages()
     {
         return [
-            'customer_id.required' =>'الزبون مطلوب',
-            'place_id.required' =>'المكان مطلوب',
-            'captain_id.required' =>' الكابتن مطلوب',
-            'status.required' =>' الحالة مطلوب',
+            'customer_id.required' => 'الزبون مطلوب',
+            'place_id.required' => 'المكان مطلوب',
+            'captain_id.required' => ' الكابتن مطلوب',
+            'status.required' => ' الحالة مطلوب',
         ];
     }
 }

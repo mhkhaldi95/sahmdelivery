@@ -115,6 +115,7 @@ Route::group(['middleware' => ['auth:sanctum', 'admin']], function () {
         Route::get('/', [TripController::class, 'index'])->name('trips.index');
         Route::get('/create/{id?}', [TripController::class, 'create'])->name('trips.create');
         Route::post('/store/{id?}', [TripController::class, 'store'])->name('trips.store');
+        Route::post('/ajax_store/{id?}', [TripController::class, 'ajax_store'])->name('trips.ajax_store');
         Route::post('{id}/cancel', [TripController::class, 'cancel'])->name('trips.cancel');
         Route::post('cancel-selected', [TripController::class, 'cancelSelected'])->name('trips.cancel_selected');
         Route::post('complete-selected', [TripController::class, 'completeSelected'])->name('trips.complete_selected');
@@ -122,6 +123,7 @@ Route::group(['middleware' => ['auth:sanctum', 'admin']], function () {
         Route::post('update-price', [TripController::class, 'updatePrice'])->name('trips.update_price');
         Route::post('update-from', [TripController::class, 'updateFrom'])->name('trips.update_from');
         Route::post('update-to', [TripController::class, 'updateTo'])->name('trips.update_to');
+        Route::get('get-available-captains', [TripController::class, 'getAvailableCaptains'])->name('trips.get-available-captains');
     });
     Route::group(['prefix' => 'constants'], function () {
         Route::get('/create', [ConstantController::class, 'create'])->name('constants.create');
