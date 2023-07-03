@@ -119,11 +119,22 @@ class TripController extends Controller
               $data['owner_id'] = $request->get('customer_id',null);
               $data['is_owner_place'] = 0;
               $data['payment_type'] = Enum::IMMEDIATELY;
+              if($request->get('add_or_cancel_customer_value') == 2){
+                  $customer_data['name'] = $request->get('customer_name');
+                  $customer_data['phone'] = $request->get('customer_phone');
+                  $customer_data['role'] = Enum::CUSTOMER;
+              }
           }
           if($data['amount'] > 0){
               $data['customer_paid'] = 1;
           }
+
           DB::beginTransaction();
+          if(isset($customer_data)){
+              $customer = User::query()->create($customer_data);
+              $data['owner_id'] = $customer->id;
+          }
+
             $item = Trip::query()->updateOrCreate([
                 'id' => $id,
             ], $data);

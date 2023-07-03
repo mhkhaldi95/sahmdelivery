@@ -111,8 +111,9 @@
     </div>
 </div>
 
+
 <!--begin::Modal - Customers - Add-->
-<div class="modal" id="trip_create_modal"  aria-hidden="true">
+<div class="modal" id="trip_create_modal" aria-hidden="true">
     <!--begin::Modal dialog-->
     <div class="modal-dialog modal-dialog-centered mw-950px">
         <!--begin::Modal content-->
@@ -128,12 +129,19 @@
                     <h2 class="fw-bolder">اضافة رحلة</h2>
                     <!--end::Modal title-->
                     <!--begin::Close-->
-                    <div id="kt_modal_add_customer_close" class="btn btn-icon btn-sm btn-active-icon-primary close_trip_create_modal">
+                    <div id="kt_modal_add_customer_close"
+                         class="btn btn-icon btn-sm btn-active-icon-primary close_trip_create_modal">
                         <!--begin::Svg Icon | path: icons/duotune/arrows/arr061.svg-->
                         <span class="svg-icon svg-icon-1">
-															<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
-																<rect opacity="0.5" x="6" y="17.3137" width="16" height="2" rx="1" transform="rotate(-45 6 17.3137)" fill="currentColor" />
-																<rect x="7.41422" y="6" width="16" height="2" rx="1" transform="rotate(45 7.41422 6)" fill="currentColor" />
+															<svg xmlns="http://www.w3.org/2000/svg" width="24"
+                                                                 height="24" viewBox="0 0 24 24" fill="none">
+																<rect opacity="0.5" x="6" y="17.3137" width="16"
+                                                                      height="2" rx="1"
+                                                                      transform="rotate(-45 6 17.3137)"
+                                                                      fill="currentColor"/>
+																<rect x="7.41422" y="6" width="16" height="2" rx="1"
+                                                                      transform="rotate(45 7.41422 6)"
+                                                                      fill="currentColor"/>
 															</svg>
 														</span>
                         <!--end::Svg Icon-->
@@ -144,7 +152,10 @@
                 <!--begin::Modal body-->
                 <div class="modal-body py-10 px-lg-17">
                     <!--begin::Scroll-->
-                    <div class="scroll-y me-n7 pe-7" id="kt_modal_add_customer_scroll" data-kt-scroll="true" data-kt-scroll-activate="{default: false, lg: true}" data-kt-scroll-max-height="auto" data-kt-scroll-dependencies="#kt_modal_add_customer_header" data-kt-scroll-wrappers="#kt_modal_add_customer_scroll" data-kt-scroll-offset="300px">
+                    <div class="scroll-y me-n7 pe-7" id="kt_modal_add_customer_scroll" data-kt-scroll="true"
+                         data-kt-scroll-activate="{default: false, lg: true}" data-kt-scroll-max-height="auto"
+                         data-kt-scroll-dependencies="#kt_modal_add_customer_header"
+                         data-kt-scroll-wrappers="#kt_modal_add_customer_scroll" data-kt-scroll-offset="300px">
                         <div class="row">
                             <!--begin::Input group-->
                             <!--begin::Col-->
@@ -192,25 +203,77 @@
                             </div>
                             <!--begin::Col-->
 
-                            <!--begin::Col-->
+
                             <div class="col-lg-8 mt-1" id="customer">
-                                <!--begin::Label-->
-                                <label class="form-label fs-5 fw-bold ">زبائن</label>
-                                <!--end::Label-->
-                                <!--begin::Input-->
-                                <select class="form-select form-select-solid   fw-bolder  select-modal"
-                                        data-kt-select2="true" data-placeholder="{{__('lang.select')}}"
-                                        data-allow-clear="true" id="customer_select2" name="customer_id">
-                                    <option></option>
-                                    @foreach($active_customers as $customer)
-                                        <option
-                                            value="{{$customer->id}}" {{isset($item)?($customer->id == @$item->owner->id?'selected':''):''}}>{{$customer->name}}
-                                            - {{$customer->phone}}</option>
-                                    @endforeach
-                                </select>
-                                <!--end::Input-->
+                                <div class="row">
+                                    <div class="col-lg-9" id="exist-customer-section">
+                                        <!--begin::Label-->
+                                        <label class="form-label fs-5 fw-bold ">زبائن</label>
+                                        <!--end::Label-->
+                                        <!--begin::Input-->
+                                        <select class="form-select form-select-solid   fw-bolder  select-modal"
+                                                data-kt-select2="true" data-placeholder="{{__('lang.select')}}"
+                                                data-allow-clear="true" id="customer_select2" name="customer_id">
+                                            <option></option>
+                                            @foreach($active_customers as $customer)
+                                                <option
+                                                    value="{{$customer->id}}" {{isset($item)?($customer->id == @$item->owner->id?'selected':''):''}}>{{$customer->name}}
+                                                    - {{$customer->phone}}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+
+                                    <div class="col-lg-3 mt-8" id="add_customer">
+                                        <!--begin::Action-->
+                                        <div  class="ms-auto">
+                                            <button class="btn btn-primary ">اضافة زبون</button>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-5 mt-8  d-none" id="cancel_add_customer">
+                                        <!--end::Action-->
+                                        <!--begin::Action-->
+                                        <div  class="ms-auto">
+                                            <button class="btn btn-danger "> الغاء اضافة زبون</button>
+                                        </div>
+                                        <!--end::Action-->
+                                    </div>
+
+                                </div>
                             </div>
-                            <!--end::Col-->
+
+
+                            <!--begin::Col-->
+
+                            <div id="add_customer_form" class="flex-row-fluid row d-none mt-3" style="background-color: #F5F8FA;margin-right: 10px">
+                                <div class="separator separator-dashed mt-6 mb-6"></div>
+                                <!--begin::Input group-->
+                                <div class="col-6 mb-10 "  >
+                                    <!--begin::Label-->
+                                    <label class=" fw-semibold fs-6 mb-2">اسم الزبون</label>
+                                    <!--end::Label-->
+
+                                    <!--begin::Input-->
+                                    <input type="text" name="customer_name" id="customer_name" class="form-control  mb-3 mb-lg-0"
+                                           placeholder="الاسم" value=""/>
+                                    <!--end::Input-->
+                                </div>
+
+                                <!--begin::Input group-->
+                                <div class="col-6 mb-10">
+                                    <!--begin::Label-->
+                                    <label class=" fw-semibold fs-6 mb-2">{{__('lang.phone')}}</label>
+                                    <!--end::Label-->
+
+                                    <!--begin::Input-->
+                                    <input type="text" name="customer_phone" id="customer_phone" class="form-control  mb-3 mb-lg-0"
+                                           placeholder="{{__('lang.phone')}}"
+                                           value="{{old('phone')}}"/>
+                                    <!--end::Input-->
+                                </div>
+                                <!--end::Input group-->
+                            </div>
+
+
                             <!--begin::Col-->
                             <div class="col-lg-8 mt-1" id="place">
                                 <!--begin::Label-->
@@ -229,11 +292,12 @@
                                 </select>
                                 <!--end::Input-->
 
-                                    <div id="place_address">
-                                        @foreach($active_places as $place)
-                                         <input type="hidden" value="{{$place->address}}" id="place_address_{{$place->id}}"/>
-                                        @endforeach
-                                    </div>
+                                <div id="place_address">
+                                    @foreach($active_places as $place)
+                                        <input type="hidden" value="{{$place->address}}"
+                                               id="place_address_{{$place->id}}"/>
+                                    @endforeach
+                                </div>
 
 
                             </div>
@@ -320,53 +384,53 @@
                             <!--begin::Col-->
                         </div>
                         <!--begin::Separator-->
-{{--                        <div class="separator separator-dashed mt-6 mb-6"></div>--}}
+                        {{--                        <div class="separator separator-dashed mt-6 mb-6"></div>--}}
                         <!--end::Separator-->
-{{--                        <div class="row ">--}}
-{{--                            <!--begin::Col-->--}}
-{{--                            <div class="col-lg-4 ">--}}
-{{--                                <div class="mb-4">--}}
-{{--                                    الحالة :--}}
-{{--                                </div>--}}
-{{--                                <div class="d-flex">--}}
-{{--                                    <div class="form-check form-check-custom form-check-solid me-10">--}}
-{{--                                        <input class="form-check-input h-30px w-30px"  type="radio" name="status"--}}
-{{--                                               @if(!isset($item) || isset($item) && $item->status == \App\Constants\Enum::PENDING)--}}
-{{--                                                   checked="checked"--}}
-{{--                                               @endif--}}
-{{--                                               value="pending" id="pending_status"/>--}}
-{{--                                        <label class="form-check-label" for="pending_status">--}}
-{{--                                            غير مكتملة--}}
-{{--                                        </label>--}}
-{{--                                    </div>--}}
-{{--                                    <div class="form-check form-check-custom form-check-solid me-10">--}}
-{{--                                        <input class="form-check-input h-30px w-30px" type="radio" name="status"--}}
-{{--                                               @if(isset($item) && $item->status == \App\Constants\Enum::COMPLETED)--}}
-{{--                                                   checked="checked"--}}
-{{--                                               @endif--}}
-{{--                                               value="completed" id="flexCheckbox30"/>--}}
-{{--                                        <label class="form-check-label" for="flexCheckbox30">--}}
-{{--                                            مكتملة--}}
-{{--                                        </label>--}}
-{{--                                    </div>--}}
+                        {{--                        <div class="row ">--}}
+                        {{--                            <!--begin::Col-->--}}
+                        {{--                            <div class="col-lg-4 ">--}}
+                        {{--                                <div class="mb-4">--}}
+                        {{--                                    الحالة :--}}
+                        {{--                                </div>--}}
+                        {{--                                <div class="d-flex">--}}
+                        {{--                                    <div class="form-check form-check-custom form-check-solid me-10">--}}
+                        {{--                                        <input class="form-check-input h-30px w-30px"  type="radio" name="status"--}}
+                        {{--                                               @if(!isset($item) || isset($item) && $item->status == \App\Constants\Enum::PENDING)--}}
+                        {{--                                                   checked="checked"--}}
+                        {{--                                               @endif--}}
+                        {{--                                               value="pending" id="pending_status"/>--}}
+                        {{--                                        <label class="form-check-label" for="pending_status">--}}
+                        {{--                                            غير مكتملة--}}
+                        {{--                                        </label>--}}
+                        {{--                                    </div>--}}
+                        {{--                                    <div class="form-check form-check-custom form-check-solid me-10">--}}
+                        {{--                                        <input class="form-check-input h-30px w-30px" type="radio" name="status"--}}
+                        {{--                                               @if(isset($item) && $item->status == \App\Constants\Enum::COMPLETED)--}}
+                        {{--                                                   checked="checked"--}}
+                        {{--                                               @endif--}}
+                        {{--                                               value="completed" id="flexCheckbox30"/>--}}
+                        {{--                                        <label class="form-check-label" for="flexCheckbox30">--}}
+                        {{--                                            مكتملة--}}
+                        {{--                                        </label>--}}
+                        {{--                                    </div>--}}
 
-{{--                                    <div class=" form-check form-check-custom form-check-solid me-10">--}}
-{{--                                        <input class="form-check-input h-30px w-30px" type="radio" name="status"--}}
-{{--                                               @if( isset($item) && $item->status == \App\Constants\Enum::CANCELED)--}}
-{{--                                                   checked="checked"--}}
-{{--                                               @endif--}}
-{{--                                               value="canceled" id="flexCheckbox40"/>--}}
-{{--                                        <label class="form-check-label" for="flexCheckbox40">--}}
-{{--                                            الغاء--}}
-{{--                                        </label>--}}
-{{--                                    </div>--}}
+                        {{--                                    <div class=" form-check form-check-custom form-check-solid me-10">--}}
+                        {{--                                        <input class="form-check-input h-30px w-30px" type="radio" name="status"--}}
+                        {{--                                               @if( isset($item) && $item->status == \App\Constants\Enum::CANCELED)--}}
+                        {{--                                                   checked="checked"--}}
+                        {{--                                               @endif--}}
+                        {{--                                               value="canceled" id="flexCheckbox40"/>--}}
+                        {{--                                        <label class="form-check-label" for="flexCheckbox40">--}}
+                        {{--                                            الغاء--}}
+                        {{--                                        </label>--}}
+                        {{--                                    </div>--}}
 
-{{--                                </div>--}}
+                        {{--                                </div>--}}
 
 
-{{--                            </div>--}}
+                        {{--                            </div>--}}
 
-{{--                        </div>--}}
+                        {{--                        </div>--}}
                         <!--begin::Separator-->
                         <div class="separator separator-dashed mt-6 mb-6"></div>
                         <div class="row ">
@@ -390,8 +454,9 @@
                                 <div class="col-lg-4 ">
                                     <div class="fv-row w-100 flex-md-root">
 
-                                        مغلقة/غير مدخلة  :
-                                        <label class="checkbox badge badge-light-{{!is_null($item->amount)?'success':'danger'}}">
+                                        مغلقة/غير مدخلة :
+                                        <label
+                                            class="checkbox badge badge-light-{{!is_null($item->amount)?'success':'danger'}}">
                                             {{!is_null($item->amount)?'مغلقة':'غير مدخلة'}}
                                         </label>
                                     </div>
@@ -415,7 +480,7 @@
                 <div class="modal-footer flex-center">
 
                     <!--begin::Actions-->
-                    <button  type="button" id="trip_create_submit" class="btn btn-primary">
+                    <button type="button" id="trip_create_submit" class="btn btn-primary">
                         <span class="indicator-label">
                            {{__('lang.submit')}}
                         </span>
@@ -426,11 +491,13 @@
                     <!--end::Actions-->
 
                     <!--begin::Button-->
-                    <button type="button"  class="btn btn-light me-3 close_trip_create_modal">الغِ</button>
+                    <button type="button" class="btn btn-light me-3 close_trip_create_modal">الغِ</button>
                     <!--end::Button-->
 
                 </div>
                 <!--end::Modal footer-->
+
+                <input type="hidden" id="add-or-cancel-customer" value="1">
             </form>
             <!--end::Form-->
         </div>

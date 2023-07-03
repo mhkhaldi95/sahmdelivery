@@ -1007,6 +1007,9 @@
                 const from  = $('#from_trip_modal').val()
                 const to  = $('#to_trip_modal').val()
                 const status  = $('input[name="status"]:checked').val();
+                var customer_name  = $('#customer_name').val()
+                var customer_phone  = $('#customer_phone').val()
+                var add_or_cancel_customer_value  = $('#add-or-cancel-customer').val()
                 var body = {
                     owner:owner,
                     customer_id:customer_id,
@@ -1015,7 +1018,9 @@
                     amount:amount,
                     from:from,
                     to:to,
-                    status:status,
+                    customer_name:customer_name,
+                    customer_phone:customer_phone,
+                    add_or_cancel_customer_value:add_or_cancel_customer_value,
                 }
 
                 axios.post('{{route('trips.ajax_store')}}', body).then(function (response) {
@@ -1049,6 +1054,16 @@
                 $('#place-label').removeClass('active')
                 $('#place').hide();
                 $('#customer').show();
+                $('#customer_name').val('')
+                $('#customer_phone').val('')
+
+                $('#exist-customer-section').removeClass('d-none')
+                $('#add_customer').removeClass('d-none')
+
+                $('#add_customer_form').addClass('d-none')
+                $('#cancel_add_customer').addClass('d-none')
+                $('#add-or-cancel-customer').val(1)
+
                 // $('#pending_status').prop('checked', true);
 
             }
@@ -1057,9 +1072,26 @@
 
                 const selectedValue  = $('input[name="owner"]:checked').val();
                 const customer_select2  = $('#customer_select2').val()
+                const add_or_cancel_customer_value  = $('#add-or-cancel-customer').val()
                 const place_select2  = $('#place_select2').val()
                 const captain_select2  = $('#captain_select2').val()
-                if(selectedValue === 'place') {
+                if((add_or_cancel_customer_value && add_or_cancel_customer_value == 1) && selectedValue === 'customer') {
+                    if(!customer_select2){
+                        toastr.warning("اختر زبون");
+                        flag = true
+                    }
+                }else if((add_or_cancel_customer_value && add_or_cancel_customer_value == 2) && selectedValue === 'customer') {
+                    const customer_name  = $('#customer_name').val()
+                    const customer_phone  = $('#customer_phone').val()
+                    if(!customer_name){
+                        toastr.warning(" أدخل اسم الزبون");
+                        flag = true
+                    }
+                    if(!customer_phone){
+                        toastr.warning(" أدخل جوال الزبون");
+                        flag = true
+                    }
+                }else if(selectedValue === 'place') {
                     if(!place_select2){
                         toastr.warning("اختر مكان");
                         flag = true
@@ -1088,9 +1120,18 @@
                 if (selectedValue === 'customer') {
                     $('#place').hide();
                     $('#customer').show();
+
+                    $('#exist-customer-section').removeClass('d-none')
+                    $('#add_customer').removeClass('d-none')
+
+                    $('#add_customer_form').addClass('d-none')
+                    $('#cancel_add_customer').addClass('d-none')
+                    $('#add-or-cancel-customer').val(1)
+
                 } else if (selectedValue === 'place') {
                     $('#customer').hide();
                     $('#place').show();
+                    $('#add_customer_form').addClass('d-none')
                 }
             });
             $('#place_select2').on('change', function () {
@@ -1100,6 +1141,27 @@
             });
             $('#customer_radio_btn').prop('checked', true);
             $('#place').hide();
+
+
+
+            $('#add_customer').click(function (e){
+                 e.preventDefault()
+                $('#exist-customer-section').addClass('d-none')
+                $('#add_customer').addClass('d-none')
+                $('#add_customer_form').removeClass('d-none')
+                $('#cancel_add_customer').removeClass('d-none')
+                $('#add-or-cancel-customer').val(2)
+            })
+
+            $('#cancel_add_customer').click(function (e){
+                e.preventDefault()
+                $('#exist-customer-section').removeClass('d-none')
+                $('#add_customer').removeClass('d-none')
+
+                $('#add_customer_form').addClass('d-none')
+                $('#cancel_add_customer').addClass('d-none')
+                $('#add-or-cancel-customer').val(1)
+            })
 
         });
 

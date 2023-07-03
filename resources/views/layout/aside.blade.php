@@ -69,14 +69,14 @@
                                                 <span class="menu-title">استعلام</span>
                                             </a>
                                         </div>
-                                        <div class="menu-item">
-                                            <a class="menu-link" href="{{route('trips.create')}}">
-														<span class="menu-bullet">
-															<span class="bullet bullet-dot"></span>
-														</span>
-                                                <span class="menu-title">اضافة</span>
-                                            </a>
-                                        </div>
+{{--                                        <div class="menu-item">--}}
+{{--                                            <a class="menu-link" href="{{route('trips.create')}}">--}}
+{{--														<span class="menu-bullet">--}}
+{{--															<span class="bullet bullet-dot"></span>--}}
+{{--														</span>--}}
+{{--                                                <span class="menu-title">اضافة</span>--}}
+{{--                                            </a>--}}
+{{--                                        </div>--}}
                                 </div>
                             </div>
                         @endif
