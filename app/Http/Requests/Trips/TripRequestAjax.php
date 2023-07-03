@@ -7,7 +7,7 @@ use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\Rule;
 
-class TripRequest extends FormRequest
+class TripRequestAjax extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -32,12 +32,33 @@ class TripRequest extends FormRequest
             'owner' => ['required'],
             'customer_id' => [
                 Rule::requiredIf(function () {
-                    return $this->input('owner') === 'customer';
+                    return $this->input('owner') === 'customer' &&  $this->input('add_or_cancel_customer_value') == 1;
+                }),
+            ],
+            'customer_name' => [
+                Rule::requiredIf(function () {
+                    return $this->input('owner') === 'customer' &&  $this->input('add_or_cancel_customer_value') == 2;
+                }),
+            ],
+            'customer_phone' => [
+                Rule::requiredIf(function () {
+                    return $this->input('owner') === 'customer' &&  $this->input('add_or_cancel_customer_value') == 2;
                 }),
             ],
             'place_id' => [
                 Rule::requiredIf(function () {
-                    return $this->input('owner') === 'place';
+                    return $this->input('owner') === 'place' &&  $this->input('add_or_cancel_place_value') == 1;
+                }),
+            ],
+
+            'place_name' => [
+                Rule::requiredIf(function () {
+                    return $this->input('owner') === 'place' &&  $this->input('add_or_cancel_place_value') == 2;
+                }),
+            ],
+            'place_phone' => [
+                Rule::requiredIf(function () {
+                    return $this->input('owner') === 'place' &&  $this->input('add_or_cancel_place_value') == 2;
                 }),
             ],
             'captain_id' => ['required', 'numeric', 'exists:users,id'],

@@ -276,33 +276,79 @@
 
                             <!--begin::Col-->
                             <div class="col-lg-8 mt-1" id="place">
-                                <!--begin::Label-->
-                                <label class="form-label fs-5 fw-bold ">أماكن</label>
-                                <!--end::Label-->
-                                <!--begin::Input-->
-                                <select class="form-select form-select-solid  fw-bolder  select-modal"
-                                        data-kt-select2="true" data-placeholder="{{__('lang.select')}}"
-                                        data-allow-clear="true" id="place_select2" name="place_id">
-                                    <option></option>
-                                    @foreach($active_places as $place)
-                                        <option
-                                            value="{{$place->id}}" {{isset($item)?($place->id == @$item->owner->id?'selected':''):''}}>{{$place->name}}
-                                            - {{$place->phone}}</option>
-                                    @endforeach
-                                </select>
-                                <!--end::Input-->
+                                <div class="row">
+                                    <div class="col-lg-9" id="exist-place-section">
+                                        <!--begin::Label-->
+                                        <label class="form-label fs-5 fw-bold ">أماكن</label>
+                                        <!--end::Label-->
+                                        <!--begin::Input-->
+                                        <select class="form-select form-select-solid  fw-bolder  select-modal"
+                                                data-kt-select2="true" data-placeholder="{{__('lang.select')}}"
+                                                data-allow-clear="true" id="place_select2" name="place_id">
+                                            <option></option>
+                                            @foreach($active_places as $place)
+                                                <option
+                                                    value="{{$place->id}}" {{isset($item)?($place->id == @$item->owner->id?'selected':''):''}}>{{$place->name}}
+                                                    - {{$place->phone}}</option>
+                                            @endforeach
+                                        </select>
+                                        <!--end::Input-->
 
-                                <div id="place_address">
-                                    @foreach($active_places as $place)
-                                        <input type="hidden" value="{{$place->address}}"
-                                               id="place_address_{{$place->id}}"/>
-                                    @endforeach
+                                        <div id="place_address">
+                                            @foreach($active_places as $place)
+                                                <input type="hidden" value="{{$place->address}}"
+                                                       id="place_address_{{$place->id}}"/>
+                                            @endforeach
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-3 mt-8" id="add_place">
+                                        <!--begin::Action-->
+                                        <div  class="ms-auto">
+                                            <button class="btn btn-primary ">اضافة مكان</button>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-5 mt-8  d-none" id="cancel_add_place">
+                                        <!--end::Action-->
+                                        <!--begin::Action-->
+                                        <div  class="ms-auto">
+                                            <button class="btn btn-danger "> الغاء اضافة مكان</button>
+                                        </div>
+                                        <!--end::Action-->
+                                    </div>
                                 </div>
+
 
 
                             </div>
                             <!--end::Col-->
+                            <div id="add_place_form" class="flex-row-fluid row d-none mt-3" style="background-color: #F5F8FA;margin-right: 10px">
+                                <div class="separator separator-dashed mt-6 mb-6"></div>
+                                <!--begin::Input group-->
+                                <div class="col-6 mb-10 "  >
+                                    <!--begin::Label-->
+                                    <label class=" fw-semibold fs-6 mb-2">اسم المكان</label>
+                                    <!--end::Label-->
 
+                                    <!--begin::Input-->
+                                    <input type="text" name="place_name" id="place_name" class="form-control  mb-3 mb-lg-0"
+                                           placeholder="الاسم" value=""/>
+                                    <!--end::Input-->
+                                </div>
+
+                                <!--begin::Input group-->
+                                <div class="col-6 mb-10">
+                                    <!--begin::Label-->
+                                    <label class=" fw-semibold fs-6 mb-2">{{__('lang.phone')}}</label>
+                                    <!--end::Label-->
+
+                                    <!--begin::Input-->
+                                    <input type="text" name="place_phone" id="place_phone" class="form-control  mb-3 mb-lg-0"
+                                           placeholder="{{__('lang.phone')}}"
+                                           value="{{old('phone')}}"/>
+                                    <!--end::Input-->
+                                </div>
+                                <!--end::Input group-->
+                            </div>
 
                             <!--begin::Col-->
 
@@ -384,92 +430,10 @@
                             <!--begin::Col-->
                         </div>
                         <!--begin::Separator-->
-                        {{--                        <div class="separator separator-dashed mt-6 mb-6"></div>--}}
-                        <!--end::Separator-->
-                        {{--                        <div class="row ">--}}
-                        {{--                            <!--begin::Col-->--}}
-                        {{--                            <div class="col-lg-4 ">--}}
-                        {{--                                <div class="mb-4">--}}
-                        {{--                                    الحالة :--}}
-                        {{--                                </div>--}}
-                        {{--                                <div class="d-flex">--}}
-                        {{--                                    <div class="form-check form-check-custom form-check-solid me-10">--}}
-                        {{--                                        <input class="form-check-input h-30px w-30px"  type="radio" name="status"--}}
-                        {{--                                               @if(!isset($item) || isset($item) && $item->status == \App\Constants\Enum::PENDING)--}}
-                        {{--                                                   checked="checked"--}}
-                        {{--                                               @endif--}}
-                        {{--                                               value="pending" id="pending_status"/>--}}
-                        {{--                                        <label class="form-check-label" for="pending_status">--}}
-                        {{--                                            غير مكتملة--}}
-                        {{--                                        </label>--}}
-                        {{--                                    </div>--}}
-                        {{--                                    <div class="form-check form-check-custom form-check-solid me-10">--}}
-                        {{--                                        <input class="form-check-input h-30px w-30px" type="radio" name="status"--}}
-                        {{--                                               @if(isset($item) && $item->status == \App\Constants\Enum::COMPLETED)--}}
-                        {{--                                                   checked="checked"--}}
-                        {{--                                               @endif--}}
-                        {{--                                               value="completed" id="flexCheckbox30"/>--}}
-                        {{--                                        <label class="form-check-label" for="flexCheckbox30">--}}
-                        {{--                                            مكتملة--}}
-                        {{--                                        </label>--}}
-                        {{--                                    </div>--}}
 
-                        {{--                                    <div class=" form-check form-check-custom form-check-solid me-10">--}}
-                        {{--                                        <input class="form-check-input h-30px w-30px" type="radio" name="status"--}}
-                        {{--                                               @if( isset($item) && $item->status == \App\Constants\Enum::CANCELED)--}}
-                        {{--                                                   checked="checked"--}}
-                        {{--                                               @endif--}}
-                        {{--                                               value="canceled" id="flexCheckbox40"/>--}}
-                        {{--                                        <label class="form-check-label" for="flexCheckbox40">--}}
-                        {{--                                            الغاء--}}
-                        {{--                                        </label>--}}
-                        {{--                                    </div>--}}
-
-                        {{--                                </div>--}}
-
-
-                        {{--                            </div>--}}
-
-                        {{--                        </div>--}}
                         <!--begin::Separator-->
                         <div class="separator separator-dashed mt-6 mb-6"></div>
-                        <div class="row ">
-                            <!--begin::Col-->
-                            @if(isset($item))
-                                <!--begin::Col-->
-                                <div class="col-lg-4 ">
-                                    <div class="fv-row w-100 flex-md-root">
 
-                                        الحالة الحالية :
-                                        <label class="checkbox badge badge-light-{{getClassByStatus($item->status)}}">
-                                            {{getStatusStr($item->status)}}
-
-                                        </label>
-                                    </div>
-
-
-                                </div>
-                                <!--begin::Col-->
-                                <!--begin::Col-->
-                                <div class="col-lg-4 ">
-                                    <div class="fv-row w-100 flex-md-root">
-
-                                        مغلقة/غير مدخلة :
-                                        <label
-                                            class="checkbox badge badge-light-{{!is_null($item->amount)?'success':'danger'}}">
-                                            {{!is_null($item->amount)?'مغلقة':'غير مدخلة'}}
-                                        </label>
-                                    </div>
-
-
-                                </div>
-                                <!--begin::Col-->
-                            @endif
-
-                        </div>
-                        <!--begin::Separator-->
-                        <div class="separator separator-dashed mt-6 mb-6"></div>
-                        <!--end::Separator-->
 
 
                     </div>
@@ -498,6 +462,7 @@
                 <!--end::Modal footer-->
 
                 <input type="hidden" id="add-or-cancel-customer" value="1">
+                <input type="hidden" id="add-or-cancel-place" value="1">
             </form>
             <!--end::Form-->
         </div>

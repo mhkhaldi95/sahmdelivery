@@ -6,6 +6,7 @@ use App\Constants\Enum;
 use App\Constants\StatusCodes;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Trips\TripRequest;
+use App\Http\Requests\Trips\TripRequestAjax;
 use App\Http\Resources\Trips\TripResource;
 use App\Models\CompleteTripDaily;
 use App\Models\Constant;
@@ -107,14 +108,19 @@ class TripController extends Controller
             return $this->returnBackWithSaveDoneFailed();
         }
     }
-    public function ajax_store(TripRequest $request, $id = null)
+    public function ajax_store(TripRequestAjax $request, $id = null)
     {
       try {
           $data = $request->only(Trip::FILLABLE);
           if($request->get('owner',null) == 'place'){
               $data['owner_id'] = $request->get('place_id',null);
               $data['is_owner_place'] = 1;
-              $data['payment_type'] = Enum::POSTPAID;
+//              $data['payment_type'] = Enum::POSTPAID;
+              if($request->get('add_or_cancel_place_value') == 2){
+                  $place_data['name'] = $request->get('place_name');
+                  $place_data['phone'] = $request->get('place_phone');
+                  $place_data['role'] = Enum::PLACE;
+              }
           }else{
               $data['owner_id'] = $request->get('customer_id',null);
               $data['is_owner_place'] = 0;
@@ -133,6 +139,9 @@ class TripController extends Controller
           if(isset($customer_data)){
               $customer = User::query()->create($customer_data);
               $data['owner_id'] = $customer->id;
+          }else if(isset($place_data)){
+              $place = User::query()->create($place_data);
+              $data['owner_id'] = $place->id;
           }
 
             $item = Trip::query()->updateOrCreate([
