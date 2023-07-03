@@ -1059,12 +1059,7 @@
                 const customer_select2  = $('#customer_select2').val()
                 const place_select2  = $('#place_select2').val()
                 const captain_select2  = $('#captain_select2').val()
-                if(selectedValue === 'customer') {
-                    if(!customer_select2){
-                        toastr.warning("اختر زبون");
-                        flag = true
-                    }
-                }else{
+                if(selectedValue === 'place') {
                     if(!place_select2){
                         toastr.warning("اختر مكان");
                         flag = true
@@ -1082,6 +1077,7 @@
                 $(".select-modal").select2({
                     dropdownParent: $("#trip_create_modal")
                 })
+                clearInputs()
             })
 
 
