@@ -987,10 +987,10 @@
                 selectElement.select2({
                     data: selectData
                 });
-                $("#captain_select2").select2({
+                
+                $(".select-modal").select2({
                     dropdownParent: $("#trip_create_modal")
                 })
-
 
 
 
