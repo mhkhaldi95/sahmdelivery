@@ -108,8 +108,21 @@ License: For each use you must have a valid license purchased only from above li
 <!--end::Javascript-->
 
 <script>
-    var toggle = document.querySelector('#kt_aside_toggle');
-    toggle.dispatchEvent(new Event('change'));
+    function disableButton(id_btn) {
+        var button = document.getElementById(id_btn);
+        button.disabled = true;
+    }
+    function enableButton(id_btn) {
+        var button = document.getElementById(id_btn);
+        button.disabled = false;
+    }
+    function disableButtonAndSubmitForm(id_btn,id_form) {
+        var button = document.getElementById(id_btn);
+        button.disabled = true;
+        var form = document.getElementById(id_form);
+        form.submit();
+    }
+
 
 </script>
 @yield('scripts')

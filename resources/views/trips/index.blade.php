@@ -270,7 +270,7 @@
                 var captain = $('#captain_filter');
                 var date_from = $('#date_from');
                 var date_to = $('#date_to');
-                return (status && status.val() == 'pending') && captain &&
+                return (status && status.val() == 'pending') && (captain && captain.val()) &&
                     (date_from && date_from.val()) &&
                     (date_to && date_to.val());
             }
@@ -292,7 +292,7 @@
                         processing: true,
                         serverSide: true,
                         'pagingType': 'full_numbers',
-                        'lengthMenu': [[10, 20, 30, 40, -1], [10, 20, 30, 40, 'الكل']],
+                        'lengthMenu': [[50, 70, 100, 200, -1], [50, 70, 100, 200, 'الكل']],
                         order: [6, 'desc'],
                         stateSave: false,
                         select: {
@@ -462,6 +462,7 @@
 
 
                     $('#submit').click(function () {
+                        disableButton('submit')
                         var amount = $('#amount').val()
                         if (parseInt(amount) && id) {
                             axios.post('{{route('trips.update_price')}}', {
@@ -472,9 +473,12 @@
                                 id = null;
                                 amount = null
                                 $('#update_amount_modal').modal('hide')
+                                enableButton('submit')
+
                             })
                         } else {
                             alert("السعر مطلوب")
+                            enableButton('submit')
                         }
 
                     })
@@ -494,6 +498,7 @@
 
 
                     $('#submit_from').click(function () {
+                        disableButton('submit_from')
                         from = $('#from').val()
                         if (from && id) {
                             axios.post('{{route('trips.update_from')}}', {
@@ -504,9 +509,11 @@
                                 id = null;
                                 from = null
                                 $('#update_from_modal').modal('hide')
+                                enableButton('submit_from')
                             })
                         } else {
                             alert("أدخل الحقل")
+                            enableButton('submit_from')
                         }
 
                     })
@@ -526,6 +533,8 @@
 
 
                     $('#submit_to').click(function () {
+                        disableButton('submit_to')
+
                         to = $('#to').val()
                         if (to && id) {
                             axios.post('{{route('trips.update_to')}}', {'id': id, 'to': to}).then(function (response) {
@@ -533,9 +542,11 @@
                                 id = null;
                                 to = null
                                 $('#update_to_modal').modal('hide')
+                                enableButton('submit_to')
                             })
                         } else {
                             alert("أدخل الحقل")
+                            enableButton('submit_to')
                         }
 
                     })
@@ -569,7 +580,6 @@
 
                     // Deleted selected rows
                     completeSelected.addEventListener('click', function () {
-
                         var captain_id = $('#captain_filter').val();
                         if (!captain_id) {
                             Swal.fire({
@@ -583,6 +593,7 @@
                             })
                             return;
                         }
+                        // disableButton('complete_selected')
 
                         Swal.fire({
                             text: "هل أنت متأكد أنك تريد اكمال الرحلات المختارة؟",
@@ -613,7 +624,8 @@
                                         confirmButtonText: "حسنا!",
                                         customClass: {
                                             confirmButton: "btn fw-bold btn-primary",
-                                        }
+                                        },
+
                                     }).then(function () {
                                         const ids = [];
                                         const headerCheck = container.querySelectorAll('[type="checkbox"]');
@@ -628,6 +640,8 @@
                                             'captain_id': captain_id
                                         }).then(function (response) {
                                             dt.draw();
+                                            // enableButton('complete_selected')
+
                                         })
                                     });
 
@@ -636,8 +650,10 @@
                                     const headerCheckbox = container.querySelectorAll('[type="checkbox"]')[0];
 
                                     headerCheckbox.checked = false;
+                                    // enableButton('complete_selected')
                                 });
                             } else if (result.dismiss === 'cancel') {
+                                // enableButton('complete_selected')
                                 Swal.fire({
                                     text: " لقد ألغيت عملية الاكمال ",
                                     icon: "error",
@@ -999,6 +1015,7 @@
 
             $('#trip_create_submit').click(function () {
               if(validations()){
+                  enableButton('trip_create_submit')
                   return;
               }
 
@@ -1039,11 +1056,13 @@
                        $('#trip_create_modal').modal('hide')
                        $('#trip_create_btn').click()
                        toastr.success(response.data.msg)
+                       enableButton('trip_create_submit')
                    }else{
                        toastr.error(response.data.msg)
+                       enableButton('trip_create_submit')
                    }
                 }).catch(function (err) {
-
+                    enableButton('trip_create_submit')
                 })
 
 

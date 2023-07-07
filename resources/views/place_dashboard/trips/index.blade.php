@@ -576,6 +576,7 @@
                 $('#request_sahm_modal').modal('show')
             })
             $('#submit_request').click(function (){
+                disableButton('submit_request')
                var qty_captain =  $('#qty_captain').val()
                var mints =  $('#mints').val()
                 var selectedValue = $('input[name="type"]:checked').val();
@@ -585,8 +586,10 @@
                     $('#type').val(selectedValue)
                     $('#come_at').val(mints)
                     $('#place_trip_create').submit()
+                    enableButton('submit_request')
                 }else{
                     alert("تأكد من تعبئة الحقول  ")
+                    enableButton('submit_request')
                 }
 
             })

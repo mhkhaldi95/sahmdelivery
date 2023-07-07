@@ -80,7 +80,7 @@
 
 
                             <!--begin::Actions-->
-                            <button id="kt_docs_formvalidation_text_submit1" type="submit" class="btn btn-primary">
+                            <button id="kt_docs_formvalidation_text_submit1" type="submit" onclick="disableButtonAndSubmitForm('kt_docs_formvalidation_text_submit1','kt_docs_formvalidation_text')"class="btn btn-primary">
                         <span class="indicator-label">
                            {{__('lang.submit')}}
                         </span>

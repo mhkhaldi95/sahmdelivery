@@ -444,7 +444,7 @@
                 <div class="modal-footer flex-center">
 
                     <!--begin::Actions-->
-                    <button type="button" id="trip_create_submit" class="btn btn-primary">
+                    <button type="button" id="trip_create_submit"  onclick="disableButton('trip_create_submit')" class="btn btn-primary">
                         <span class="indicator-label">
                            {{__('lang.submit')}}
                         </span>
