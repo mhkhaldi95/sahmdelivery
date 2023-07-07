@@ -987,7 +987,7 @@
                 selectElement.select2({
                     data: selectData
                 });
-                
+
                 $(".select-modal").select2({
                     dropdownParent: $("#trip_create_modal")
                 })
@@ -1087,12 +1087,12 @@
                 const add_or_cancel_place_value  = $('#add-or-cancel-place').val()
                 const place_select2  = $('#place_select2').val()
                 const captain_select2  = $('#captain_select2').val()
-                if((add_or_cancel_customer_value && add_or_cancel_customer_value == 1) && selectedValue === 'customer') {
+                if((add_or_cancel_customer_value && add_or_cancel_customer_value == 1) && selectedValue === 'customer' && false) {
                     if(!customer_select2){
                         toastr.warning("اختر زبون");
                         flag = true
                     }
-                }else if((add_or_cancel_customer_value && add_or_cancel_customer_value == 2) && selectedValue === 'customer') {
+                }else if((add_or_cancel_customer_value && add_or_cancel_customer_value == 2) && selectedValue === 'customer' && false) {
                     const customer_name  = $('#customer_name').val()
                     const customer_phone  = $('#customer_phone').val()
                     if(!customer_name){
@@ -1103,7 +1103,7 @@
                         toastr.warning(" أدخل جوال الزبون");
                         flag = true
                     }
-                }else if((add_or_cancel_place_value && add_or_cancel_place_value == 1) && selectedValue === 'place') {
+                }else if((add_or_cancel_place_value && add_or_cancel_place_value == 1) && selectedValue === 'place' && false) {
                     if(!place_select2){
                         toastr.warning("اختر مكان");
                         flag = true

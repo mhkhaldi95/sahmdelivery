@@ -32,33 +32,33 @@ class TripRequestAjax extends FormRequest
             'owner' => ['required'],
             'customer_id' => [
                 Rule::requiredIf(function () {
-                    return $this->input('owner') === 'customer' &&  $this->input('add_or_cancel_customer_value') == 1;
+                    return $this->input('owner') === 'customer' &&  $this->input('add_or_cancel_customer_value') == 1 && false;
                 }),
             ],
             'customer_name' => [
                 Rule::requiredIf(function () {
-                    return $this->input('owner') === 'customer' &&  $this->input('add_or_cancel_customer_value') == 2;
+                    return $this->input('owner') === 'customer' &&  $this->input('add_or_cancel_customer_value') == 2 && false;
                 }),
             ],
             'customer_phone' => [
                 Rule::requiredIf(function () {
-                    return $this->input('owner') === 'customer' &&  $this->input('add_or_cancel_customer_value') == 2;
+                    return $this->input('owner') === 'customer' &&  $this->input('add_or_cancel_customer_value') == 2 && false;
                 }),
             ],
             'place_id' => [
                 Rule::requiredIf(function () {
-                    return $this->input('owner') === 'place' &&  $this->input('add_or_cancel_place_value') == 1;
+                    return $this->input('owner') === 'place' &&  $this->input('add_or_cancel_place_value') == 1 && false;
                 }),
             ],
 
             'place_name' => [
                 Rule::requiredIf(function () {
-                    return $this->input('owner') === 'place' &&  $this->input('add_or_cancel_place_value') == 2;
+                    return $this->input('owner') === 'place' &&  $this->input('add_or_cancel_place_value') == 2 && false;
                 }),
             ],
             'place_phone' => [
                 Rule::requiredIf(function () {
-                    return $this->input('owner') === 'place' &&  $this->input('add_or_cancel_place_value') == 2;
+                    return $this->input('owner') === 'place' &&  $this->input('add_or_cancel_place_value') == 2 && false;
                 }),
             ],
             'captain_id' => ['required', 'numeric', 'exists:users,id'],

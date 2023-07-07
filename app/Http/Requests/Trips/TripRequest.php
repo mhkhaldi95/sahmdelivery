@@ -32,12 +32,12 @@ class TripRequest extends FormRequest
             'owner' => ['required'],
             'customer_id' => [
                 Rule::requiredIf(function () {
-                    return $this->input('owner') === 'customer';
+                    return $this->input('owner') === 'customer' && false;
                 }),
             ],
             'place_id' => [
                 Rule::requiredIf(function () {
-                    return $this->input('owner') === 'place';
+                    return $this->input('owner') === 'place' && false;
                 }),
             ],
             'captain_id' => ['required', 'numeric', 'exists:users,id'],
