@@ -463,7 +463,7 @@
 
                     $('#submit').click(function () {
                         var amount = $('#amount').val()
-                        if (amount && id) {
+                        if (parseInt(amount) && id) {
                             axios.post('{{route('trips.update_price')}}', {
                                 'id': id,
                                 'amount': amount

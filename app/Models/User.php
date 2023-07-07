@@ -86,7 +86,7 @@ class User extends Authenticatable
     public static function captainReadyForTrips($item = null){
         $today = Carbon::today();
 
-        $captain_ids = Trip::query()->whereNotIn('amount',[null,0])->where('status','!=',Enum::CANCELED)
+        $captain_ids = Trip::query()->whereNull('amount')->where('status','!=',Enum::CANCELED)
 //            ->orWhere(function ($q) use ($today){
 //                $q->where('created_at', '<', $today)->where('status', Enum::PENDING);
 //            })
