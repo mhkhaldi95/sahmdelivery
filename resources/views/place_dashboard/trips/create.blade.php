@@ -261,7 +261,7 @@
 
                                             مغلقة/غير مدخلة  :
                                             <label class="checkbox badge badge-light-{{!is_null($item->amount)?'success':'danger'}}">
-                                                {{!is_null($item->amount)?'مغلقة':'غير مدخلة'}}
+                                                {{!is_null($item->amount) && $item->amount >0 ?'مغلقة':'غير مدخلة'}}
                                             </label>
                                         </div>
 

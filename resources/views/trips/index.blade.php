@@ -395,13 +395,13 @@
                             $('#totalAmountAfterDiscountForOffice').html(html3)
                         },
                         rowCallback: function (row, data) {
-                            if (data.status_str === 'completed') {
+                            if (data.is_success_row) {
                                 $(row).addClass('success_row');
-                            } else if (data.status_str === 'pending' && data.amount_str) {
+                            } else if (data.is_primary_row ) {
                                 $(row).addClass('primary_row');
-                            } else if (data.status_str === 'pending' && !data.amount_str) {
+                            } else if (data.is_warning_row) {
                                 $(row).addClass('warning_row');
-                            } else if (data.status_str === 'canceled') {
+                            } else if (data.is_danger_row) {
                                 $(row).addClass('danger_row');
                             }
                         }

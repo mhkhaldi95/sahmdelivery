@@ -46,7 +46,12 @@ class TripResource extends JsonResource
         ;
         $data['created_at'] = Carbon::parse($data['created_at'])->setTimezone('Asia/Gaza')->format('Y-m-d H:i:s');
         $data['status_str'] = $this['status'];
-        $data['amount_str'] = $this['amount'];
+        $data['amount_str'] = intval($this['amount']);
+        $data['is_success_row'] = $this['status'] == Enum::COMPLETED;
+        $data['is_primary_row'] = $this['status'] == Enum::PENDING && $this['amount'] && $this['amount'] > 0;
+        $data['is_warning_row'] = $this['status'] == Enum::PENDING && (is_null($this['amount']) || $this['amount']== 0);
+        $data['is_danger_row'] = $this['status'] == Enum::CANCELED;
+
 
 
         return $data;
