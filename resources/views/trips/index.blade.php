@@ -1127,7 +1127,7 @@
                         toastr.warning("اختر مكان");
                         flag = true
                     }
-                }else if((add_or_cancel_place_value && add_or_cancel_place_value == 2) && selectedValue === 'place') {
+                }else if((add_or_cancel_place_value && add_or_cancel_place_value == 2) && selectedValue === 'place' && false) {
                     const place_name  = $('#place_name').val()
                     const place_phone  = $('#place_phone').val()
                     if(!place_name){
