@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\Model;
 class Trip extends Model
 {
     use HasFactory;
-    const FILLABLE = ['captain_id','owner_id','type','come_at','complete_trip_daily_id','is_owner_place','from','to','amount','payment_type','customer_paid','place_paid','status','fix_amount','ratio'];
+    const FILLABLE = ['captain_id','owner_id','type','come_at','complete_trip_daily_id','is_owner_place','from','to','amount','payment_type','customer_paid','place_paid','status'];
     protected $fillable = self::FILLABLE;
 
     public function captain(){

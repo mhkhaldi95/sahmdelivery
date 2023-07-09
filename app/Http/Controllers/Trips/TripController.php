@@ -10,6 +10,7 @@ use App\Http\Requests\Trips\TripRequestAjax;
 use App\Http\Resources\Trips\TripResource;
 use App\Models\CompleteTripDaily;
 use App\Models\Constant;
+use App\Models\StartEndTime;
 use App\Models\Trip;
 use App\Models\User;
 use Illuminate\Database\QueryException;
@@ -19,7 +20,53 @@ use Illuminate\Support\Facades\DB;
 class TripController extends Controller
 {
 
+    public function fetchData(Request $request){
+        if($request->ajax()){
+            $length = \request()->get('length', 10);
+            if(\request()->get('length') && \request()->get('length') == -1){
+                $length = Trip::query()->count();
+            }
+            $items = Trip::query()->with(['captain','owner'])->orderBy(getColAndDirForOrderBy()['col'],getColAndDirForOrderBy()['dir'])->filter()
+                ->paginate($length,'*','*',getPageNumber($length));
+            return datatable_response($items, null, TripResource::class);
+        }
+    }
     public function index(Request $request){
+        if($request->ajax()){
+            $length = \request()->get('length', 10);
+            if(\request()->get('length') && \request()->get('length') == -1){
+                $length = Trip::query()->count();
+            }
+            $items = Trip::query()->with(['captain','owner'])->orderBy(getColAndDirForOrderBy()['col'],getColAndDirForOrderBy()['dir'])->filter()
+                ->paginate($length,'*','*',getPageNumber($length));
+            return datatable_response($items, null, TripResource::class);
+        }
+        $customers = User::query()->customers()->get();
+        $places = User::query()->places()->get();
+        $captains = User::query()->captains()->get();
+        $active_customers = collect($customers)->where('is_deleted','=',0);
+        $active_places = collect($places)->where('is_deleted','=',0);
+        $captain_ids = User::captainReadyForTrips();
+        $active_captains = User::query()->active()->captains()->whereNotIn('id',$captain_ids)->get();
+        $start_end_time = StartEndTime::query()->whereDate('start_time', now())->orderByDesc('created_at')->first();
+
+        $page_breadcrumbs = [
+            ['page' => route('dashboard.index') , 'title' =>'الرئيسية','active' => true],
+            ['page' => '#' , 'title' =>'الرحلات','active' => false],
+        ];
+        return view('trips.index', [
+            'page_title' =>'الرئيسية',
+            'page_breadcrumbs' => $page_breadcrumbs,
+            'customers' => $customers,
+            'captains' => $captains,
+            'places' => $places,
+            'active_customers' => $active_customers,
+            'active_places' => $active_places,
+            'active_captains' => $active_captains,
+            'start_end_time' => $start_end_time,
+        ]);
+    }
+    public function archive(Request $request){
         if($request->ajax()){
             $length = \request()->get('length', 10);
             if(\request()->get('length') && \request()->get('length') == -1){
@@ -37,9 +84,10 @@ class TripController extends Controller
         $page_breadcrumbs = [
             ['page' => route('dashboard.index') , 'title' =>'الرئيسية','active' => true],
             ['page' => '#' , 'title' =>'الرحلات','active' => false],
+            ['page' => '#' , 'title' =>'الأرشيف','active' => false],
         ];
-        return view('trips.index', [
-            'page_title' =>'الرئيسية',
+        return view('trips.archive', [
+            'page_title' =>'الأرشيف',
             'page_breadcrumbs' => $page_breadcrumbs,
             'customers' => $customers,
             'captains' => $captains,
@@ -116,7 +164,7 @@ class TripController extends Controller
               $data['owner_id'] = $request->get('place_id',null);
               $data['is_owner_place'] = 1;
 //              $data['payment_type'] = Enum::POSTPAID;
-              if($request->get('add_or_cancel_place_value') == 2){
+              if($request->get('add_or_cancel_place_value') == 2 && $request->get('place_name')){
                   $place_data['name'] = $request->get('place_name');
                   $place_data['phone'] = $request->get('place_phone');
                   $place_data['role'] = Enum::PLACE;
@@ -125,7 +173,7 @@ class TripController extends Controller
               $data['owner_id'] = $request->get('customer_id',null);
               $data['is_owner_place'] = 0;
               $data['payment_type'] = Enum::IMMEDIATELY;
-              if($request->get('add_or_cancel_customer_value') == 2){
+              if($request->get('add_or_cancel_customer_value') == 2 &&  $request->get('customer_name')){
                   $customer_data['name'] = $request->get('customer_name');
                   $customer_data['phone'] = $request->get('customer_phone');
                   $customer_data['role'] = Enum::CUSTOMER;
@@ -176,8 +224,6 @@ class TripController extends Controller
             $ratio = getConstantByKey($constants,'ratio')->value;
             $fix_amount = getConstantByKey($constants,'fix_amount')->value;
 
-//            $date = \DateTime::createFromFormat('m/d/Y', $request->completed_at);
-//            $formattedDate = $date->format('Y/m/d');
            $item =  CompleteTripDaily::query()->create([
                'completed_at' =>now() ,
                'ids_trips' => $ids,

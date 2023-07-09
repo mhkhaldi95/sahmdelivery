@@ -65,6 +65,22 @@
                 <div class="d-flex align-items-stretch flex-shrink-0">
 
                     @if(auth()->user()->isAdmin())
+                        @php
+                            $item = \App\Models\StartEndTime::query()->whereDate('start_time',now())->orderByDesc('created_at')->first();
+                        @endphp
+                        <div class="d-flex align-items-center ms-1 ms-lg-3">
+                            @if(!is_null($item->start_time) && is_null($item->end_time))
+                                <button href="javascript:void(0)" id="end_time" type="button"
+                                        class="btn btn-danger">انهاء الدوام
+                                </button>
+                            @else
+                                <button href="javascript:void(0)" id="start_time" type="button"
+                                        class="btn btn-primary">بدء الدوام
+                                </button>
+                            @endif
+                        </div>
+                        <form method="post" action="{{route('start_time')}}" id="start_time_form">@csrf</form>
+                        <form method="post" action="{{route('end_time',$item->id)}}" id="end_time_form">@csrf</form>
                         <!--begin::Notifications-->
                         <div class="d-flex align-items-center ms-1 ms-lg-3" style="position: relative">
                             <!--begin::Menu- wrapper-->
@@ -76,7 +92,8 @@
 
                                 <span class="svg-icon svg-icon-1">
 
-                                      <span id="count_notifications" @if($count_notifications > 0)  class="count_notifications" @endif>{{$count_notifications == 0?'':$count_notifications}}</span>
+                                      <span id="count_notifications"
+                                            @if($count_notifications > 0)  class="count_notifications" @endif>{{$count_notifications == 0?'':$count_notifications}}</span>
 												<svg fill="#000000" height="800px" width="800px" version="1.1"
                                                      id="Capa_1" xmlns="http://www.w3.org/2000/svg"
                                                      xmlns:xlink="http://www.w3.org/1999/xlink"
@@ -133,7 +150,8 @@
                                                         <div class="d-flex align-items-center">
                                                             <!--begin::Symbol-->
                                                             <div class="symbol symbol-35px me-4">
-																		<span class="symbol-label bg-light-{{$notification['read_at']?'success':'danger'}}">
+																		<span
+                                                                            class="symbol-label bg-light-{{$notification['read_at']?'success':'danger'}}">
 																			<!--begin::Svg Icon | path: icons/duotune/technology/teh008.svg-->
 																			<span
                                                                                 class="svg-icon svg-icon-2 svg-icon-{{$notification['read_at']?'success':'danger'}}">
@@ -168,7 +186,8 @@
                                                         </div>
                                                         <!--end::Section-->
                                                         <!--begin::Label-->
-                                                        <span class="badge badge-light fs-8">{{$notification['created_at']}}</span>
+                                                        <span
+                                                            class="badge badge-light fs-8">{{$notification['created_at']}}</span>
                                                         <!--end::Label-->
                                                     </div>
                                                 @endforeach

@@ -69,6 +69,14 @@
                                                 <span class="menu-title">استعلام</span>
                                             </a>
                                         </div>
+                                        <div class="menu-item">
+                                            <a class="menu-link" href="{{route('trips.archive')}}">
+														<span class="menu-bullet">
+															<span class="bullet bullet-dot"></span>
+														</span>
+                                                <span class="menu-title">أرشيف الرحلات</span>
+                                            </a>
+                                        </div>
 {{--                                        <div class="menu-item">--}}
 {{--                                            <a class="menu-link" href="{{route('trips.create')}}">--}}
 {{--														<span class="menu-bullet">--}}

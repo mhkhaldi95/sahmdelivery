@@ -367,11 +367,11 @@
                                         data-kt-select2="true" data-placeholder="{{__('lang.select')}}"
                                         data-allow-clear="true" id="captain_select2">
                                     <option></option>
-                                    {{--                                    @foreach($active_captains as $captain)--}}
-                                    {{--                                        <option--}}
-                                    {{--                                            value="{{$captain->id}}" {{isset($item)?($captain->id == @$item->captain->id?'selected':''):''}}>{{$captain->name}}--}}
-                                    {{--                                            - {{$captain->phone}}</option>--}}
-                                    {{--                                    @endforeach--}}
+                                                                        @foreach($active_captains as $captain)
+                                                                            <option
+                                                                                value="{{$captain->id}}" {{isset($item)?($captain->id == @$item->captain->id?'selected':''):''}}>{{$captain->name}}
+                                                                                - {{$captain->phone}}</option>
+                                                                        @endforeach
                                 </select>
                                 <!--end::Input-->
                             </div>

@@ -23,8 +23,8 @@
 
                             <!--end::Filter-->
                             <!--begin::Add customer-->
-                            <a href="javascript:void(0)" id="trip_create_btn" type="button"
-                               class="btn btn-primary">{{__('lang.add')}}</a>
+{{--                            <a href="javascript:void(0)" id="trip_create_btn" type="button"--}}
+{{--                               class="btn btn-primary">{{__('lang.add')}}</a>--}}
                             <!--end::Add customer-->
                         </div>
                         <!--end::Toolbar-->
@@ -180,7 +180,6 @@
                                     <input type="text" class="form-control form-control-solid" id="date_from"
                                            placeholder="اختر التاريخ  و الوقت">
 
-
                                 </div>
                                 <div class="col-lg-3 mt-1">
                                     <label class="form-label fs-5 fw-bold ">الى</label>
@@ -189,20 +188,20 @@
                                            placeholder="اختر التاريخ  و الوقت">
 
                                 </div>
-                                <div class="col-lg-3 mt-1">
-                                    <div class="row mt-8">
-                                        <div class="col-lg-6">
-                                            <button  id="prev_day"  data-type="prev" data-id="{{$start_end_time->id}}" type="button"
-                                               class="btn btn-primary">اليوم السابق</button>
-                                        </div>
-                                        <div class="col-lg-6">
-                                            <button  id="next_day"  data-type="next" data-id="{{$start_end_time->id}}" type="button"
-                                               class="btn btn-info">اليوم التالي</button>
-                                        </div>
-                                    </div>
+                                <!--begin::Col-->
 
+                                <!--end::Col-->
+                                <!--begin::Col-->
+                                {{--                                <div class="col-lg-3 mt-1">--}}
+                                {{--                                    <!--begin::Label-->--}}
+                                {{--                                    <label class="form-label fs-5 fw-bold ">إلى</label>--}}
+                                {{--                                    <!--end::Label-->--}}
+                                {{--                                    <!--begin::Input-->--}}
+                                {{--                                    <input class="form-control form-control-solid" placeholder="اختر التاريخ" id="date_to"/>--}}
 
-                                </div>
+                                {{--                                    <!--end::Input-->--}}
+                                {{--                                </div>--}}
+                                <!--end::Col-->
 
                             </div>
                             <!--end::Row-->
@@ -221,13 +220,7 @@
                         <thead>
                         <!--begin::Table row-->
                         <tr class="text-start text-gray-400 fw-bolder fs-7 text-uppercase gs-0">
-                            <th class="w-10px pe-2">
-                                <div class="form-check form-check-sm form-check-custom form-check-solid me-3">
-                                    <input class="form-check-input" id="all_checked" type="checkbox"
-                                           data-kt-check="true"
-                                           data-kt-check-target="#kt_customers_table .form-check-input" value="1"/>
-                                </div>
-                            </th>
+
                             <th class="min-w-125px">صاحب الطلب</th>
                             <th class="min-w-125px"> الكابتن</th>
                             <th class="min-w-125px"> من</th>
@@ -257,7 +250,6 @@
     </div>
     <!--end::Post-->
 
-    @include('trips.partial.modal')
 @endsection
 @section('scripts')
 
@@ -266,16 +258,14 @@
         $(document).ready(function () {
             "use strict";
 
-            // $('#date_from').attr('disabled',true)
-
             function showTotalsDiv() {
                 var status = $('#status_filter');
                 var captain = $('#captain_filter');
                 var date_from = $('#date_from');
                 var date_to = $('#date_to');
-                return (status && (status.val() == 'pending' || status.val() == 'completed'))
-                    && (captain && captain.val()) &&
-                    (date_from && date_from.val()) ;
+                return (status && (status.val() == 'pending' || status.val() == 'completed')) && (captain && captain.val()) &&
+                    (date_from && date_from.val()) &&
+                    (date_to && date_to.val()) && false;
             }
 
             // Class definition
@@ -305,10 +295,9 @@
                         },
                         ajax: {
                             // url: "https://preview.keenthemes.com/api/datatables.php",
-                            url: "{{route('trips.index')}}",
+                            url: "{{route('trips.fetchData')}}",
                         },
                         columns: [
-                            {data: 'id'},
                             {data: 'owner_name'},
                             {data: 'captain_name'},
                             {data: 'from'},
@@ -423,7 +412,6 @@
                 }
 
                 var handleSearchDatatable = function () {
-
                     var searchParams = {};
 
                     // Function to add search parameter to the searchParams object
@@ -921,12 +909,12 @@
 
             $('#trip_create_btn').click(function () {
                 $('#trip_create_modal').modal('show')
-                {{--var url = '{{route('trips.get-available-captains')}}';--}}
-                {{--axios.get(url).then(function (response) {--}}
-                {{--    var captains = response.data.data.captains;--}}
-                {{--    addOptions(captains);--}}
+                var url = '{{route('trips.get-available-captains')}}';
+                axios.get(url).then(function (response) {
+                    var captains = response.data.data.captains;
+                    addOptions(captains);
 
-                {{--})--}}
+                })
             })
             $('.close_trip_create_modal').click(function () {
                 clearInputs()
@@ -1146,63 +1134,6 @@
                 toggleCancelAddPlace()
             })
 
-
-
-            $('#date_from').val('{{$start_end_time->start_time}}')
-            $('#date_from').change()
-            $('#date_from').attr('disabled',true)
-
-
-            $('#date_to').attr('disabled',true)
-            $('#next_day').attr('disabled',true)
-
-
-            $('#prev_day').click(function (){
-                var id =  $(this).data('id');
-                var url = '{{route('start_time.day')}}';
-                url = url+`?id=${id}&type=prev`
-                axios.get(url).then(function (response) {
-                   if(response.data.status){
-                       var item = response.data.data.item;
-                       if(response.data.data.item){
-                           $('#next_day').attr('disabled',false)
-                           $('#prev_day').data("id", item.id);
-                           $("#next_day").data("id", item.id);
-                           $('#date_from').val(item.start_time)
-                           $('#date_to').val(item.end_time)
-                           $('#date_from').change()
-                           $('#date_to').change()
-                       }else{
-                           $('#prev_day').attr('disabled',true)
-                       }
-
-                   }
-                })
-            })
-
-            $('#next_day').click(function (){
-                var id =  $(this).data('id');
-                var url = '{{route('start_time.day')}}';
-                url = url+`?id=${id}&type=next`
-                axios.get(url).then(function (response) {
-                   if(response.data.status){
-                       var item = response.data.data.item;
-                       if(item){
-                           $('#prev_day').attr('disabled',false)
-                           $('#prev_day').data("id", item.id);
-                           $("#next_day").data("id", item.id);
-                           $('#date_from').val(item.start_time)
-                           $('#date_to').val(item.end_time)
-                           $('#date_from').change()
-                           $('#date_to').change()
-                       }else{
-                           $('#next_day').attr('disabled',true)
-                           $('#prev_day').attr('disabled',false)
-                       }
-
-                   }
-                })
-            })
 
             function toggleCancelAddCustomer(){
                 $('#exist-customer-section').removeClass('d-none')

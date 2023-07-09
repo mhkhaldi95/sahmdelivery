@@ -26,8 +26,6 @@ return new class extends Migration
             $table->timestamp('come_at')->nullable();
             $table->boolean('customer_paid')->default(false); // انا حاسبت الزبون واعطيته
             $table->boolean('place_paid')->default(false); // انا حاسبت المكان واخذت منه
-            $table->double('ratio')->default(0.14);
-            $table->double('fix_amount')->default(2);
             $table->enum('status', [Enum::PENDING, Enum::COMPLETED, Enum::CANCELED])->default(Enum::PENDING);
             $table->timestamps();
         });

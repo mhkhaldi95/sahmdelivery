@@ -208,6 +208,77 @@ License: For each use you must have a valid license purchased only from above li
         }, 30000)
 
         @endif
+
+
+
+        $('#start_time').click(function (){
+
+            Swal.fire({
+                text: "هل أنت متأكد من بدء الدوام",
+                icon: "success",
+                showCancelButton: true,
+                buttonsStyling: false,
+                showLoaderOnConfirm: true,
+                confirmButtonText: "نعم ",
+                cancelButtonText: "لا, الغِ",
+                customClass: {
+                    confirmButton: "btn fw-bold btn-success",
+                    cancelButton: "btn fw-bold btn-active-light-danger"
+                },
+            }).then(function (result) {
+                if (result.value) {
+                    $('#start_time_form').submit();
+
+                } else if (result.dismiss === 'cancel') {
+                    // enableButton('complete_selected')
+                    Swal.fire({
+                        text: " لقد ألغيت عملية بدء الدوام ",
+                        icon: "error",
+                        buttonsStyling: false,
+                        confirmButtonText: "حسنا",
+                        customClass: {
+                            confirmButton: "btn fw-bold btn-primary",
+                        }
+                    });
+                }
+            });
+
+
+        })
+        $('#end_time').click(function (){
+
+            Swal.fire({
+                text: "هل أنت متأكد من انهاء الدوام",
+                icon: "success",
+                showCancelButton: true,
+                buttonsStyling: false,
+                showLoaderOnConfirm: true,
+                confirmButtonText: "نعم ",
+                cancelButtonText: "لا, الغِ",
+                customClass: {
+                    confirmButton: "btn fw-bold btn-success",
+                    cancelButton: "btn fw-bold btn-active-light-danger"
+                },
+            }).then(function (result) {
+                if (result.value) {
+                    $('#end_time_form').submit();
+
+                } else if (result.dismiss === 'cancel') {
+                    // enableButton('complete_selected')
+                    Swal.fire({
+                        text: " لقد ألغيت عملية انهاء الدوام ",
+                        icon: "error",
+                        buttonsStyling: false,
+                        confirmButtonText: "حسنا",
+                        customClass: {
+                            confirmButton: "btn fw-bold btn-primary",
+                        }
+                    });
+                }
+            });
+
+
+        })
     });
 
 </script>

@@ -3,6 +3,7 @@
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Constant\ConstantController;
 use App\Http\Controllers\Notifications\NotificationController;
+use App\Http\Controllers\StartEndTimeController;
 use App\Http\Controllers\StatisticController;
 use App\Http\Controllers\Trips\TripController;
 use App\Http\Controllers\PlaceDashboard\Trips\TripController as PlaceTripController;
@@ -73,10 +74,14 @@ Route::group(['prefix' => 'admin', 'middleware' => 'locale'], function () {
 Route::group(['middleware' => ['auth:sanctum', 'admin']], function () {
     Route::get('/', [DashboardController::class, 'index'])->name('dashboard.index');
     Route::get('/statistics', [StatisticController::class, 'index'])->name('statistics.index');
+    Route::post('/start-time', [StartEndTimeController::class, 'startTime'])->name('start_time');
+    Route::post('/end-time/{id}', [StartEndTimeController::class, 'endTime'])->name('end_time');
+    Route::get('/start_time-get-day', [StartEndTimeController::class, 'getDay'])->name('start_time.day');
 
     Route::group(['prefix' => 'auth'], function () {
         Route::get('logout', [LoginController::class, 'logout'])->name('logout')->withoutMiddleware('admin');
     });
+
 
 
     Route::get('{id}/account', [AccountSettingsController::class, 'create'])->name('admins.account.create')->withoutMiddleware('admin');
@@ -111,8 +116,12 @@ Route::group(['middleware' => ['auth:sanctum', 'admin']], function () {
         Route::get('{id}/trips', [CustomerController::class, 'trips'])->name('customers.trips');
 
     });
+
+
     Route::group(['prefix' => 'trips'], function () {
-        Route::get('/', [TripController::class, 'index'])->name('trips.index');
+        Route::get('/', [TripController::class, 'index'])->name('trips.index')->middleware('start_end_time');
+        Route::get('/fetchData', [TripController::class, 'fetchData'])->name('trips.fetchData');
+        Route::get('/archive', [TripController::class, 'archive'])->name('trips.archive');
         Route::get('/create/{id?}', [TripController::class, 'create'])->name('trips.create');
         Route::post('/store/{id?}', [TripController::class, 'store'])->name('trips.store');
         Route::post('/ajax_store/{id?}', [TripController::class, 'ajax_store'])->name('trips.ajax_store');
