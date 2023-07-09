@@ -185,10 +185,10 @@ class TripController extends Controller
 
           DB::beginTransaction();
           if(isset($customer_data)){
-              $customer = User::query()->create($customer_data);
+              $customer = User::query()->updateOrCreate(['phone' => $customer_data['phone']],$customer_data);
               $data['owner_id'] = $customer->id;
           }else if(isset($place_data)){
-              $place = User::query()->create($place_data);
+              $place = User::query()->updateOrCreate(['phone' => $place_data['phone']],$place_data);
               $data['owner_id'] = $place->id;
           }
 
