@@ -69,7 +69,7 @@
                             $item = \App\Models\StartEndTime::query()->whereDate('start_time',now())->orderByDesc('created_at')->first();
                         @endphp
                         <div class="d-flex align-items-center ms-1 ms-lg-3">
-                            @if(!is_null($item->start_time) && is_null($item->end_time))
+                            @if($item && !is_null($item->start_time) && is_null($item->end_time))
                                 <button href="javascript:void(0)" id="end_time" type="button"
                                         class="btn btn-danger">انهاء الدوام
                                 </button>
@@ -80,7 +80,7 @@
                             @endif
                         </div>
                         <form method="post" action="{{route('start_time')}}" id="start_time_form">@csrf</form>
-                        <form method="post" action="{{route('end_time',$item->id)}}" id="end_time_form">@csrf</form>
+                        <form method="post" action="{{route('end_time',isset($item)?$item->id:-1)}}" id="end_time_form">@csrf</form>
                         <!--begin::Notifications-->
                         <div class="d-flex align-items-center ms-1 ms-lg-3" style="position: relative">
                             <!--begin::Menu- wrapper-->
