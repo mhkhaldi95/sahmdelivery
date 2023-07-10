@@ -438,9 +438,18 @@
                             } else {
                                 $('#totals').hide()
                             }
-                            searchParams[column] = $(this).val().toLowerCase().toLowerCase();
-                            if(!$('#date_to').val()){
-                                delete searchParams['date_to'];
+
+
+
+                            if(filterId == '#date_from'){
+                                searchParams[column] = $(this).val().toLowerCase().toLowerCase();
+                                if($('#date_to').val()){
+                                    searchParams['date_to'] = $('#date_to').val().toLowerCase().toLowerCase();
+                                }else{
+                                    delete searchParams['date_to'];
+                                }
+                            }else{
+                                searchParams[column] = $(this).val().toLowerCase().toLowerCase();
                             }
                             dt.search(JSON.stringify(searchParams)).draw();
                         });
@@ -1237,9 +1246,8 @@
 
 
                             if (date_from && date_to) {
-                                $('#date_from').change(function () {
-                                    $('#date_to').change();
-                                }).change();
+                                $('#date_from').change();
+                                $('#date_to').change();
                             } else if (date_from) {
                                 $('#date_from').change();
                             }
@@ -1295,9 +1303,8 @@
 
 
                             if (date_from && date_to) {
-                                $('#date_from').change(function () {
-                                    $('#date_to').change();
-                                }).change();
+                                $('#date_from').change();
+                                $('#date_to').change();
                             } else if (date_from) {
                                 $('#date_from').change();
                             }
