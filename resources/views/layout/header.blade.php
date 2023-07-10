@@ -1,11 +1,13 @@
 @php
 
-    if (\Illuminate\Support\Facades\Auth::check()) {
-                  $user = \App\Models\User::query()->where('role',\App\Constants\Enum::SUPER_ADMIN)->first();
-                  $notifications = $user->notifications()->with(['notifiable'])->paginate(20);
-                  $notifications = \App\Http\Resources\NotificationResource::collection($notifications)->resolve();
-                  $count_notifications = $user->unreadNotifications()->count();
-                  }
+    $notifications = [];
+    $user = \App\Models\User::query()->where('role',\App\Constants\Enum::SUPER_ADMIN)->first();
+    $count_notifications = 0;
+        if (\Illuminate\Support\Facades\Auth::check() && $user) {
+                      $notifications = $user->notifications()->with(['notifiable'])->paginate(20);
+                      $notifications = \App\Http\Resources\NotificationResource::collection($notifications)->resolve();
+                      $count_notifications = $user->unreadNotifications()->count();
+                      }
 @endphp
 <div id="kt_header" style="" class="header align-items-stretch">
     <!--begin::Container-->

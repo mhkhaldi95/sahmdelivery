@@ -20,7 +20,7 @@ class DatabaseSeeder extends Seeder
             'email' => 'sahm@gmail.com',
             'username' => 'sahm',
             'role' => Enum::SUPER_ADMIN,
-            'password' => Hash::make('123456'),
+            'password' => Hash::make('E123456'),
         ]);
         $constant = [
             ['key'=> 'ratio' , 'value'=>0.14],
