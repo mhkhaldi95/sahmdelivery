@@ -33,8 +33,7 @@
                 </ul>
 
                 <div class="tab-content">
-                    <div class="tab-pane fade show active" id="kt_ecommerce_add_product_general"
-                         role="tab-panel">
+                    <div class="tab-pane fade show active" id="kt_ecommerce_add_product_general" role="tab-panel">
                         <!--end:::Tabs-->
                         @include('validation.alerts')
                         <!--begin::Form-->

@@ -41,12 +41,24 @@ class StartEndTimeController extends Controller
         try {
             DB::beginTransaction();
 
+            $constants = Constant::query()->get();
+            $closed_amount = getConstantByKey($constants,'closed_amount')->value;
+
+
             $item = StartEndTime::query()->findOrFail($id);
             $ids_trips = Trip::query()
                 ->where('created_at', '>=', $item->start_time)
                 ->where('created_at', '<=', now())
                 ->pluck('id')
                 ->toArray();
+
+
+            $trips =  Trip::query()
+                ->where('created_at', '>=', $item->start_time)
+                ->where('created_at', '<=', now())
+                ->where('amount',null)
+                ->where('status',Enum::PENDING)
+                ->update(['amount' =>$closed_amount]);
 
             $item->update([
                 'end_time' => now(),

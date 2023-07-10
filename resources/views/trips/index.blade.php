@@ -438,7 +438,10 @@
                             } else {
                                 $('#totals').hide()
                             }
-                            searchParams[column] = $(this).val().toLowerCase();
+                            searchParams[column] = $(this).val().toLowerCase().toLowerCase();
+                            if(!$('#date_to').val()){
+                                delete searchParams['date_to'];
+                            }
                             dt.search(JSON.stringify(searchParams)).draw();
                         });
                     }
@@ -487,9 +490,9 @@
 
                                 if (error.response && error.response.status === 401 && error.response.data.message === 'Unauthenticated.') {
                                     window.location.reload();
-                                }else if(error.response && error.response.status === 419){
+                                } else if (error.response && error.response.status === 419) {
                                     window.location.reload();
-                                }else{
+                                } else {
                                     enableButton('submit')
                                 }
                             });
@@ -530,9 +533,9 @@
                             }).catch(function (error) {
                                 if (error.response && error.response.status === 401 && error.response.data.message === 'Unauthenticated.') {
                                     window.location.reload();
-                                }else if(error.response && error.response.status === 419){
+                                } else if (error.response && error.response.status === 419) {
                                     window.location.reload();
-                                }else{
+                                } else {
                                     enableButton('submit_from')
                                 }
                             });
@@ -571,9 +574,9 @@
                             }).catch(function (error) {
                                 if (error.response && error.response.status === 401 && error.response.data.message === 'Unauthenticated.') {
                                     window.location.reload();
-                                }else if(error.response && error.response.status === 419){
+                                } else if (error.response && error.response.status === 419) {
                                     window.location.reload();
-                                }else{
+                                } else {
                                     enableButton('submit_to')
                                 }
                             });
@@ -678,7 +681,7 @@
                                         }).catch(function (error) {
                                             if (error.response && error.response.status === 401 && error.response.data.message === 'Unauthenticated.') {
                                                 window.location.reload();
-                                            }else if(error.response && error.response.status === 419){
+                                            } else if (error.response && error.response.status === 419) {
                                                 window.location.reload();
                                             }
                                         });
@@ -752,7 +755,7 @@
                                             }).catch(function (error) {
                                             if (error.response && error.response.status === 401 && error.response.data.message === 'Unauthenticated.') {
                                                 window.location.reload();
-                                            }else if(error.response && error.response.status === 419){
+                                            } else if (error.response && error.response.status === 419) {
                                                 window.location.reload();
                                             }
                                         });
@@ -835,7 +838,7 @@
                                             }).catch(function (error) {
                                                 if (error.response && error.response.status === 401 && error.response.data.message === 'Unauthenticated.') {
                                                     window.location.reload();
-                                                }else if(error.response && error.response.status === 419){
+                                                } else if (error.response && error.response.status === 419) {
                                                     window.location.reload();
                                                 }
                                             });
@@ -1053,7 +1056,7 @@
                 }).catch(function (error) {
                     if (error.response && error.response.status === 401 && error.response.data.message === 'Unauthenticated.') {
                         window.location.reload();
-                    }else if(error.response && error.response.status === 419){
+                    } else if (error.response && error.response.status === 419) {
                         window.location.reload();
                     }
                 });
@@ -1207,6 +1210,8 @@
 
 
             $('#prev_day').click(function () {
+                var date_to = null;
+                var date_from = null;
                 var id = $(this).data('id');
                 var url = '{{route('start_time.day')}}';
                 url = url + `?id=${id}&type=prev`
@@ -1214,13 +1219,30 @@
                     if (response.data.status) {
                         var item = response.data.data.item;
                         if (response.data.data.item) {
+                            $('#date_from').val('')
+                            $('#date_to').val('')
+
                             $('#next_day').attr('disabled', false)
                             $('#prev_day').data("id", item.id);
                             $("#next_day").data("id", item.id);
                             $('#date_from').val(item.start_time)
-                            $('#date_to').val(item.end_time)
-                            $('#date_from').change()
-                            $('#date_to').change()
+                             date_from = $('#date_from').val()
+
+
+                            if(item.end_time){
+                                $('#date_to').val(item.end_time)
+                                date_to = $('#date_to').val()
+                            }
+
+
+
+                            if (date_from && date_to) {
+                                $('#date_from').change()
+                                $('#date_to').change()
+                            }else if(date_from){
+                                $('#date_from').change()
+                            }
+
                         } else {
                             $('#prev_day').attr('disabled', true)
                         }
@@ -1229,27 +1251,55 @@
                 }).catch(function (error) {
                     if (error.response && error.response.status === 401 && error.response.data.message === 'Unauthenticated.') {
                         window.location.reload();
-                    }else if(error.response && error.response.status === 419){
+                    } else if (error.response && error.response.status === 419) {
                         window.location.reload();
                     }
                 });
             })
 
             $('#next_day').click(function () {
+                var date_to = null;
+                var date_from = null;
                 var id = $(this).data('id');
                 var url = '{{route('start_time.day')}}';
                 url = url + `?id=${id}&type=next`
                 axios.get(url).then(function (response) {
                     if (response.data.status) {
+
                         var item = response.data.data.item;
                         if (item) {
+                            $('#date_from').val('')
+                            $('#date_to').val('')
+
+
                             $('#prev_day').attr('disabled', false)
                             $('#prev_day').data("id", item.id);
                             $("#next_day").data("id", item.id);
+
+
                             $('#date_from').val(item.start_time)
-                            $('#date_to').val(item.end_time)
-                            $('#date_from').change()
-                            $('#date_to').change()
+                             date_from = $('#date_from').val()
+
+
+
+                            if(item.end_time){
+                                $('#date_to').val(item.end_time)
+                                date_to = $('#date_to').val()
+                            }
+
+
+
+
+
+
+
+                            if (date_from && date_to) {
+                                $('#date_from').change()
+                                $('#date_to').change()
+                            }else if(date_from){
+                                $('#date_from').change()
+
+                            }
                         } else {
                             $('#next_day').attr('disabled', true)
                             $('#prev_day').attr('disabled', false)
@@ -1259,7 +1309,7 @@
                 }).catch(function (error) {
                     if (error.response && error.response.status === 401 && error.response.data.message === 'Unauthenticated.') {
                         window.location.reload();
-                    }else if(error.response && error.response.status === 419){
+                    } else if (error.response && error.response.status === 419) {
                         window.location.reload();
                     }
                 });
