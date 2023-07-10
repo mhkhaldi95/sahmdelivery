@@ -197,6 +197,8 @@ function datatable(datatable_id){
                                     }).catch(function (error) {
                                         if (error.response && error.response.status === 401 && error.response.data.message === 'Unauthenticated.') {
                                             window.location.reload();
+                                        }else if(error.response && error.response.status === 419){
+                                            window.location.reload();
                                         }
                                     });
                                 });
@@ -298,6 +300,8 @@ function datatable(datatable_id){
                                     dt.draw();
                                 }).catch(function (error) {
                                     if (error.response && error.response.status === 401 && error.response.data.message === 'Unauthenticated.') {
+                                        window.location.reload();
+                                    }else if(error.response && error.response.status === 419){
                                         window.location.reload();
                                     }
                                 });

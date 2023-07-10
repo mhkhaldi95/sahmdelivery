@@ -578,6 +578,8 @@
                                     }).catch(function (error) {
                                         if (error.response && error.response.status === 401 && error.response.data.message === 'Unauthenticated.') {
                                             window.location.reload();
+                                        }else if(error.response && error.response.status === 419){
+                                            window.location.reload();
                                         }
                                     });
                                 });
@@ -646,6 +648,8 @@
                                     }).catch(function (error) {
                                         if (error.response && error.response.status === 401 && error.response.data.message === 'Unauthenticated.') {
                                             window.location.reload();
+                                        }else if(error.response && error.response.status === 419){
+                                            window.location.reload();
                                         }
                                     });
                                 });
@@ -713,6 +717,8 @@
                                         dt.draw();
                                     }).catch(function (error) {
                                         if (error.response && error.response.status === 401 && error.response.data.message === 'Unauthenticated.') {
+                                            window.location.reload();
+                                        }else if(error.response && error.response.status === 419){
                                             window.location.reload();
                                         }
                                     });
@@ -794,6 +800,8 @@
                                             dt.draw();
                                         }).catch(function (error) {
                                             if (error.response && error.response.status === 401 && error.response.data.message === 'Unauthenticated.') {
+                                                window.location.reload();
+                                            }else if(error.response && error.response.status === 419){
                                                 window.location.reload();
                                             }
                                         });

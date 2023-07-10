@@ -484,7 +484,10 @@
                                 enableButton('submit')
 
                             }).catch(function (error) {
+
                                 if (error.response && error.response.status === 401 && error.response.data.message === 'Unauthenticated.') {
+                                    window.location.reload();
+                                }else if(error.response && error.response.status === 419){
                                     window.location.reload();
                                 }else{
                                     enableButton('submit')
@@ -527,6 +530,8 @@
                             }).catch(function (error) {
                                 if (error.response && error.response.status === 401 && error.response.data.message === 'Unauthenticated.') {
                                     window.location.reload();
+                                }else if(error.response && error.response.status === 419){
+                                    window.location.reload();
                                 }else{
                                     enableButton('submit_from')
                                 }
@@ -565,6 +570,8 @@
                                 enableButton('submit_to')
                             }).catch(function (error) {
                                 if (error.response && error.response.status === 401 && error.response.data.message === 'Unauthenticated.') {
+                                    window.location.reload();
+                                }else if(error.response && error.response.status === 419){
                                     window.location.reload();
                                 }else{
                                     enableButton('submit_to')
@@ -671,6 +678,8 @@
                                         }).catch(function (error) {
                                             if (error.response && error.response.status === 401 && error.response.data.message === 'Unauthenticated.') {
                                                 window.location.reload();
+                                            }else if(error.response && error.response.status === 419){
+                                                window.location.reload();
                                             }
                                         });
                                     });
@@ -742,6 +751,8 @@
                                                 dt.draw();
                                             }).catch(function (error) {
                                             if (error.response && error.response.status === 401 && error.response.data.message === 'Unauthenticated.') {
+                                                window.location.reload();
+                                            }else if(error.response && error.response.status === 419){
                                                 window.location.reload();
                                             }
                                         });
@@ -823,6 +834,8 @@
                                                 dt.draw();
                                             }).catch(function (error) {
                                                 if (error.response && error.response.status === 401 && error.response.data.message === 'Unauthenticated.') {
+                                                    window.location.reload();
+                                                }else if(error.response && error.response.status === 419){
                                                     window.location.reload();
                                                 }
                                             });
@@ -1040,6 +1053,8 @@
                 }).catch(function (error) {
                     if (error.response && error.response.status === 401 && error.response.data.message === 'Unauthenticated.') {
                         window.location.reload();
+                    }else if(error.response && error.response.status === 419){
+                        window.location.reload();
                     }
                 });
 
@@ -1214,6 +1229,8 @@
                 }).catch(function (error) {
                     if (error.response && error.response.status === 401 && error.response.data.message === 'Unauthenticated.') {
                         window.location.reload();
+                    }else if(error.response && error.response.status === 419){
+                        window.location.reload();
                     }
                 });
             })
@@ -1241,6 +1258,8 @@
                     }
                 }).catch(function (error) {
                     if (error.response && error.response.status === 401 && error.response.data.message === 'Unauthenticated.') {
+                        window.location.reload();
+                    }else if(error.response && error.response.status === 419){
                         window.location.reload();
                     }
                 });

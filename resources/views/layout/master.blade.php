@@ -207,6 +207,8 @@ License: For each use you must have a valid license purchased only from above li
             }).catch(function (error) {
                 if (error.response && error.response.status === 401 && error.response.data.message === 'Unauthenticated.') {
                     window.location.reload();
+                }else if(error.response && error.response.status === 419){
+                    window.location.reload();
                 }
             });
         }, 30000)
