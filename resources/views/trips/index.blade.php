@@ -1237,10 +1237,11 @@
 
 
                             if (date_from && date_to) {
-                                $('#date_from').change()
-                                $('#date_to').change()
-                            }else if(date_from){
-                                $('#date_from').change()
+                                $('#date_from').change(function () {
+                                    $('#date_to').change();
+                                }).change();
+                            } else if (date_from) {
+                                $('#date_from').change();
                             }
 
                         } else {
@@ -1294,11 +1295,11 @@
 
 
                             if (date_from && date_to) {
-                                $('#date_from').change()
-                                $('#date_to').change()
-                            }else if(date_from){
-                                $('#date_from').change()
-
+                                $('#date_from').change(function () {
+                                    $('#date_to').change();
+                                }).change();
+                            } else if (date_from) {
+                                $('#date_from').change();
                             }
                         } else {
                             $('#next_day').attr('disabled', true)
