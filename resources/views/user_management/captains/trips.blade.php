@@ -433,7 +433,11 @@
                                     // delete row data from server and re-draw datatable
                                     axios.post('{{route('trips.complete_selected')}}',{'ids':ids}).then(function (response) {
                                         dt.draw();
-                                    })
+                                    }).catch(function (error) {
+                                        if (error.response && error.response.status === 401 && error.response.data.message === 'Unauthenticated.') {
+                                            window.location.reload();
+                                        }
+                                    });
                                 });
 
                                 // Remove header checked box
@@ -497,7 +501,11 @@
                                     // delete row data from server and re-draw datatable
                                     axios.post('{{route('trips.cancel_selected')}}',{'ids':ids}).then(function (response) {
                                         dt.draw();
-                                    })
+                                    }).catch(function (error) {
+                                        if (error.response && error.response.status === 401 && error.response.data.message === 'Unauthenticated.') {
+                                            window.location.reload();
+                                        }
+                                    });
                                 });
 
                                 // Remove header checked box
@@ -574,7 +582,11 @@
 
                                         axios.post(url).then(function (response) {
                                             dt.draw();
-                                        })
+                                        }).catch(function (error) {
+                                            if (error.response && error.response.status === 401 && error.response.data.message === 'Unauthenticated.') {
+                                                window.location.reload();
+                                            }
+                                        });
 
                                     });
                                 });

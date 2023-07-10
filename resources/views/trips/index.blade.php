@@ -192,12 +192,16 @@
                                 <div class="col-lg-3 mt-1">
                                     <div class="row mt-8">
                                         <div class="col-lg-6">
-                                            <button  id="prev_day"  data-type="prev" data-id="{{$start_end_time->id}}" type="button"
-                                               class="btn btn-primary">اليوم السابق</button>
+                                            <button id="prev_day" data-type="prev" data-id="{{$start_end_time->id}}"
+                                                    type="button"
+                                                    class="btn btn-primary">اليوم السابق
+                                            </button>
                                         </div>
                                         <div class="col-lg-6">
-                                            <button  id="next_day"  data-type="next" data-id="{{$start_end_time->id}}" type="button"
-                                               class="btn btn-info">اليوم التالي</button>
+                                            <button id="next_day" data-type="next" data-id="{{$start_end_time->id}}"
+                                                    type="button"
+                                                    class="btn btn-info">اليوم التالي
+                                            </button>
                                         </div>
                                     </div>
 
@@ -275,7 +279,7 @@
                 var date_to = $('#date_to');
                 return (status && (status.val() == 'pending' || status.val() == 'completed'))
                     && (captain && captain.val()) &&
-                    (date_from && date_from.val()) ;
+                    (date_from && date_from.val());
             }
 
             // Class definition
@@ -400,7 +404,7 @@
                         rowCallback: function (row, data) {
                             if (data.is_success_row) {
                                 $(row).addClass('success_row');
-                            } else if (data.is_primary_row ) {
+                            } else if (data.is_primary_row) {
                                 $(row).addClass('primary_row');
                             } else if (data.is_warning_row) {
                                 $(row).addClass('warning_row');
@@ -479,7 +483,13 @@
                                 $('#update_amount_modal').modal('hide')
                                 enableButton('submit')
 
-                            })
+                            }).catch(function (error) {
+                                if (error.response && error.response.status === 401 && error.response.data.message === 'Unauthenticated.') {
+                                    window.location.reload();
+                                }else{
+                                    enableButton('submit')
+                                }
+                            });
                         } else {
                             alert("السعر مطلوب")
                             enableButton('submit')
@@ -514,7 +524,13 @@
                                 from = null
                                 $('#update_from_modal').modal('hide')
                                 enableButton('submit_from')
-                            })
+                            }).catch(function (error) {
+                                if (error.response && error.response.status === 401 && error.response.data.message === 'Unauthenticated.') {
+                                    window.location.reload();
+                                }else{
+                                    enableButton('submit_from')
+                                }
+                            });
                         } else {
                             alert("أدخل الحقل")
                             enableButton('submit_from')
@@ -547,7 +563,13 @@
                                 to = null
                                 $('#update_to_modal').modal('hide')
                                 enableButton('submit_to')
-                            })
+                            }).catch(function (error) {
+                                if (error.response && error.response.status === 401 && error.response.data.message === 'Unauthenticated.') {
+                                    window.location.reload();
+                                }else{
+                                    enableButton('submit_to')
+                                }
+                            });
                         } else {
                             alert("أدخل الحقل")
                             enableButton('submit_to')
@@ -646,7 +668,11 @@
                                             dt.draw();
                                             // enableButton('complete_selected')
 
-                                        })
+                                        }).catch(function (error) {
+                                            if (error.response && error.response.status === 401 && error.response.data.message === 'Unauthenticated.') {
+                                                window.location.reload();
+                                            }
+                                        });
                                     });
 
                                     // Remove header checked box
@@ -711,9 +737,14 @@
                                                 ids.push(parseInt($(element).val()));
                                         });
                                         // delete row data from server and re-draw datatable
-                                        axios.post('{{route('trips.cancel_selected')}}', {'ids': ids}).then(function (response) {
-                                            dt.draw();
-                                        })
+                                        axios.post('{{route('trips.cancel_selected')}}', {'ids': ids})
+                                            .then(function (response) {
+                                                dt.draw();
+                                            }).catch(function (error) {
+                                            if (error.response && error.response.status === 401 && error.response.data.message === 'Unauthenticated.') {
+                                                window.location.reload();
+                                            }
+                                        });
                                     });
 
                                     // Remove header checked box
@@ -790,7 +821,11 @@
 
                                             axios.post(url).then(function (response) {
                                                 dt.draw();
-                                            })
+                                            }).catch(function (error) {
+                                                if (error.response && error.response.status === 401 && error.response.data.message === 'Unauthenticated.') {
+                                                    window.location.reload();
+                                                }
+                                            });
 
                                         });
                                     });
@@ -932,6 +967,7 @@
                 clearInputs()
                 $('#trip_create_modal').modal('hide')
             })
+
             function addOptions(options) {
                 var selectElement = $('#captain_select2').select2();
                 const selectData = options.map(option => ({
@@ -939,7 +975,7 @@
                     text: option.name + ' - ' + option.phone,
                 }));
                 selectElement.empty();
-                selectData.unshift({ id: '', text: '' });
+                selectData.unshift({id: '', text: ''});
 
                 selectElement.select2({
                     data: selectData
@@ -950,67 +986,68 @@
                 })
 
 
-
             }
 
 
             $('#trip_create_submit').click(function () {
-              if(validations()){
-                  enableButton('trip_create_submit')
-                  return;
-              }
+                if (validations()) {
+                    enableButton('trip_create_submit')
+                    return;
+                }
 
-                const owner  = $('input[name="owner"]:checked').val();
-                const customer_id  = $('#customer_select2').val()
-                const place_id  = $('#place_select2').val()
-                const captain_id  = $('#captain_select2').val()
-                const amount  = $('#amount_trip_modal').val()
-                const from  = $('#from_trip_modal').val()
-                const to  = $('#to_trip_modal').val()
-                const status  = $('input[name="status"]:checked').val();
-                var customer_name  = $('#customer_name').val()
-                var customer_phone  = $('#customer_phone').val()
-                var place_name  = $('#place_name').val()
-                var place_phone  = $('#place_phone').val()
-                var add_or_cancel_customer_value  = $('#add-or-cancel-customer').val()
-                var add_or_cancel_place_value  = $('#add-or-cancel-place').val()
+                const owner = $('input[name="owner"]:checked').val();
+                const customer_id = $('#customer_select2').val()
+                const place_id = $('#place_select2').val()
+                const captain_id = $('#captain_select2').val()
+                const amount = $('#amount_trip_modal').val()
+                const from = $('#from_trip_modal').val()
+                const to = $('#to_trip_modal').val()
+                const status = $('input[name="status"]:checked').val();
+                var customer_name = $('#customer_name').val()
+                var customer_phone = $('#customer_phone').val()
+                var place_name = $('#place_name').val()
+                var place_phone = $('#place_phone').val()
+                var add_or_cancel_customer_value = $('#add-or-cancel-customer').val()
+                var add_or_cancel_place_value = $('#add-or-cancel-place').val()
                 var body = {
-                    owner:owner,
-                    customer_id:customer_id,
-                    place_id:place_id,
-                    captain_id:captain_id,
-                    amount:amount,
-                    from:from,
-                    to:to,
-                    customer_name:customer_name,
-                    customer_phone:customer_phone,
-                    place_name:place_name,
-                    place_phone:place_phone,
-                    add_or_cancel_customer_value:add_or_cancel_customer_value,
-                    add_or_cancel_place_value:add_or_cancel_place_value,
+                    owner: owner,
+                    customer_id: customer_id,
+                    place_id: place_id,
+                    captain_id: captain_id,
+                    amount: amount,
+                    from: from,
+                    to: to,
+                    customer_name: customer_name,
+                    customer_phone: customer_phone,
+                    place_name: place_name,
+                    place_phone: place_phone,
+                    add_or_cancel_customer_value: add_or_cancel_customer_value,
+                    add_or_cancel_place_value: add_or_cancel_place_value,
                 }
 
                 axios.post('{{route('trips.ajax_store')}}', body).then(function (response) {
-                   if(response.data.status){
-                       clearInputs()
-                       dt.draw()
-                       $('#trip_create_modal').modal('hide')
-                       $('#trip_create_btn').click()
-                       toastr.success(response.data.msg)
-                       enableButton('trip_create_submit')
-                   }else{
-                       toastr.error(response.data.msg)
-                       enableButton('trip_create_submit')
-                   }
-                }).catch(function (err) {
-                    enableButton('trip_create_submit')
-                })
+                    if (response.data.status) {
+                        clearInputs()
+                        dt.draw()
+                        $('#trip_create_modal').modal('hide')
+                        $('#trip_create_btn').click()
+                        toastr.success(response.data.msg)
+                        enableButton('trip_create_submit')
+                    } else {
+                        toastr.error(response.data.msg)
+                        enableButton('trip_create_submit')
+                    }
+                }).catch(function (error) {
+                    if (error.response && error.response.status === 401 && error.response.data.message === 'Unauthenticated.') {
+                        window.location.reload();
+                    }
+                });
 
 
             })
 
 
-            function  clearInputs(){
+            function clearInputs() {
                 $('#captain_select2').val('')
                 $('#place_select2').val('')
                 $('#customer_select2').val('')
@@ -1033,55 +1070,54 @@
                 toggleCancelAddPlace()
 
 
-
-
                 // $('#pending_status').prop('checked', true);
 
             }
-            function validations(){
+
+            function validations() {
                 var flag = false;
 
-                const selectedValue  = $('input[name="owner"]:checked').val();
-                const customer_select2  = $('#customer_select2').val()
-                const add_or_cancel_customer_value  = $('#add-or-cancel-customer').val()
-                const add_or_cancel_place_value  = $('#add-or-cancel-place').val()
-                const place_select2  = $('#place_select2').val()
-                const captain_select2  = $('#captain_select2').val()
-                if((add_or_cancel_customer_value && add_or_cancel_customer_value == 1) && selectedValue === 'customer' && false) {
-                    if(!customer_select2){
+                const selectedValue = $('input[name="owner"]:checked').val();
+                const customer_select2 = $('#customer_select2').val()
+                const add_or_cancel_customer_value = $('#add-or-cancel-customer').val()
+                const add_or_cancel_place_value = $('#add-or-cancel-place').val()
+                const place_select2 = $('#place_select2').val()
+                const captain_select2 = $('#captain_select2').val()
+                if ((add_or_cancel_customer_value && add_or_cancel_customer_value == 1) && selectedValue === 'customer' && false) {
+                    if (!customer_select2) {
                         toastr.warning("اختر زبون");
                         flag = true
                     }
-                }else if((add_or_cancel_customer_value && add_or_cancel_customer_value == 2) && selectedValue === 'customer' && false) {
-                    const customer_name  = $('#customer_name').val()
-                    const customer_phone  = $('#customer_phone').val()
-                    if(!customer_name){
+                } else if ((add_or_cancel_customer_value && add_or_cancel_customer_value == 2) && selectedValue === 'customer' && false) {
+                    const customer_name = $('#customer_name').val()
+                    const customer_phone = $('#customer_phone').val()
+                    if (!customer_name) {
                         toastr.warning(" أدخل اسم الزبون");
                         flag = true
                     }
-                    if(!customer_phone){
+                    if (!customer_phone) {
                         toastr.warning(" أدخل جوال الزبون");
                         flag = true
                     }
-                }else if((add_or_cancel_place_value && add_or_cancel_place_value == 1) && selectedValue === 'place' && false) {
-                    if(!place_select2){
+                } else if ((add_or_cancel_place_value && add_or_cancel_place_value == 1) && selectedValue === 'place' && false) {
+                    if (!place_select2) {
                         toastr.warning("اختر مكان");
                         flag = true
                     }
-                }else if((add_or_cancel_place_value && add_or_cancel_place_value == 2) && selectedValue === 'place' && false) {
-                    const place_name  = $('#place_name').val()
-                    const place_phone  = $('#place_phone').val()
-                    if(!place_name){
+                } else if ((add_or_cancel_place_value && add_or_cancel_place_value == 2) && selectedValue === 'place' && false) {
+                    const place_name = $('#place_name').val()
+                    const place_phone = $('#place_phone').val()
+                    if (!place_name) {
                         toastr.warning(" أدخل اسم المكان");
                         flag = true
                     }
-                    if(!place_phone){
+                    if (!place_phone) {
                         toastr.warning(" أدخل جوال المكان");
                         flag = true
                     }
                 }
 
-                if(!captain_select2){
+                if (!captain_select2) {
                     toastr.warning(" اختر كابتن");
                     flag = true
                 }
@@ -1106,7 +1142,7 @@
                     $('#place').hide();
                     $('#customer').show();
 
-                   toggleCancelAddCustomer()
+                    toggleCancelAddCustomer()
                     toggleCancelAddPlace()
 
                 } else if (selectedValue === 'place') {
@@ -1125,86 +1161,92 @@
             $('#place').hide();
 
 
-
-            $('#add_customer').click(function (e){
-                 e.preventDefault()
+            $('#add_customer').click(function (e) {
+                e.preventDefault()
                 toggleAddCustomer()
             })
 
-            $('#cancel_add_customer').click(function (e){
+            $('#cancel_add_customer').click(function (e) {
                 e.preventDefault()
                 toggleCancelAddCustomer()
             })
 
-            $('#add_place').click(function (e){
-                 e.preventDefault()
+            $('#add_place').click(function (e) {
+                e.preventDefault()
                 toggleAddPlace()
             })
 
-            $('#cancel_add_place').click(function (e){
+            $('#cancel_add_place').click(function (e) {
                 e.preventDefault()
                 toggleCancelAddPlace()
             })
 
 
-
             $('#date_from').val('{{$start_end_time->start_time}}')
             $('#date_from').change()
-            $('#date_from').attr('disabled',true)
+            $('#date_from').attr('disabled', true)
 
 
-            $('#date_to').attr('disabled',true)
-            $('#next_day').attr('disabled',true)
+            $('#date_to').attr('disabled', true)
+            $('#next_day').attr('disabled', true)
 
 
-            $('#prev_day').click(function (){
-                var id =  $(this).data('id');
+            $('#prev_day').click(function () {
+                var id = $(this).data('id');
                 var url = '{{route('start_time.day')}}';
-                url = url+`?id=${id}&type=prev`
+                url = url + `?id=${id}&type=prev`
                 axios.get(url).then(function (response) {
-                   if(response.data.status){
-                       var item = response.data.data.item;
-                       if(response.data.data.item){
-                           $('#next_day').attr('disabled',false)
-                           $('#prev_day').data("id", item.id);
-                           $("#next_day").data("id", item.id);
-                           $('#date_from').val(item.start_time)
-                           $('#date_to').val(item.end_time)
-                           $('#date_from').change()
-                           $('#date_to').change()
-                       }else{
-                           $('#prev_day').attr('disabled',true)
-                       }
+                    if (response.data.status) {
+                        var item = response.data.data.item;
+                        if (response.data.data.item) {
+                            $('#next_day').attr('disabled', false)
+                            $('#prev_day').data("id", item.id);
+                            $("#next_day").data("id", item.id);
+                            $('#date_from').val(item.start_time)
+                            $('#date_to').val(item.end_time)
+                            $('#date_from').change()
+                            $('#date_to').change()
+                        } else {
+                            $('#prev_day').attr('disabled', true)
+                        }
 
-                   }
-                })
+                    }
+                }).catch(function (error) {
+                    if (error.response && error.response.status === 401 && error.response.data.message === 'Unauthenticated.') {
+                        window.location.reload();
+                    }
+                });
             })
 
-            $('#next_day').click(function (){
-                var id =  $(this).data('id');
+            $('#next_day').click(function () {
+                var id = $(this).data('id');
                 var url = '{{route('start_time.day')}}';
-                url = url+`?id=${id}&type=next`
+                url = url + `?id=${id}&type=next`
                 axios.get(url).then(function (response) {
-                   if(response.data.status){
-                       var item = response.data.data.item;
-                       if(item){
-                           $('#prev_day').attr('disabled',false)
-                           $('#prev_day').data("id", item.id);
-                           $("#next_day").data("id", item.id);
-                           $('#date_from').val(item.start_time)
-                           $('#date_to').val(item.end_time)
-                           $('#date_from').change()
-                           $('#date_to').change()
-                       }else{
-                           $('#next_day').attr('disabled',true)
-                           $('#prev_day').attr('disabled',false)
-                       }
+                    if (response.data.status) {
+                        var item = response.data.data.item;
+                        if (item) {
+                            $('#prev_day').attr('disabled', false)
+                            $('#prev_day').data("id", item.id);
+                            $("#next_day").data("id", item.id);
+                            $('#date_from').val(item.start_time)
+                            $('#date_to').val(item.end_time)
+                            $('#date_from').change()
+                            $('#date_to').change()
+                        } else {
+                            $('#next_day').attr('disabled', true)
+                            $('#prev_day').attr('disabled', false)
+                        }
 
-                   }
-                })
+                    }
+                }).catch(function (error) {
+                    if (error.response && error.response.status === 401 && error.response.data.message === 'Unauthenticated.') {
+                        window.location.reload();
+                    }
+                });
             })
 
-            function toggleCancelAddCustomer(){
+            function toggleCancelAddCustomer() {
                 $('#exist-customer-section').removeClass('d-none')
                 $('#add_customer').removeClass('d-none')
 
@@ -1212,7 +1254,8 @@
                 $('#cancel_add_customer').addClass('d-none')
                 $('#add-or-cancel-customer').val(1)
             }
-            function toggleCancelAddPlace(){
+
+            function toggleCancelAddPlace() {
                 $('#exist-place-section').removeClass('d-none')
                 $('#add_place').removeClass('d-none')
 
@@ -1220,7 +1263,8 @@
                 $('#cancel_add_place').addClass('d-none')
                 $('#add-or-cancel-place').val(1)
             }
-            function toggleAddCustomer(){
+
+            function toggleAddCustomer() {
                 $('#exist-customer-section').addClass('d-none')
                 $('#add_customer').addClass('d-none')
                 $('#add_customer_form').removeClass('d-none')
@@ -1228,7 +1272,7 @@
                 $('#add-or-cancel-customer').val(2)
             }
 
-            function toggleAddPlace(){
+            function toggleAddPlace() {
                 $('#exist-place-section').addClass('d-none')
                 $('#add_place').addClass('d-none')
                 $('#add_place_form').removeClass('d-none')

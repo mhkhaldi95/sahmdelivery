@@ -210,7 +210,11 @@
 
                                         axios.post(url).then(function (response) {
                                             dt.draw();
-                                        })
+                                        }).catch(function (error) {
+                                            if (error.response && error.response.status === 401 && error.response.data.message === 'Unauthenticated.') {
+                                                window.location.reload();
+                                            }
+                                        });
 
                                     });
                                 });
@@ -276,7 +280,11 @@
 
                                         axios.post(url).then(function (response) {
                                             dt.draw();
-                                        })
+                                        }).catch(function (error) {
+                                            if (error.response && error.response.status === 401 && error.response.data.message === 'Unauthenticated.') {
+                                                window.location.reload();
+                                            }
+                                        });
 
                                     });
                                 });

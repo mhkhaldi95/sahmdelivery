@@ -194,7 +194,11 @@ function datatable(datatable_id){
                                     // delete row data from server and re-draw datatable
                                     axios.post('/admin/categories/'+record_id+'/delete').then(function (response) {
                                         dt.draw();
-                                    })
+                                    }).catch(function (error) {
+                                        if (error.response && error.response.status === 401 && error.response.data.message === 'Unauthenticated.') {
+                                            window.location.reload();
+                                        }
+                                    });
                                 });
                             });
                         } else if (result.dismiss === 'cancel') {
@@ -292,7 +296,11 @@ function datatable(datatable_id){
                                 // delete row data from server and re-draw datatable
                                 axios.post('/admin/categories/delete-selected',{'ids':ids}).then(function (response) {
                                     dt.draw();
-                                })
+                                }).catch(function (error) {
+                                    if (error.response && error.response.status === 401 && error.response.data.message === 'Unauthenticated.') {
+                                        window.location.reload();
+                                    }
+                                });
                             });
 
                             // Remove header checked box

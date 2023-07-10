@@ -467,7 +467,11 @@
                                 $('#update_amount_modal').modal('hide')
                                 enableButton('submit')
 
-                            })
+                            }).catch(function (error) {
+                                if (error.response && error.response.status === 401 && error.response.data.message === 'Unauthenticated.') {
+                                    window.location.reload();
+                                }
+                            });
                         } else {
                             alert("السعر مطلوب")
                             enableButton('submit')
@@ -502,7 +506,11 @@
                                 from = null
                                 $('#update_from_modal').modal('hide')
                                 enableButton('submit_from')
-                            })
+                            }).catch(function (error) {
+                                if (error.response && error.response.status === 401 && error.response.data.message === 'Unauthenticated.') {
+                                    window.location.reload();
+                                }
+                            });
                         } else {
                             alert("أدخل الحقل")
                             enableButton('submit_from')
@@ -535,7 +543,11 @@
                                 to = null
                                 $('#update_to_modal').modal('hide')
                                 enableButton('submit_to')
-                            })
+                            }).catch(function (error) {
+                                if (error.response && error.response.status === 401 && error.response.data.message === 'Unauthenticated.') {
+                                    window.location.reload();
+                                }
+                            });
                         } else {
                             alert("أدخل الحقل")
                             enableButton('submit_to')
@@ -634,7 +646,11 @@
                                             dt.draw();
                                             // enableButton('complete_selected')
 
-                                        })
+                                        }).catch(function (error) {
+                                            if (error.response && error.response.status === 401 && error.response.data.message === 'Unauthenticated.') {
+                                                window.location.reload();
+                                            }
+                                        });
                                     });
 
                                     // Remove header checked box
@@ -701,7 +717,11 @@
                                         // delete row data from server and re-draw datatable
                                         axios.post('{{route('trips.cancel_selected')}}', {'ids': ids}).then(function (response) {
                                             dt.draw();
-                                        })
+                                        }).catch(function (error) {
+                                            if (error.response && error.response.status === 401 && error.response.data.message === 'Unauthenticated.') {
+                                                window.location.reload();
+                                            }
+                                        });
                                     });
 
                                     // Remove header checked box
@@ -778,7 +798,11 @@
 
                                             axios.post(url).then(function (response) {
                                                 dt.draw();
-                                            })
+                                            }).catch(function (error) {
+                                                if (error.response && error.response.status === 401 && error.response.data.message === 'Unauthenticated.') {
+                                                    window.location.reload();
+                                                }
+                                            });
 
                                         });
                                     });
@@ -914,7 +938,11 @@
                     var captains = response.data.data.captains;
                     addOptions(captains);
 
-                })
+                }).catch(function (error) {
+                    if (error.response && error.response.status === 401 && error.response.data.message === 'Unauthenticated.') {
+                        window.location.reload();
+                    }
+                });
             })
             $('.close_trip_create_modal').click(function () {
                 clearInputs()
@@ -990,9 +1018,13 @@
                        toastr.error(response.data.msg)
                        enableButton('trip_create_submit')
                    }
-                }).catch(function (err) {
-                    enableButton('trip_create_submit')
-                })
+                }).catch(function (error) {
+                    if (error.response && error.response.status === 401 && error.response.data.message === 'Unauthenticated.') {
+                        window.location.reload();
+                    }else{
+                        enableButton('trip_create_submit')
+                    }
+                });
 
 
             })

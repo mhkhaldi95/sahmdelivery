@@ -204,7 +204,11 @@ License: For each use you must have a valid license purchased only from above li
                     // document.getElementById('playButton').click();
 
                 }
-            })
+            }).catch(function (error) {
+                if (error.response && error.response.status === 401 && error.response.data.message === 'Unauthenticated.') {
+                    window.location.reload();
+                }
+            });
         }, 30000)
 
         @endif
