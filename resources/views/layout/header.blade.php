@@ -68,7 +68,7 @@
 
                     @if(auth()->user()->isAdmin())
                         @php
-                            $item = \App\Models\StartEndTime::query()->whereDate('start_time',now())->orderByDesc('created_at')->first();
+                            $item = \App\Models\StartEndTime::query()->orderByDesc('created_at')->first();
                         @endphp
                         <div class="d-flex align-items-center ms-1 ms-lg-3">
                             @if($item && !is_null($item->start_time) && is_null($item->end_time))

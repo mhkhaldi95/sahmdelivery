@@ -19,7 +19,7 @@ class StartEndTimeMiddleware
      */
     public function handle(Request $request, Closure $next)
     {
-        $item = StartEndTime::query()->whereDate('start_time',now())->orderByDesc('created_at')->first();
+        $item = StartEndTime::query()->orderByDesc('created_at')->first();
         if(!$item){
             return redirect()->route('dashboard.index')->with([
                 'message' => 'بجب عليك الضغط على زر بدء الدوام',

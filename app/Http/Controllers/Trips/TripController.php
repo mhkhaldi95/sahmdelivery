@@ -48,7 +48,7 @@ class TripController extends Controller
         $active_places = collect($places)->where('is_deleted','=',0);
         $captain_ids = User::captainReadyForTrips();
         $active_captains = User::query()->active()->captains()->whereNotIn('id',$captain_ids)->get();
-        $start_end_time = StartEndTime::query()->whereDate('start_time', now())->orderByDesc('created_at')->first();
+        $start_end_time = StartEndTime::query()->orderByDesc('created_at')->first();
 
         $page_breadcrumbs = [
             ['page' => route('dashboard.index') , 'title' =>'الرئيسية','active' => true],
