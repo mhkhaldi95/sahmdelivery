@@ -143,6 +143,8 @@ class TripController extends Controller
           }
           if($data['amount'] > 0){
               $data['customer_paid'] = 1;
+          }elseif($data['amount'] == 0){
+              $data['amount'] = null;
           }
           DB::beginTransaction();
             $item = Trip::query()->updateOrCreate([
@@ -181,6 +183,8 @@ class TripController extends Controller
           }
           if($data['amount'] > 0){
               $data['customer_paid'] = 1;
+          }elseif($data['amount'] == 0){
+              $data['amount'] = null;
           }
 
           DB::beginTransaction();
