@@ -44,10 +44,11 @@ class TripRequest extends FormRequest
             'amount' => ['nullable', 'numeric', 'max:9999'],
             'from' => ['nullable', 'string', 'max:255'],
             'to' => ['nullable', 'string', 'max:255'],
-            'status' => [
-                Rule::requiredIf(function () use ($id){
-                    return isset($id);
-                }), Rule::in([Enum::PENDING, Enum::COMPLETED, Enum::CANCELED])],
+//            'status' => [
+//                Rule::requiredIf(function () use ($id){
+//                    return isset($id);
+//                }), Rule::in([Enum::PENDING, Enum::COMPLETED, Enum::CANCELED])],
+            'status' => [Rule::in([Enum::PENDING, Enum::COMPLETED, Enum::CANCELED])],
         ];
     }
 
