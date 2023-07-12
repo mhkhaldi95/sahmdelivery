@@ -192,55 +192,47 @@
                                 </div>
                                 <!--begin::Col-->
                             </div>
-                            <!--begin::Separator-->
-                            <div class="separator separator-dashed mt-6 mb-6"></div>
-                            <!--end::Separator-->
-                            <div class="row ">
-                                <!--begin::Col-->
-                                <div class="col-lg-4 ">
-                                    <div class="mb-4">
-                                        الحالة :
+                            @if(isset($item)  && $item->status != \App\Constants\Enum::COMPLETED)
+                                <!--begin::Separator-->
+                                <div class="separator separator-dashed mt-6 mb-6"></div>
+                                <!--end::Separator-->
+                                <div class="row ">
+                                    <!--begin::Col-->
+                                    <div class="col-lg-4 ">
+                                        <div class="mb-4">
+                                            الحالة :
+                                        </div>
+                                        <div class="d-flex">
+                                            <div class="form-check form-check-custom form-check-solid me-10">
+                                                <input class="form-check-input h-30px w-30px" type="radio" name="status"
+                                                       @if(!isset($item) || isset($item) && $item->status == \App\Constants\Enum::PENDING)
+                                                           checked="checked"
+                                                       @endif
+                                                       value="pending" id="flexCheckbox30"/>
+                                                <label class="form-check-label" for="flexCheckbox30">
+                                                    غير مكتملة
+                                                </label>
+                                            </div>
+
+                                            <div class=" form-check form-check-custom form-check-solid me-10">
+                                                <input class="form-check-input h-30px w-30px" type="radio" name="status"
+                                                       @if( isset($item) && $item->status == \App\Constants\Enum::CANCELED)
+                                                           checked="checked"
+                                                       @endif
+                                                       value="canceled" id="flexCheckbox40"/>
+                                                <label class="form-check-label" for="flexCheckbox40">
+                                                    الغاء
+                                                </label>
+                                            </div>
+
+                                        </div>
+
+
                                     </div>
-                                  <div class="d-flex">
-                                      <div class="form-check form-check-custom form-check-solid me-10">
-                                          <input class="form-check-input h-30px w-30px" type="radio" name="status"
-                                                 @if(!isset($item) || isset($item) && $item->status == \App\Constants\Enum::PENDING)
-                                                 checked="checked"
-                                                 @endif
-                                                 value="pending" id="flexCheckbox30"/>
-                                          <label class="form-check-label" for="flexCheckbox30">
-                                              غير مكتملة
-                                          </label>
-                                      </div>
-{{--                                      <div class="form-check form-check-custom form-check-solid me-10">--}}
-{{--                                          <input class="form-check-input h-30px w-30px" type="radio" name="status"--}}
-{{--                                                 @if(isset($item) && $item->status == \App\Constants\Enum::COMPLETED)--}}
-{{--                                                     checked="checked"--}}
-{{--                                                 @endif--}}
-{{--                                                 value="completed" id="flexCheckbox30"/>--}}
-{{--                                          <label class="form-check-label" for="flexCheckbox30">--}}
-{{--                                              مكتملة--}}
-{{--                                          </label>--}}
-{{--                                      </div>--}}
-
-                                      <div class=" form-check form-check-custom form-check-solid me-10">
-                                          <input class="form-check-input h-30px w-30px" type="radio" name="status"
-                                                 @if( isset($item) && $item->status == \App\Constants\Enum::CANCELED)
-                                                     checked="checked"
-                                                 @endif
-                                                 value="canceled" id="flexCheckbox40"/>
-                                          <label class="form-check-label" for="flexCheckbox40">
-                                              الغاء
-                                          </label>
-                                      </div>
-
-                                  </div>
-
-
                                 </div>
+                                <!--begin::Separator-->
+                                @endif
 
-                            </div>
-                            <!--begin::Separator-->
                             <div class="separator separator-dashed mt-6 mb-6"></div>
                             <div class="row ">
                                 <!--begin::Col-->

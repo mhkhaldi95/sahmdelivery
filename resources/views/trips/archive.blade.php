@@ -228,7 +228,6 @@
                             <th class="min-w-125px"> السعر</th>
                             <th class="min-w-125px"> التاريخ</th>
                             <th class="min-w-125px"> الحالة</th>
-                            <th class="text-end min-w-70px">{{__('lang.actions')}}</th>
                         </tr>
                         <!--end::Table row-->
                         </thead>
@@ -305,7 +304,6 @@
                             {data: 'amount'},
                             {data: 'created_at'},
                             {data: 'status'},
-                            {data: 'actions'},
                         ],
                         columnDefs: [
 
@@ -334,11 +332,7 @@
                                 orderable: false,
 
                             },
-                            {
-                                targets: -1,
-                                orderable: false,
-                                className: 'text-end',
-                            },
+
                         ],
                         footerCallback: function (row, data, start, end, display) {
                             var TotalAmountIndex = 5;
