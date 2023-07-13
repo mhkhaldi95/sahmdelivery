@@ -108,6 +108,7 @@ License: For each use you must have a valid license purchased only from above li
 <!--end::Javascript-->
 
 <script>
+
     function disableButton(id_btn) {
         var button = document.getElementById(id_btn);
         button.disabled = true;
@@ -128,7 +129,6 @@ License: For each use you must have a valid license purchased only from above li
 @yield('scripts')
 
 <script type="text/javascript">
-
     @if(Session::has('message'))
         toastr.options = {
         "closeButton": false,

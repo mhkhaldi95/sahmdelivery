@@ -271,9 +271,16 @@
         var dt;
         $(document).ready(function () {
             "use strict";
-
+            // $.fn.modal.Constructor.prototype.enforceFocus = function() {};
             // $('#date_from').attr('disabled',true)
+            $(document).on('select2:open', '.form-select', function() {
 
+                $('.select2-search__field').each(function (){
+                    $(this)[0].focus()
+                })
+
+
+            });
             function showTotalsDiv() {
                 var status = $('#status_filter');
                 var captain = $('#captain_filter');
@@ -1166,6 +1173,8 @@
                     dropdownParent: $("#trip_create_modal")
                 })
                 clearInputs()
+
+
 
             })
 
