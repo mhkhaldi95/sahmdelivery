@@ -274,10 +274,13 @@
             // $.fn.modal.Constructor.prototype.enforceFocus = function() {};
             // $('#date_from').attr('disabled',true)
             $(document).on('select2:open', '.form-select', function() {
+                if($(this)){
+                    $('.select2-search__field').each(function (){
+                        if($(this)[0])
+                            $(this)[0].focus()
+                    })
+                }
 
-                $('.select2-search__field').each(function (){
-                    $(this)[0].focus()
-                })
 
 
             });
