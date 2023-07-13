@@ -4,6 +4,8 @@
     <input type="hidden" value="{{getConstantByKey($constants,'fix_amount')->value}}" id="fix_amount">
     <!--begin::Post-->
     <div class="post d-flex flex-column-fluid" id="kt_post">
+
+
         <!--begin::Container-->
         <div id="kt_content_container" class="container-xxl">
             <!--begin::Card-->
@@ -1081,12 +1083,19 @@
                 $('#amount_trip_modal').val('')
                 $('#from_trip_modal').val('');
                 $('#to_trip_modal').val('')
-                $('#customer_radio_btn').prop('checked', true);
-                $('#customer-label').addClass('active')
-                $('#place_radio_btn').prop('checked', false);
-                $('#place-label').removeClass('active')
-                $('#place').hide();
-                $('#customer').show();
+
+
+                $('#place_radio_btn').prop('checked', true);
+                $('#place-label').addClass('active')
+                $('#customer_radio_btn').prop('checked', false);
+                $('#customer-label').removeClass('active')
+
+
+                $('#customer').hide();
+                $('#place').show();
+
+
+
                 $('#customer_name').val('')
                 $('#customer_phone').val('')
                 $('#place_name').val('')
@@ -1163,6 +1172,9 @@
 
             //----------------------------------
 
+
+
+
             $('input[name="owner"]').on('change', function () {
                 var selectedValue = $(this).val();
                 if (selectedValue === 'customer') {
@@ -1184,13 +1196,17 @@
                 var textarea = modal.querySelector('#from_trip_modal');
                 textarea.value = $('#place_address_' + $(this).val()).val();
             });
-            $('#customer_radio_btn').prop('checked', true);
-            $('#place').hide();
+
+            // $('#place_radio_btn').prop('checked', true);
+            // $('#customer').hide();
 
 
             $('#add_customer').click(function (e) {
                 e.preventDefault()
-                toggleAddCustomer()
+                if($('#add-or-cancel-place').val() == 2){
+                    return;
+                }
+                    toggleAddCustomer()
             })
 
             $('#cancel_add_customer').click(function (e) {
@@ -1207,6 +1223,9 @@
                 e.preventDefault()
                 toggleCancelAddPlace()
             })
+
+
+
 
 
             $('#date_from').val('{{$start_end_time->start_time}}')
@@ -1361,5 +1380,7 @@
 
 
     </script>
+
+
 
 @endsection

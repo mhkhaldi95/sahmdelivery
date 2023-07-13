@@ -166,28 +166,17 @@
                                 <div class="btn-group w-100 " data-kt-buttons="true"
                                      data-kt-buttons-target="[data-kt-button]">
                                     <!--begin::Radio-->
-                                    <label
-                                        class="btn btn-outline btn-color-muted btn-active-primary  {{!isset($item) || isset($item) && !$item->is_owner_place?'active':''}}"
-                                        data-kt-button="true" id="customer-label">
-                                        <!--begin::Input-->
-                                        <input class="btn-check" id="customer_radio_btn"
-                                               @if(!isset($item) || isset($item) && !$item->is_owner_place)
-                                                   checked="checked"
-                                               @endif
-                                               type="radio" name="owner" value="customer"/>
-                                        <!--end::Input-->
-                                        زبون
-                                    </label>
+
                                     <!--end::Radio-->
 
                                     <!--begin::Radio-->
                                     <label
-                                        class="btn btn-outline btn-color-muted btn-active-primary {{isset($item) && $item->is_owner_place?'active':''}}"
+                                        class="btn btn-outline btn-color-muted btn-active-primary {{ !isset($item) ||   $item->is_owner_place?'active':''}}"
                                         data-kt-button="true" id="place-label">
                                         <!--begin::Input-->
                                         <input class="btn-check" type="radio" id="place_radio_btn"
                                                name="owner"
-                                               @if(isset($item) && $item->is_owner_place)
+                                               @if(!isset($item) ||   $item->is_owner_place)
                                                    checked="checked"
                                                @endif
                                                value="place"/>
@@ -195,6 +184,19 @@
                                         مكان
                                     </label>
                                     <!--end::Radio-->
+
+                                    <label
+                                        class="btn btn-outline btn-color-muted btn-active-primary  {{isset($item) && !$item->is_owner_place?'active':''}}"
+                                        data-kt-button="true" id="customer-label">
+                                        <!--begin::Input-->
+                                        <input class="btn-check" id="customer_radio_btn"
+                                               @if(isset($item) && !$item->is_owner_place)
+                                                   checked="checked"
+                                               @endif
+                                               type="radio" name="owner" value="customer"/>
+                                        <!--end::Input-->
+                                        زبون
+                                    </label>
 
 
                                 </div>
