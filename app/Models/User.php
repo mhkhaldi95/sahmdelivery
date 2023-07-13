@@ -122,9 +122,8 @@ class User extends Authenticatable
         $col = @request('search')['regex'];
         $value = @request('search')['value'];
         if ($value) {
-            $q->when(true, function ($qq) use ($value) {
-                $qq->whereRaw("concat(name, ' ',phone) like '%" . $value . "%' ");
-            });
+            $q->where('name','like' , "%$value%")->orWhere('phone','like' , "%$value%");
+//            $q->whereRaw("concat(name, ' ',phone) like '%" . $value . "%' ");
         }
         return $q;
     }
