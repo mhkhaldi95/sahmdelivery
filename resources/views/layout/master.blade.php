@@ -87,8 +87,8 @@ License: For each use you must have a valid license purchased only from above li
 <script src="{{asset('')}}assets/plugins/global/plugins.bundle.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
 
-<script src="{{asset('')}}assets/js/scripts2.bundle.js"></script>
-{{--<script src="{{asset('')}}assets/js/scripts.bundle.js"></script>--}}
+{{--<script src="{{asset('')}}assets/js/scripts2.bundle.js"></script>--}}
+<script src="{{asset('')}}assets/js/scripts.bundle.js"></script>
 <!--end::Global Javascript Bundle-->
 <!--begin::Page Vendors Javascript(used by this page)-->
 <script src="{{asset('')}}assets/plugins/custom/fullcalendar/fullcalendar.bundle.js"></script>

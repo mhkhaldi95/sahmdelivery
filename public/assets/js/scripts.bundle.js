@@ -6154,7 +6154,7 @@ if (typeof module !== 'undefined' && typeof module.exports !== 'undefined') {
 var KTApp = function() {
     var initPageLoader =  function() {
         // CSS3 Transitions only after page load(.page-loading class added to body tag and remove with JS on page load)
-        KTUtil.removeClass(document.body, 'page-loading');
+        // KTUtil.removeClass(document.body, 'page-loading');
     }
 
     var initBootstrapTooltip = function(el, options) {
@@ -6472,6 +6472,17 @@ var KTApp = function() {
             });
         }
     }
+    var showPageLoading = function() {
+        document.body.classList.add('page-loading');
+        document.body.setAttribute('data-kt-app-page-loading', "on");
+    }
+
+    var hidePageLoading = function() {
+
+        // CSS3 Transitions only after page load(.page-loading or .app-page-loading class added to body tag and remove with JS on page load)
+        document.body.classList.remove('page-loading');
+        document.body.removeAttribute('data-kt-app-page-loading');
+    }
 
     return {
         init: function() {
@@ -6498,6 +6509,18 @@ var KTApp = function() {
             this.initTinySliders();
 
             this.initSmoothScroll();
+
+            this.showPageLoading();
+            this.hidePageLoading();
+
+        },
+
+        showPageLoading: function () {
+            showPageLoading();
+        },
+
+        hidePageLoading: function () {
+            hidePageLoading();
         },
 
         initPageLoader: function() {

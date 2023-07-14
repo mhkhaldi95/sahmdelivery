@@ -33,7 +33,7 @@ if (document.readyState === "loading") {
 
 // Init page loader
 window.addEventListener("load", function() {
-    KTApp.hidePageLoading();
+    // KTApp.hidePageLoading();
 });
 
 // Declare KTApp for Webpack support
