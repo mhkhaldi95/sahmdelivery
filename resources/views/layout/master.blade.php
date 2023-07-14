@@ -21,8 +21,16 @@ License: For each use you must have a valid license purchased only from above li
 <!--begin::Body-->
 <body id="kt_body"
       class="header-fixed header-tablet-and-mobile-fixed toolbar-enabled toolbar-fixed aside-enabled aside-fixed"
-      style="--kt-toolbar-height:55px;--kt-toolbar-height-tablet-and-mobile:55px">
+      style="--kt-toolbar-height:55px;--kt-toolbar-height-tablet-and-mobile:55px" data-kt-app-page-loading-enabled="true" data-kt-app-page-loading="on">
 <!--begin::Main-->
+<!--begin::Page loading(append to body)-->
+<div class="page-loader flex-column bg-dark bg-opacity-25" style="z-index: 10000">
+    <span class="spinner-border text-primary" role="status"></span>
+    <span class="text-gray-800 fs-6 fw-semibold mt-5">جاري التحميل ...</span>
+</div>
+
+
+<!--end::Page loading-->
 <!--begin::Root-->
 <div class="d-flex flex-column flex-root">
     <!--begin::Page-->
@@ -110,17 +118,7 @@ License: For each use you must have a valid license purchased only from above li
 
 <script>
 
-    const loadingEl = document.createElement("div");
-    document.body.prepend(loadingEl);
-    loadingEl.classList.add("page-loader");
-    loadingEl.classList.add("flex-column");
-    loadingEl.classList.add("bg-dark");
-    loadingEl.classList.add("bg-opacity-25");
-    loadingEl.innerHTML = `
-        <span class="spinner-border text-primary" role="status"></span>
-        <span class="text-gray-800 fs-6 fw-semibold mt-5">جاري التحميل ...</span>
-    `;
-    loadingEl.style.zIndex = "10000";
+
 
 
 
