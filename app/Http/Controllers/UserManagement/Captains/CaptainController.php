@@ -19,7 +19,8 @@ class CaptainController extends Controller
 
     public function index(Request $request){
         if($request->ajax()){
-            $items = User::query()->orderByDesc('id')->captains()->filter()->paginate(\request()->get('length', 10),'*','*',getPageNumber());
+            $length = \request()->get('length', 10);
+            $items = User::query()->orderByDesc('id')->captains()->filter()->paginate(\request()->get('length', 10),'*','*',getPageNumber($length));
             return datatable_response($items, null, CaptainResource::class);
         }
         $page_breadcrumbs = [

@@ -18,7 +18,8 @@ class CustomerController extends Controller
 
     public function index(Request $request){
         if($request->ajax()){
-            $items = User::query()->orderByDesc('id')->customers()->filter()->paginate(\request()->get('length', 10),'*','*',getPageNumber());
+            $length = \request()->get('length', 10);
+            $items = User::query()->orderByDesc('id')->customers()->filter()->paginate(\request()->get('length', 10),'*','*',getPageNumber($length));
             return datatable_response($items, null, CustomerResource::class);
         }
         $page_breadcrumbs = [

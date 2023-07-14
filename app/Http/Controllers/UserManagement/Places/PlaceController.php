@@ -18,7 +18,8 @@ class PlaceController extends Controller
 
     public function index(Request $request){
         if($request->ajax()){
-            $items = User::query()->orderByDesc('id')->places()->filter()->paginate(\request()->get('length', 10),'*','*',getPageNumber());
+            $length = \request()->get('length', 10);
+            $items = User::query()->orderByDesc('id')->places()->filter()->paginate(\request()->get('length', 10),'*','*',getPageNumber($length));
             return datatable_response($items, null, PlaceResource::class);
         }
         $page_breadcrumbs = [
