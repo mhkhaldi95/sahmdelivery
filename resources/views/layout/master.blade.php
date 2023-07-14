@@ -120,6 +120,7 @@ License: For each use you must have a valid license purchased only from above li
         <span class="spinner-border text-primary" role="status"></span>
         <span class="text-gray-800 fs-6 fw-semibold mt-5">جاري التحميل ...</span>
     `;
+    loadingEl.style.zIndex = "10000";
 
 
 

@@ -1037,6 +1037,8 @@
                     return;
                 }
 
+                KTApp.showPageLoading();
+
                 const owner = $('input[name="owner"]:checked').val();
                 const customer_id = $('#customer_select2').val()
                 const place_id = $('#place_select2').val()
@@ -1075,9 +1077,11 @@
                         $('#trip_create_btn').click()
                         toastr.success(response.data.msg)
                         enableButton('trip_create_submit')
+                        KTApp.hidePageLoading();
                     } else {
                         toastr.error(response.data.msg)
                         enableButton('trip_create_submit')
+                        KTApp.hidePageLoading();
                     }
                 }).catch(function (error) {
                     if (error.response && error.response.status === 401 && error.response.data.message === 'Unauthenticated.') {
