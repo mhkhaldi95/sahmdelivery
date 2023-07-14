@@ -87,7 +87,8 @@ License: For each use you must have a valid license purchased only from above li
 <script src="{{asset('')}}assets/plugins/global/plugins.bundle.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
 
-<script src="{{asset('')}}assets/js/scripts.bundle.js"></script>
+<script src="{{asset('')}}assets/js/scripts2.bundle.js"></script>
+{{--<script src="{{asset('')}}assets/js/scripts.bundle.js"></script>--}}
 <!--end::Global Javascript Bundle-->
 <!--begin::Page Vendors Javascript(used by this page)-->
 <script src="{{asset('')}}assets/plugins/custom/fullcalendar/fullcalendar.bundle.js"></script>
@@ -108,6 +109,19 @@ License: For each use you must have a valid license purchased only from above li
 <!--end::Javascript-->
 
 <script>
+
+    const loadingEl = document.createElement("div");
+    document.body.prepend(loadingEl);
+    loadingEl.classList.add("page-loader");
+    loadingEl.classList.add("flex-column");
+    loadingEl.classList.add("bg-dark");
+    loadingEl.classList.add("bg-opacity-25");
+    loadingEl.innerHTML = `
+        <span class="spinner-border text-primary" role="status"></span>
+        <span class="text-gray-800 fs-6 fw-semibold mt-5">جاري التحميل ...</span>
+    `;
+
+
 
     function disableButton(id_btn) {
         var button = document.getElementById(id_btn);
@@ -171,6 +185,14 @@ License: For each use you must have a valid license purchased only from above li
 
     $(document).ready(function () {
 
+
+        $(document).on('select2:open', '.form-select', function() {
+            if($(this)){
+                $('.select2-search__field').each(function (){
+                    $(this)[0].focus()
+                })
+            }
+        });
 
         function showNotification() {
             new Notification('طلبية جديد', {

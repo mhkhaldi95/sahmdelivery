@@ -273,17 +273,7 @@
             "use strict";
             // $.fn.modal.Constructor.prototype.enforceFocus = function() {};
             // $('#date_from').attr('disabled',true)
-            $(document).on('select2:open', '.form-select', function() {
-                if($(this)){
-                    $('.select2-search__field').each(function (){
-                        if($(this)[0])
-                            $(this)[0].focus()
-                    })
-                }
 
-
-
-            });
             function showTotalsDiv() {
                 var status = $('#status_filter');
                 var captain = $('#captain_filter');
@@ -320,8 +310,23 @@
                             className: 'row-selected'
                         },
                         ajax: {
-                            // url: "https://preview.keenthemes.com/api/datatables.php",
                             url: "{{route('trips.index')}}",
+                            error: function(xhr, error, thrown) {
+                                var status = xhr.status; // Get the status code
+                                if(status == 401 || status == 419){
+                                    KTApp.hidePageLoading();
+                                    window.location.reload()
+                                }
+
+                            },
+                        },
+                        preDrawCallback: function(settings) {
+                            KTApp.showPageLoading();
+                        },
+
+
+                        drawCallback: function(settings) {
+                            KTApp.hidePageLoading();
                         },
                         columns: [
                             {data: 'id'},
@@ -428,7 +433,7 @@
 
                     table = dt.$;
 
-                    dt.on('draw', function () {
+                    dt.on('draw', function (response) {
                         handleDeleteRows();
                         initToggleToolbar();
                         KTMenu.createInstances();
@@ -1250,6 +1255,7 @@
 
 
             $('#prev_day').click(function () {
+                KTApp.showPageLoading();
                 var date_to = null;
                 var date_from = null;
                 var id = $(this).data('id');
@@ -1282,9 +1288,10 @@
                             } else if (date_from) {
                                 $('#date_from').change();
                             }
-
+                            KTApp.hidePageLoading();
                         } else {
                             $('#prev_day').attr('disabled', true)
+                            KTApp.hidePageLoading();
                         }
 
                     }
@@ -1298,6 +1305,7 @@
             })
 
             $('#next_day').click(function () {
+                KTApp.showPageLoading();
                 var date_to = null;
                 var date_from = null;
                 var id = $(this).data('id');
@@ -1329,19 +1337,17 @@
 
 
 
-
-
-
-
                             if (date_from && date_to) {
                                 $('#date_from').change();
                                 $('#date_to').change();
                             } else if (date_from) {
                                 $('#date_from').change();
                             }
+                            KTApp.hidePageLoading();
                         } else {
                             $('#next_day').attr('disabled', true)
                             $('#prev_day').attr('disabled', false)
+                            KTApp.hidePageLoading();
                         }
 
                     }
