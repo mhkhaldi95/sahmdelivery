@@ -499,9 +499,11 @@
 
 
                     $('#submit').click(function () {
+
                         disableButton('submit')
                         var amount = $('#amount').val()
                         if (parseInt(amount) && id) {
+                            KTApp.showPageLoading();
                             axios.post('{{route('trips.update_price')}}', {
                                 'id': id,
                                 'amount': amount
@@ -519,6 +521,7 @@
                                 } else if (error.response && error.response.status === 419) {
                                     window.location.reload();
                                 } else {
+                                    KTApp.hidePageLoading();
                                     enableButton('submit')
                                 }
                             });
@@ -545,8 +548,10 @@
 
                     $('#submit_from').click(function () {
                         disableButton('submit_from')
+
                         from = $('#from').val()
                         if (from && id) {
+                            KTApp.showPageLoading();
                             axios.post('{{route('trips.update_from')}}', {
                                 'id': id,
                                 'from': from
@@ -563,6 +568,7 @@
                                     window.location.reload();
                                 } else {
                                     enableButton('submit_from')
+                                    KTApp.hidePageLoading();
                                 }
                             });
                         } else {
@@ -588,15 +594,16 @@
 
                     $('#submit_to').click(function () {
                         disableButton('submit_to')
-
                         to = $('#to').val()
                         if (to && id) {
+                            KTApp.showPageLoading();
                             axios.post('{{route('trips.update_to')}}', {'id': id, 'to': to}).then(function (response) {
                                 dt.draw();
                                 id = null;
                                 to = null
                                 $('#update_to_modal').modal('hide')
                                 enableButton('submit_to')
+
                             }).catch(function (error) {
                                 if (error.response && error.response.status === 401 && error.response.data.message === 'Unauthenticated.') {
                                     window.location.reload();
@@ -604,6 +611,7 @@
                                     window.location.reload();
                                 } else {
                                     enableButton('submit_to')
+                                    KTApp.hidePageLoading();
                                 }
                             });
                         } else {
@@ -695,6 +703,7 @@
                                             if (element.checked == true)
                                                 ids.push(parseInt($(element).val()));
                                         });
+                                        KTApp.showPageLoading();
                                         var completed_at = $('#date').val()
                                         // delete row data from server and re-draw datatable
                                         axios.post('{{route('trips.complete_selected')}}', {
@@ -774,6 +783,8 @@
                                             if (element.checked == true)
                                                 ids.push(parseInt($(element).val()));
                                         });
+                                        KTApp.showPageLoading();
+
                                         // delete row data from server and re-draw datatable
                                         axios.post('{{route('trips.cancel_selected')}}', {'ids': ids})
                                             .then(function (response) {
@@ -1077,7 +1088,7 @@
                         $('#trip_create_btn').click()
                         toastr.success(response.data.msg)
                         enableButton('trip_create_submit')
-                        KTApp.hidePageLoading();
+                        // KTApp.hidePageLoading();
                     } else {
                         toastr.error(response.data.msg)
                         enableButton('trip_create_submit')
@@ -1292,7 +1303,7 @@
                             } else if (date_from) {
                                 $('#date_from').change();
                             }
-                            KTApp.hidePageLoading();
+                            // KTApp.hidePageLoading();
                         } else {
                             $('#prev_day').attr('disabled', true)
                             KTApp.hidePageLoading();
@@ -1347,7 +1358,7 @@
                             } else if (date_from) {
                                 $('#date_from').change();
                             }
-                            KTApp.hidePageLoading();
+                            // KTApp.hidePageLoading();
                         } else {
                             $('#next_day').attr('disabled', true)
                             $('#prev_day').attr('disabled', false)
