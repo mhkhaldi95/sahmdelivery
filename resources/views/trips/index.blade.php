@@ -319,6 +319,7 @@
                                 }
 
                             },
+
                         },
                         preDrawCallback: function(settings) {
                             KTApp.showPageLoading();
@@ -714,10 +715,12 @@
                                             // enableButton('complete_selected')
 
                                         }).catch(function (error) {
-                                            if (error.response && error.response.status === 401 && error.response.data.message === 'Unauthenticated.') {
+                                            if (error.response && (error.response.status === 401  || error.response.status === 419)) {
                                                 window.location.reload();
-                                            } else if (error.response && error.response.status === 419) {
-                                                window.location.reload();
+                                            } else if (error.response && error.response.status === 422) {
+                                                KTApp.hidePageLoading();
+                                                toastr.warning('لم تتم عملية الاكمال بنجاح');
+                                                toastr.error(error.response.data.message);
                                             }
                                         });
                                     });

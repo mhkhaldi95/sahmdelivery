@@ -223,18 +223,30 @@ class TripController extends Controller
     public function completeSelected(Request $request)
     {
         $ids = $request->get('ids');
+        $captain_id = $request->get('captain_id',null);
         try {
             DB::beginTransaction();
             $constants = Constant::query()->get();
             $ratio = getConstantByKey($constants,'ratio')->value;
             $fix_amount = getConstantByKey($constants,'fix_amount')->value;
+            $start_end_time = StartEndTime::query()->orderByDesc('created_at')->first();
+            $exist_trips_not_selected = Trip::query()
+                ->where('created_at','>=',$start_end_time->start_time)
+                ->where('status',Enum::PENDING)
+                ->where('captain_id',$captain_id)
+                ->whereNotIn('id',$ids)
+                ->first();
+            if($exist_trips_not_selected){
+                return $this->response_json(false, StatusCodes::VALIDATION_ERROR, 'يجب عليك تحديد كل الرحلات  الغير مكتملة لهذا الكابتن لاتمام العملية بنجاح');
 
-           $item =  CompleteTripDaily::query()->create([
+            }
+
+            $item =  CompleteTripDaily::query()->create([
                'completed_at' =>now() ,
                'ids_trips' => $ids,
                'ratio' => $ratio,
                'fix_amount' => $fix_amount,
-               'captain_id' => $request->get('captain_id',null)
+               'captain_id' => $captain_id
             ]);
             $result = Trip::query()->pending()->closed()->whereIn('id', $ids)->update([
                 'status' => Enum::COMPLETED,
