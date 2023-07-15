@@ -65,26 +65,25 @@
             <div class="card mt-1">
                 <div class="card-body">
                     <div class="row g-5 g-xl-8">
-                        <div class="col-xl-6">
+                        <div class="col-xl-3">
                             <!--begin::Statistics Widget 5-->
-                            <a href="#" class="card bg-primary hoverable card-xl-stretch mb-xl-8">
+                            <a href="#" class="card bg-info hoverable card-xl-stretch mb-xl-8">
                                 <!--begin::Body-->
                                 <div class="card-body">
                                     <!--begin::Svg Icon | path: icons/duotune/general/gen008.svg-->
                                     <span class="svg-icon svg-icon-white svg-icon-3x ms-n1">
                             </span>
                                     <!--end::Svg Icon-->
-                                    <div class="text-white fw-bolder fs-2 mb-2 mt-5"> الرحلات</div>
-                                    <div class="fw-bold text-white" style="font-size: 16px;">عدد الرحلات الاجمالي :
-                                        {{$trip_count}}
 
+                                    <div class="fw-bold text-white fs-2">عدد الرحلات الاجمالي :
+                                        {{$trip_count}}
                                     </div>
                                 </div>
                                 <!--end::Body-->
                             </a>
                             <!--end::Statistics Widget 5-->
                         </div>
-                        <div class="col-xl-6">
+                        <div class="col-xl-3">
                             <!--begin::Statistics Widget 5-->
                             <a href="#" class="card bg-success hoverable card-xl-stretch mb-xl-8">
                                 <!--begin::Body-->
@@ -92,9 +91,42 @@
                                     <!--begin::Svg Icon | path: icons/duotune/general/gen008.svg-->
                                     <span class="svg-icon svg-icon-white svg-icon-3x ms-n1"></span>
                                     <!--end::Svg Icon-->
-                                    <div class="text-white fw-bolder fs-2 mb-2 mt-5"> الرحلات المكتملة</div>
-                                    <div class="fw-bold text-white" style="font-size: 16px;">عدد الرحلات المكتملة :
+                                    <div class="fw-bold text-white fs-2"  style="font-size: 16px;">عدد الرحلات المكتملة :
                                         {{$complete_trip_count}}
+
+                                    </div>
+                                </div>
+                                <!--end::Body-->
+                            </a>
+                            <!--end::Statistics Widget 5-->
+                        </div>
+                        <div class="col-xl-3">
+                            <!--begin::Statistics Widget 5-->
+                            <a href="#" class="card bg-primary hoverable card-xl-stretch mb-xl-8">
+                                <!--begin::Body-->
+                                <div class="card-body">
+                                    <!--begin::Svg Icon | path: icons/duotune/general/gen008.svg-->
+                                    <span class="svg-icon svg-icon-white svg-icon-3x ms-n1"></span>
+                                    <!--end::Svg Icon-->
+                                    <div class="fw-bold text-white fs-2"  style="font-size: 16px;">عدد الرحلات  الغير المكتملة :
+                                        {{$pending_trip_count}}
+
+                                    </div>
+                                </div>
+                                <!--end::Body-->
+                            </a>
+                            <!--end::Statistics Widget 5-->
+                        </div>
+                        <div class="col-xl-3">
+                            <!--begin::Statistics Widget 5-->
+                            <a href="#" class="card bg-danger hoverable card-xl-stretch mb-xl-8">
+                                <!--begin::Body-->
+                                <div class="card-body">
+                                    <!--begin::Svg Icon | path: icons/duotune/general/gen008.svg-->
+                                    <span class="svg-icon svg-icon-white svg-icon-3x ms-n1"></span>
+                                    <!--end::Svg Icon-->
+                                    <div class="fw-bold text-white fs-2"  style="font-size: 16px;">عدد الرحلات   الملغية :
+                                        {{$canceled_trip_count}}
 
                                     </div>
                                 </div>

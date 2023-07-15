@@ -86,6 +86,9 @@ class Trip extends Model
     public function scopePending($q){
         $q->where('status',Enum::PENDING);
     }
+    public function scopeCancel($q){
+        $q->where('status',Enum::CANCELED);
+    }
 
     public function scopePlaceTrips($q){
         $q->where('owner_id',auth()->user()->id);
