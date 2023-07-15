@@ -26,6 +26,7 @@ class TripController extends Controller
             if(\request()->get('length') && \request()->get('length') == -1){
                 $length = Trip::query()->count();
             }
+
             $items = Trip::query()->with(['captain','owner'])->orderBy(getColAndDirForOrderBy()['col'],getColAndDirForOrderBy()['dir'])->filter()
                 ->paginate($length,'*','*',getPageNumber($length));
             return datatable_response($items, null, TripResource::class);

@@ -301,8 +301,8 @@
                         processing: true,
                         serverSide: true,
                         'pagingType': 'full_numbers',
-                        'lengthMenu': [[50, 70, 100, 200, -1], [50, 70, 100, 200, 'الكل']],
-                        order: [6, 'desc'],
+                        'lengthMenu': [[5, 70, 100, 200, -1], [5, 70, 100, 200, 'الكل']],
+                        order: [],
                         stateSave: false,
                         select: {
                             style: 'multi',
