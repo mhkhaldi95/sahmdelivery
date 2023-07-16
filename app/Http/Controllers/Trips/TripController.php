@@ -142,9 +142,9 @@ class TripController extends Controller
               $data['is_owner_place'] = 0;
               $data['payment_type'] = Enum::IMMEDIATELY;
           }
-          if($data['amount'] > 0){
+          if($data['amount'] >= 0){
               $data['customer_paid'] = 1;
-          }elseif($data['amount'] == 0){
+          }else{
               $data['amount'] = null;
           }
           DB::beginTransaction();
@@ -182,9 +182,9 @@ class TripController extends Controller
                   $customer_data['role'] = Enum::CUSTOMER;
               }
           }
-          if($data['amount'] > 0){
+          if($data['amount'] >= 0){
               $data['customer_paid'] = 1;
-          }elseif($data['amount'] == 0){
+          }else{
               $data['amount'] = null;
           }
 
@@ -305,7 +305,7 @@ class TripController extends Controller
         $id = $request->get('id');
         $amount = $request->get('amount');
         try {
-            if($id && ($amount || $amount >=0)){
+            if($id && ($amount >=0)){
                 $result = Trip::query()->findOrFail($id)->update([
                     'amount' => $amount
                 ]);

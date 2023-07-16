@@ -328,6 +328,9 @@
 
                         drawCallback: function(settings) {
                             KTApp.hidePageLoading();
+                            $('#all_checked').prop('checked', false);
+
+
                         },
                         columns: [
                             {data: 'id'},
@@ -391,12 +394,16 @@
                                 .column(TotalAmountIndex, {search: 'applied'})
                                 .data()
                                 .reduce(function (accumulator, currentValue) {
-                                    var value = parseInt($(currentValue).text(), 10);
-                                    if (!isNaN(value)) {
-                                        return accumulator + value;
-                                    } else {
-                                        return accumulator;
+                                    var input = $(currentValue).closest('div').find('input');
+                                    if(input){
+                                        var value = parseInt(input.val(), 10);
+                                        if (!isNaN(value)) {
+                                            return accumulator + value;
+                                        } else {
+                                            return accumulator;
+                                        }
                                     }
+
                                 }, 0);
 
                             var TotalAmountAfterDiscountForOffice = totalAmount ? ((totalAmount * ratio) + parseFloat(fix_amount)) : 0;
@@ -492,10 +499,8 @@
                     var from = null;
                     var to = null;
                     $(document).on('dblclick', '.amount', function (e) {
-                        amount = $(this).data('amount')
-                        id = $(this).data('id')
-                        $('#amount').val(amount)
-                        $('#update_amount_modal').modal('show')
+                        $(this).removeAttr("readonly");
+                        $(this).closest('div').find('.save-price').removeClass('d-none');
                     });
 
 
@@ -514,6 +519,40 @@
                                 amount = null
                                 $('#update_amount_modal').modal('hide')
                                 enableButton('submit')
+
+                            }).catch(function (error) {
+
+                                if (error.response && error.response.status === 401 && error.response.data.message === 'Unauthenticated.') {
+                                    window.location.reload();
+                                } else if (error.response && error.response.status === 419) {
+                                    window.location.reload();
+                                } else {
+                                    KTApp.hidePageLoading();
+                                    enableButton('submit')
+                                }
+                            });
+                        } else {
+                            alert("السعر مطلوب")
+                            enableButton('submit')
+                        }
+
+                    })
+                    $(document).on('click', '.save-price', function (e) {
+                        var input = $(this).closest('div').find('.amount');
+                        var amount =  input.val();
+                        var id = $(this).data('id')
+                        if ((parseInt(amount) >=0 || amount =='') && id) {
+                            KTApp.showPageLoading();
+                            axios.post('{{route('trips.update_price')}}', {
+                                'id': id,
+                                'amount': amount
+                            }).then(function (response) {
+                                dt.draw();
+                                id = null;
+                                amount = null
+                                $(this).addClass('d-none');
+                                $(this).closest('div').find('input').attr("readonly", "readonly");
+
 
                             }).catch(function (error) {
 
@@ -719,7 +758,6 @@
                                                 window.location.reload();
                                             } else if (error.response && error.response.status === 422) {
                                                 KTApp.hidePageLoading();
-                                                toastr.warning('لم تتم عملية الاكمال بنجاح');
                                                 toastr.error(error.response.data.message);
                                             }
                                         });

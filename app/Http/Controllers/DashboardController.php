@@ -17,7 +17,7 @@ class DashboardController extends Controller
         $start_end_time = StartEndTime::query()->orderByDesc('created_at')->first();
         $recent_trips = [];
         $captains_most_trips_for_day = [];
-        if(is_null($start_end_time->end_time)){
+        if($start_end_time && is_null($start_end_time->end_time)){
             $captains_most_trips_for_day = Trip::query()
                 ->with(['captain'])
                 ->select('captain_id')
