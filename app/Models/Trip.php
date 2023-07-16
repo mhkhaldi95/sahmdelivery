@@ -15,6 +15,9 @@ class Trip extends Model
     public function captain(){
         return $this->belongsTo(User::class,'captain_id','id');
     }
+    public function completeTripDaily(){
+        return $this->belongsTo(CompleteTripDaily::class,'complete_trip_daily_id','id');
+    }
     public function owner(){
         return $this->belongsTo(User::class,'owner_id','id');
     }

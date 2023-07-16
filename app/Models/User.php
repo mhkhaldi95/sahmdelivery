@@ -98,9 +98,9 @@ class User extends Authenticatable
 
     public static function captainReadyForTrips($item = null)
     {
-        $item = StartEndTime::query()->orderByDesc('created_at')->first();
+        $start_end_time = StartEndTime::query()->orderByDesc('created_at')->first();
         $captain_ids = Trip::query()
-            ->where('created_at', '<', $item->start_time)
+            ->where('created_at', '<', $start_end_time->start_time)
             ->where('status', Enum::PENDING)
             ->pluck('captain_id')
             ->toArray();
