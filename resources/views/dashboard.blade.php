@@ -124,6 +124,7 @@
                             <div class="card-header border-0 pt-5">
                                 <h3 class="card-title align-items-start flex-column">
                                     <span class="card-label fw-bolder text-dark">  أكثر الكباتن حصولا على الطلبات لهذا اليوم</span>
+                                    <span class="card-label fw-bolder mt-2 fs-7 text-success"> ({{count($captains_most_trips_for_day) }}) كابتن نشطون اليوم</span>
                                 </h3>
                             </div>
                             <!--end::Header-->
