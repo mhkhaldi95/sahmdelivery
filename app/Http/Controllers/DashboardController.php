@@ -31,7 +31,7 @@ class DashboardController extends Controller
                 ->with(['captain','owner'])
                  ->where('created_at','>=',$start_end_time->start_time)
                 ->orderByDesc('created_at')
-                ->take(15)
+                ->take(10)
                 ->get();
         }
 

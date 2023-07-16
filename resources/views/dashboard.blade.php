@@ -114,44 +114,50 @@
             <div class="row g-5 g-xl-8">
                 <!--begin::Col-->
                 <div class="col-xl-4">
-                    <!--begin::List Widget 1-->
-                    <div class="card card-xl-stretch mb-xl-8">
-                        <!--begin::Header-->
-                        <div class="card-header border-0 pt-5">
-                            <h3 class="card-title align-items-start flex-column">
-                                <span class="card-label fw-bolder text-dark">  أكثر الكباتن حصولا على الطلبات لهذا اليوم</span>
-                            </h3>
-                        </div>
-                        <!--end::Header-->
-                        <!--begin::Body-->
-                        <div class="card-body pt-5">
-                            @if(count($captains_most_trips_for_day) > 0)
-                                @foreach($captains_most_trips_for_day as $captains_trips)
-                                    <div class="row">
+                    <div class="scroll-y "
+                         data-kt-scroll-activate="{default: true, lg: true,sm:true}"
+                         data-kt-scroll-dependencies="#kt_modal_add_customer_header" style="max-height: 700px;"
+                         data-kt-scroll-offset="300px">
+                        <!--begin::List Widget 1-->
+                        <div class="card card-xl-stretch mb-xl-8">
+                            <!--begin::Header-->
+                            <div class="card-header border-0 pt-5">
+                                <h3 class="card-title align-items-start flex-column">
+                                    <span class="card-label fw-bolder text-dark">  أكثر الكباتن حصولا على الطلبات لهذا اليوم</span>
+                                </h3>
+                            </div>
+                            <!--end::Header-->
+                            <!--begin::Body-->
+                            <div class="card-body pt-5">
+                                @if(count($captains_most_trips_for_day) > 0)
+                                    @foreach($captains_most_trips_for_day as $captains_trips)
+                                        <div class="row">
 
-                                        <div class="col-2">
-                                            <div class="symbol symbol-50px me-5">
+                                            <div class="col-2">
+                                                <div class="symbol symbol-50px me-5">
                                                             <span class="symbol-label ">
                                                                <img  src=" {{$captains_trips->captain->photo_path}}" width="50" height="50"/>
                                                             </span>
+                                                </div>
                                             </div>
-                                        </div>
-                                        <div class="col-5">
-                                            <a href="#" class="text-dark text-hover-primary fs-6 fw-bolder"></a>
-                                            <span class="text-muted fw-bold">{{$captains_trips->captain->name}}</span>
-                                        </div>
-                                        <div class="col-5">
-                                            <a href="#" class="text-danger text-hover-primary fs-6 fw-bolder"></a>
-                                            <span class="text-muted fw-bold">({{$captains_trips->trip_count}})</span>
-                                        </div>
+                                            <div class="col-5">
+                                                <a href="#" class="text-dark text-hover-primary fs-6 fw-bolder"></a>
+                                                <span class="text-muted fw-bold">{{$captains_trips->captain->name}}</span>
+                                            </div>
+                                            <div class="col-5">
+                                                <a href="#" class="text-danger text-hover-primary fs-6 fw-bolder"></a>
+                                                <span class="text-muted fw-bold">({{$captains_trips->trip_count}})</span>
+                                            </div>
 
-                                    </div>
-                                @endforeach
-                            @endif
+                                        </div>
+                                    @endforeach
+                                @endif
+                            </div>
+                            <!--end::Body-->
                         </div>
-                        <!--end::Body-->
+                        <!--end::List Widget 1-->
                     </div>
-                    <!--end::List Widget 1-->
+
                 </div>
                 <!--end::Col-->
                 <!--begin::Col-->
