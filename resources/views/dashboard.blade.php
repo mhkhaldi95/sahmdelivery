@@ -193,11 +193,11 @@
                                             <tbody class="fw-bold text-gray-600">
                                             @foreach($recent_trips as $trip)
                                                 <tr>
-                                                    <td>{{$trip->owner->name}}</td>
+                                                    <td>{{@$trip->owner->name}}</td>
                                                     <td>{{$trip->captain->name}}</td>
                                                     <td>{{$trip->from}}</td>
                                                     <td>{{$trip->to}}</td>
-                                                    <td>{{$trip->price}}</td>
+                                                    <td>{{$trip->amount}}</td>
                                                     <td>{{getStatusStr($trip->status)}}</td>
                                                 </tr>
                                             @endforeach

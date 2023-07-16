@@ -28,10 +28,10 @@ class DashboardController extends Controller
                 ->get();
 
             $recent_trips = Trip::query()
-                ->with(['captain'])
+                ->with(['captain','owner'])
                  ->where('created_at','>=',$start_end_time->start_time)
                 ->orderByDesc('created_at')
-                ->take(10)
+                ->take(15)
                 ->get();
         }
 
