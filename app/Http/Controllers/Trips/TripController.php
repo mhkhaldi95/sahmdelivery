@@ -8,6 +8,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Trips\TripRequest;
 use App\Http\Requests\Trips\TripRequestAjax;
 use App\Http\Resources\Trips\TripResource;
+use App\Http\Services\TCPDFService;
 use App\Models\CompleteTripDaily;
 use App\Models\Constant;
 use App\Models\StartEndTime;
@@ -424,27 +425,25 @@ class TripController extends Controller
         }
 
         // create new PDF document
-        $pdf = new \TCPDF(PDF_PAGE_ORIENTATION, PDF_UNIT, PDF_PAGE_FORMAT, true, 'UTF-8', false);
+        $pdf = new TCPDFService(PDF_PAGE_ORIENTATION, PDF_UNIT, PDF_PAGE_FORMAT, true, 'UTF-8', false);
 
 // set document information
-//        $pdf->SetCreator(PDF_CREATOR);
-//        $pdf->SetAuthor('Nicola Asuni');
-//        $pdf->SetTitle('TCPDF Example 018');
-//        $pdf->SetSubject('TCPDF Tutorial');
-//        $pdf->SetKeywords('TCPDF, PDF, example, test, guide');
 
+
+        $custom_logo_path = public_path('assets/media/logo.jpg');
+        $pdf->SetHeaderData($custom_logo_path, 40, null, null);
 
 // set header and footer fonts
-//        $pdf->setHeaderFont(array(PDF_FONT_NAME_MAIN, '', PDF_FONT_SIZE_MAIN));
-//        $pdf->setFooterFont(array(PDF_FONT_NAME_DATA, '', PDF_FONT_SIZE_DATA));
+        $pdf->setHeaderFont(array(PDF_FONT_NAME_MAIN, '', PDF_FONT_SIZE_MAIN));
+        $pdf->setFooterFont(array(PDF_FONT_NAME_DATA, '', PDF_FONT_SIZE_DATA));
 
 // set default monospaced font
         $pdf->SetDefaultMonospacedFont(PDF_FONT_MONOSPACED);
 
 // set margins
-//        $pdf->SetMargins(PDF_MARGIN_LEFT, PDF_MARGIN_TOP, PDF_MARGIN_RIGHT);
-//        $pdf->SetHeaderMargin(PDF_MARGIN_HEADER);
-//        $pdf->SetFooterMargin(PDF_MARGIN_FOOTER);
+        $pdf->SetMargins(PDF_MARGIN_LEFT, PDF_MARGIN_TOP, PDF_MARGIN_RIGHT);
+        $pdf->SetHeaderMargin(PDF_MARGIN_HEADER);
+        $pdf->SetFooterMargin(PDF_MARGIN_FOOTER);
 
 // set auto page breaks
         $pdf->SetAutoPageBreak(TRUE, PDF_MARGIN_BOTTOM);
@@ -489,7 +488,7 @@ class TripController extends Controller
 //        $htmlcontent = '<h4>المكان / الزبون : ' . $owner_name . '</h4>
         $htmlcontent = '
 
-<table  style=" border-collapse: collapse; width: 100%;" cellpadding="5" >
+<table  style=" border-collapse: collapse; width: 100%;" cellpadding="5"  >
    <tbody>
   <tr>
     <th style="  border: 1px solid #ddd; ;width: 45px">#</th>
