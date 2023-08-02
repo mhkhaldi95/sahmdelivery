@@ -495,7 +495,15 @@ class TripController extends Controller
   </tr>';
         foreach ($trips as $index => $trip) {
             $captain_name = @$trip->captain->name;
-            $backgroundColor = $index % 2 == 0 ? '#f2f2f2' : '';
+            if($trip->status == Enum::COMPLETED){
+                $backgroundColor = '#f9eec2;';
+            }elseif ($trip->status == Enum::PENDING && (!is_null($trip->amount))){
+                $backgroundColor = '#d0ebfb;';
+            }elseif ($trip->status == Enum::PENDING && (is_null($trip->amount))){
+                $backgroundColor = '#f9eec2;';
+            }elseif ($trip->status == Enum::CANCELED){
+                $backgroundColor = '#fdcfdd;';
+            }
             $htmlcontent .= '
  <tr style="background-color: ' . $backgroundColor . '; padding: 8px;">
   <td style="border: 1px solid #ddd; padding: 8px;width: 45px">' . ($index+1) . '</td>
