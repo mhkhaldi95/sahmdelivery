@@ -480,7 +480,7 @@ class TripController extends Controller
 
 // set font
 //        $pdf->SetFont('Aldhabi', '', 13);
-        $pdf->SetFont($fontname, '', 13,true);
+        $pdf->SetFont($fontname, '', 10,true);
 
 // print newline
         $pdf->Ln();
@@ -489,16 +489,16 @@ class TripController extends Controller
 //        $htmlcontent = '<h4>المكان / الزبون : ' . $owner_name . '</h4>
         $htmlcontent = '
 
-<table  style=" border-collapse: collapse; width: 100%;">
+<table  style=" border-collapse: collapse; width: 100%;" cellpadding="5" >
    <tbody>
   <tr>
-    <th style="  border: 1px solid #ddd; padding: 8px;width: 45px">#</th>
-    <th style="  border: 1px solid #ddd; padding: 8px;">صاحب الطلب</th>
-    <th style="  border: 1px solid #ddd; padding: 8px;">الكابتن</th>
-    <th style="  border: 1px solid #ddd; padding: 8px;">من</th>
-    <th style="  border: 1px solid #ddd; padding: 8px;">الى</th>
-    <th style="  border: 1px solid #ddd; padding: 8px;;width: 50px">السعر</th>
-    <th style="  border: 1px solid #ddd; padding: 8px;width: 174px">التاريخ</th>
+    <th style="  border: 1px solid #ddd; ;width: 45px">#</th>
+    <th style="  border: 1px solid #ddd; ;">صاحب الطلب</th>
+    <th style="  border: 1px solid #ddd; ;">الكابتن</th>
+    <th style="  border: 1px solid #ddd; ;">من</th>
+    <th style="  border: 1px solid #ddd; ;">الى</th>
+    <th style="  border: 1px solid #ddd; ;;width: 50px">السعر</th>
+    <th style="  border: 1px solid #ddd; ;width: 174px">التاريخ</th>
   </tr>';
         foreach ($trips as $index => $trip) {
             $captain_name = @$trip->captain->name;
@@ -513,13 +513,13 @@ class TripController extends Controller
             }
             $htmlcontent .= '
  <tr style="background-color: ' . $backgroundColor . '; ">
-  <td style="border: 1px solid #ddd; padding: 8px;width: 45px">' . ($index+1) . '</td>
-  <td style="border: 1px solid #ddd; padding: 8px;margin: 100px">' . @$trip->owner->name . '</td>
-  <td style="border: 1px solid #ddd; padding: 8px;">' . $captain_name . '</td>
-  <td style="  border: 1px solid #ddd; padding: 8px;">' . $trip->from . '</td>
-  <td style="  border: 1px solid #ddd; padding: 8px;">' . $trip->to . '</td>
-  <td style="  border: 1px solid #ddd; padding: 8px;width: 50px">' . $trip->amount . '</td>
-  <td style="  border: 1px solid #ddd; padding: 8px;width: 174px">' . $trip->created_at . '</td>
+  <td style="border: 1px solid #ddd; width: 45px">' . ($index+1) . '</td>
+  <td style="border: 1px solid #ddd; margin: 100px">' . @$trip->owner->name . '</td>
+  <td style="border: 1px solid #ddd; ">' . $captain_name . '</td>
+  <td style="  border: 1px solid #ddd; ">' . $trip->from . '</td>
+  <td style="  border: 1px solid #ddd; ;">' . $trip->to . '</td>
+  <td style="  border: 1px solid #ddd; ;width: 50px">' . $trip->amount . '</td>
+  <td style="  border: 1px solid #ddd; ;width: 174px">' . $trip->created_at . '</td>
  </tr>';
         }
 
