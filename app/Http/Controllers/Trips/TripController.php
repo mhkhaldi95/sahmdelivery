@@ -485,7 +485,7 @@ class TripController extends Controller
 <table  style=" border-collapse: collapse; width: 100%;">
    <tbody>
   <tr>
-    <th style="  border: 1px solid #ddd; padding: 8px;">#</th>
+    <th style="  border: 1px solid #ddd; padding: 8px;width: 45px">#</th>
     <th style="  border: 1px solid #ddd; padding: 8px;">صاحب الطلب</th>
     <th style="  border: 1px solid #ddd; padding: 8px;">الكابتن</th>
     <th style="  border: 1px solid #ddd; padding: 8px;">من</th>
@@ -498,7 +498,7 @@ class TripController extends Controller
             $backgroundColor = $index % 2 == 0 ? '#f2f2f2' : '';
             $htmlcontent .= '
  <tr style="background-color: ' . $backgroundColor . '; padding: 8px;">
-  <td style="border: 1px solid #ddd; padding: 8px;">' . ($index+1) . '</td>
+  <td style="border: 1px solid #ddd; padding: 8px;width: 45px">' . ($index+1) . '</td>
   <td style="border: 1px solid #ddd; padding: 8px;">' . @$trip->owner->name . '</td>
   <td style="border: 1px solid #ddd; padding: 8px;">' . $captain_name . '</td>
   <td style="  border: 1px solid #ddd; padding: 8px;">' . $trip->from . '</td>
