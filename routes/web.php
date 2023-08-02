@@ -133,6 +133,7 @@ Route::group(['middleware' => ['auth:sanctum', 'admin']], function () {
         Route::post('update-from', [TripController::class, 'updateFrom'])->name('trips.update_from');
         Route::post('update-to', [TripController::class, 'updateTo'])->name('trips.update_to');
         Route::get('get-available-captains', [TripController::class, 'getAvailableCaptains'])->name('trips.get-available-captains');
+        Route::get('print', [TripController::class, 'print'])->name('trips.print');
     });
     Route::group(['prefix' => 'constants'], function () {
         Route::get('/create', [ConstantController::class, 'create'])->name('constants.create');
@@ -153,3 +154,4 @@ Route::group(['prefix' => 'places', 'middleware' => 'locale'], function () {
         });
     });
 });
+

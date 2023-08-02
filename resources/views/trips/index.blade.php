@@ -20,6 +20,7 @@
                     </div>
                     <!--begin::Card toolbar-->
                     <div class="card-toolbar">
+
                         <!--begin::Toolbar-->
                         <div class="d-flex justify-content-end" data-kt-customer-table-toolbar="base">
 
@@ -31,6 +32,8 @@
                         </div>
                         <!--end::Toolbar-->
                         <!--begin::Group actions-->
+
+
                         <div class="d-flex justify-content-end align-items-center d-none"
                              data-kt-customer-table-toolbar="selected">
                             <div class="fw-bolder me-5">
@@ -41,6 +44,7 @@
                                     id="delete_selected">الغاء المحدد
                             </button>
                         </div>
+
                         <!--end::Group actions-->
                         <!--begin::Group actions-->
                         {{--                        <div class="d-flex justify-content-end align-items-center d-none"--}}
@@ -52,6 +56,9 @@
                         {{--                        </div>--}}
                         <!--end::Group actions-->
                         <!--begin::Group actions-->
+
+
+
                         <div class="d-flex justify-content-end align-items-center d-none"
                              data-kt-customer-table-toolbar="complete_selected">
                             <div class="fw-bolder me-5">
@@ -63,6 +70,17 @@
                             </button>
                         </div>
                         <!--end::Group actions-->
+
+                        <div class="d-flex justify-content-end align-items-center"
+                             data-kt-customer-table-toolbar="print_selected">
+                            <div class="fw-bolder me-5">
+
+                            </div>
+                            <button type="button" class="btn btn-primary"
+                                    data-kt-customer-table-select="print_selected"
+                                    id="print_selected">طباعة
+                            </button>
+                        </div>
                     </div>
                     <!--end::Card toolbar-->
                     <!--begin::Advance form-->
@@ -71,14 +89,25 @@
                         <div class="separator separator-dashed mt-0 mb-0"></div>
                         <!--end::Separator-->
                         <div class="row g-8 mb-3 mt-1" id="totals">
-                            <div class="col-lg-4">
+                            <div class="col-lg-3">
                                 <div id="totalAmount"></div>
                             </div>
-                            <div class="col-lg-4">
+                            <div class="col-lg-3">
                                 <div id="totalAmountAfterDiscount"></div>
                             </div>
-                            <div class="col-lg-4">
+                            <div class="col-lg-3">
                                 <div id="totalAmountAfterDiscountForOffice"></div>
+                            </div>
+                            <div class="col-lg-3">
+                                <label class="form-label fs-5 fw-bold ">خدمات  </label>
+                                <!--begin::Input-->
+                                <input type="number" name="fix_amount" id="services" style="text-align: right;"
+                                       class="form-control form-control-solid mb-3 mb-lg-0"
+                                       placeholder="المبلغ الثابت"
+                                       step="0.01"
+                                       min="0.00"
+                                       max="100.00"
+                                       value="{{getConstantByKey($constants,'fix_amount')->value}}"/>
                             </div>
                         </div>
                         <!--begin::Separator-->
@@ -379,7 +408,10 @@
                         footerCallback: function (row, data, start, end, display) {
                             var TotalAmountIndex = 5;
                             var ratio = $('#ratio').val();
-                            var fix_amount = $('#fix_amount').val();
+                            var fix_amount = $('#services').val() // from input
+                            if(!fix_amount){
+                               fix_amount = $('#fix_amount').val(); // from database
+                            }
                             var TotalAmountAfterDiscount = 0
 
                             var api = this.api();
@@ -677,6 +709,7 @@
                     // Select elements
                     const deleteSelected = document.querySelector('#delete_selected');
                     const completeSelected = document.querySelector('#complete_selected');
+                    const printSelected = document.querySelector('#print_selected');
                     // const closedSelected = document.querySelector('#closed_selected');
                     // Toggle delete selected toolbar
                     checkboxes.forEach(c => {
@@ -689,6 +722,40 @@
                     });
 
                     // Deleted selected rows
+                    printSelected.addEventListener('click', function () {
+
+                        var status_filter = $('#status_filter').val();
+                        var customer_filter = $('#customer_filter').val();
+                        var captain_filter = $('#captain_filter').val();
+                        var place_filter = $('#place_filter').val();
+                        var open_close_filter = $('#open_close_filter').val();
+                        var date = $('#date').val();
+                        var date_from = $('#date_from').val();
+                        var date_to = $('#date_to').val();
+
+                        const url = '{{ route('trips.print') }}' +
+                            '?status_filter=' + encodeURIComponent(status_filter) +
+                            '&customer_filter=' + encodeURIComponent(customer_filter) +
+                            '&captain_filter=' + encodeURIComponent(captain_filter) +
+                            '&place_filter=' + encodeURIComponent(place_filter) +
+                            '&open_close_filter=' + encodeURIComponent(open_close_filter) +
+                            '&date=' + encodeURIComponent(date) +
+                            '&date_from=' + encodeURIComponent(date_from) +
+                            '&date_to=' + encodeURIComponent(date_to);
+                        window.open(url, '_blank'); // Open the URL in a new tab or window
+                        {{--axios.get('{{route('trips.print')}}',{ params: { ids } }).then(function (response) {--}}
+                        {{--    dt.draw();--}}
+                        {{--    // enableButton('complete_selected')--}}
+
+                        {{--}).catch(function (error) {--}}
+                        {{--    if (error.response && (error.response.status === 401  || error.response.status === 419)) {--}}
+                        {{--        window.location.reload();--}}
+                        {{--    } else if (error.response && error.response.status === 422) {--}}
+                        {{--        KTApp.hidePageLoading();--}}
+                        {{--        toastr.error(error.response.data.message);--}}
+                        {{--    }--}}
+                        {{--});--}}
+                    });
                     completeSelected.addEventListener('click', function () {
                         var captain_id = $('#captain_filter').val();
                         if (!captain_id) {
@@ -745,12 +812,15 @@
                                         });
                                         KTApp.showPageLoading();
                                         var completed_at = $('#date').val()
+                                        var fix_amount = $('#services').val()
                                         // delete row data from server and re-draw datatable
                                         axios.post('{{route('trips.complete_selected')}}', {
                                             'ids': ids,
+                                            'fix_amount': fix_amount,
                                             'captain_id': captain_id
                                         }).then(function (response) {
                                             dt.draw();
+                                            $('#services').val($('#fix_amount').val())
                                             // enableButton('complete_selected')
 
                                         }).catch(function (error) {
@@ -1308,7 +1378,9 @@
 
             $('#date_to').attr('disabled', true)
             $('#next_day').attr('disabled', true)
-
+            $('#services').change(function (){
+                dt.draw()
+            })
 
             $('#prev_day').click(function () {
                 KTApp.showPageLoading();

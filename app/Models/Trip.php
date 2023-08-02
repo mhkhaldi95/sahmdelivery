@@ -76,6 +76,45 @@ class Trip extends Model
         }
         return $q;
     }
+    public function scopeFilterPrint($q)
+    {
+
+        if((request('customer_filter') && !empty(request('customer_filter')))){
+            $q->where('owner_id', request('customer_filter'));
+        }
+
+        if((request('place_filter') && !empty(request('place_filter')))){
+            $q->where('owner_id', request('place_filter'));
+        }
+
+        if((request('status_filter') && !empty(request('status_filter')))){
+            $q->where('status', request('status_filter'));
+        }
+        if((request('captain_filter') && !empty(request('captain_filter')))){
+            $q->where('captain_id', request('captain_filter'));
+        }
+        if((request('open_close_filter') && !empty(request('open_close_filter')))){
+            if( request('open_close_filter') == 'open'){
+                $q->whereNull('amount');
+            }
+            if(request('open_close_filter') == 'closed'){
+                $q->whereNotNull('amount');
+            }
+        }
+
+//        if((request('date') && !empty(request('date')))){
+//            $q->whereDate('created_at',  request('date'));
+//        }
+//
+        if((request('date_from') && !empty(request('date_from')))){
+            $q->where('created_at','>=', request('date_from').':00');
+        }
+        if((request('date_to') && !empty(request('date_to')))){
+            $q->where('created_at', '<=',request('date_to').':00');
+        }
+
+        return $q;
+    }
 
     public function scopeNotClosed($q){
         $q->whereNull('amount')->whereNotIn('status',[Enum::CANCELED,Enum::COMPLETED]);
