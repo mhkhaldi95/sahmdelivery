@@ -14,6 +14,16 @@
                     <!--begin::Card title-->
 
                     <div class="card-title">
+                        <div class="d-flex justify-content-start align-items-start"
+                             data-kt-customer-table-toolbar="print_selected">
+                            <div class="fw-bolder me-5">
+
+                            </div>
+                            <button type="button" class="btn btn-success"
+                                    data-kt-customer-table-select="print_selected"
+                                    id="print_selected">تصدير ملف PDF
+                            </button>
+                        </div>
                         <!--begin::Search-->
                         <div class="d-flex align-items-center position-relative my-1"></div>
                         <!--end::Search-->
@@ -22,6 +32,7 @@
                     <div class="card-toolbar">
 
                         <!--begin::Toolbar-->
+
                         <div class="d-flex justify-content-end" data-kt-customer-table-toolbar="base">
 
                             <!--end::Filter-->
@@ -71,16 +82,7 @@
                         </div>
                         <!--end::Group actions-->
 
-                        <div class="d-flex justify-content-end align-items-center"
-                             data-kt-customer-table-toolbar="print_selected">
-                            <div class="fw-bolder me-5">
 
-                            </div>
-                            <button type="button" class="btn btn-primary"
-                                    data-kt-customer-table-select="print_selected"
-                                    id="print_selected">طباعة
-                            </button>
-                        </div>
                     </div>
                     <!--end::Card toolbar-->
                     <!--begin::Advance form-->
