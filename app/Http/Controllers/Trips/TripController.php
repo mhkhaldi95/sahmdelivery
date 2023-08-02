@@ -470,10 +470,17 @@ class TripController extends Controller
 
 // Restore RTL direction
         $pdf->setRTL(true);
-//    $fontname = TCPDF_FONTS::addTTFfont(asset('assets/fonts/cairo/Cairo-Regular.woff2'), 'TrueTypeUnicode', '', 96);
+        $font_path = public_path('assets/fonts/IBM_Plex_Sans_Arabic/IBMPlexSansArabic-Regular.ttf');
+
+// Check if the font file exists
+        if (!file_exists($font_path)) {
+            die('Font file not found: ' . $font_path);
+        }
+        $fontname = \TCPDF_FONTS::addTTFfont($font_path, 'TrueTypeUnicode', '', 96);
 
 // set font
-        $pdf->SetFont('aefurat', '', 13);
+//        $pdf->SetFont('Aldhabi', '', 13);
+        $pdf->SetFont($fontname, '', 13,true);
 
 // print newline
         $pdf->Ln();
@@ -505,9 +512,9 @@ class TripController extends Controller
                 $backgroundColor = '#fdcfdd;';
             }
             $htmlcontent .= '
- <tr style="background-color: ' . $backgroundColor . '; padding: 8px;">
+ <tr style="background-color: ' . $backgroundColor . '; ">
   <td style="border: 1px solid #ddd; padding: 8px;width: 45px">' . ($index+1) . '</td>
-  <td style="border: 1px solid #ddd; padding: 8px;">' . @$trip->owner->name . '</td>
+  <td style="border: 1px solid #ddd; padding: 8px;margin: 100px">' . @$trip->owner->name . '</td>
   <td style="border: 1px solid #ddd; padding: 8px;">' . $captain_name . '</td>
   <td style="  border: 1px solid #ddd; padding: 8px;">' . $trip->from . '</td>
   <td style="  border: 1px solid #ddd; padding: 8px;">' . $trip->to . '</td>
