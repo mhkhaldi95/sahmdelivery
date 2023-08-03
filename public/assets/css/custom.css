@@ -44,6 +44,17 @@
 .ql-toolbar.ql-snow + .ql-container.ql-snow{
     height: auto; !important;
 }
+.table.table-row-dashed tr{
+    border-bottom-width: 3px !important;
+    border-bottom-style: unset !important;
+}
+
+
+.table.gy-5 th, .table.gy-5 td {
+    padding-top:  unset !important;
+    padding-bottom: unset !important;
+    border: 2px solid #FFFFFF;
+}
 
 
 
