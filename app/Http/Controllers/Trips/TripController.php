@@ -470,15 +470,11 @@ class TripController extends Controller
 // Restore RTL direction
         $pdf->setRTL(true);
         $font_path = public_path('assets/fonts/IBM_Plex_Sans_Arabic/IBMPlexSansArabic-Regular.ttf');
-
-// Check if the font file exists
         if (!file_exists($font_path)) {
             die('Font file not found: ' . $font_path);
         }
         $fontname = \TCPDF_FONTS::addTTFfont($font_path, 'TrueTypeUnicode', '', 96);
 
-// set font
-//        $pdf->SetFont('Aldhabi', '', 13);
         $pdf->SetFont($fontname, '', 10,true);
 
 // print newline
@@ -502,7 +498,7 @@ class TripController extends Controller
         foreach ($trips as $index => $trip) {
             $captain_name = @$trip->captain->name;
             if($trip->status == Enum::COMPLETED){
-                $backgroundColor = '#f9eec2;';
+                $backgroundColor = '#c0f0d7;';
             }elseif ($trip->status == Enum::PENDING && (!is_null($trip->amount))){
                 $backgroundColor = '#d0ebfb;';
             }elseif ($trip->status == Enum::PENDING && (is_null($trip->amount))){
