@@ -37,7 +37,7 @@
 
                             <!--end::Filter-->
                             <!--begin::Add customer-->
-                       
+
                             <!--end::Add customer-->
                         </div>
                         <!--end::Toolbar-->
@@ -313,7 +313,7 @@
                         processing: true,
                         serverSide: true,
                         'pagingType': 'full_numbers',
-                        'lengthMenu': [[30, 70, 100, 200, -1], [30, 70, 100, 200, 'الكل']],
+                        'lengthMenu': [[30, 70, 100], [30, 70, 100]],
                         order: [],
                         stateSave: false,
                         select: {
