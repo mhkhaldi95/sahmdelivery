@@ -46,14 +46,14 @@
 }
 .trip-index .table.table-row-dashed tr{
     border-bottom-width: 4px !important;
-    border-bottom-style: dot-dot-dash !important;
+    border-bottom-style: solid !important;
 }
 
 
 .trip-index .table.gy-5 th, .trip-index .table.gy-5 td {
     padding-top:  5px !important;
     padding-bottom: 5px !important;
-    border: 2px  dashed #FFFFFF;
+    border: 2px  solid #FFFFFF;
 }
 
 
