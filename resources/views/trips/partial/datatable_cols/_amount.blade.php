@@ -24,7 +24,7 @@
 <div style="position: relative">
     <input type="number" style="text-align: right;width: 67%;" readonly class="form-control  form-control-solid {{$class_amount}}"  value="{{$item->amount}}"/>
     @if(($item && $item->status == \App\Constants\Enum::PENDING))
-        <button data-id="{{$item->id}}"  class="save-price form-control  form-control-solid-c d-none" style="position: absolute; top: 0px; right: 109px;cursor: pointer;width: 30%;">
+        <button data-id="{{$item->id}}"  class="save-price form-control  form-control-solid-c d-none" style="position: absolute; top: -3px; right: 105px;cursor: pointer;width: 30%;">
          <span class="svg-icon svg-icon-primary svg-icon-2x"><!--begin::Svg Icon | path:/var/www/preview.keenthemes.com/metronic/releases/2021-05-14-112058/theme/html/demo8/dist/../src/media/svg/icons/Navigation/Double-check.svg-->
              <svg style="margin-right: -5px;" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
     <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
