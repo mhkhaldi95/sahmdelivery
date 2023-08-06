@@ -322,7 +322,7 @@
                             className: 'row-selected'
                         },
                         ajax: {
-                            url: "{{route('trips.index')}}",
+                            url: "{{route('trips.fetchData')}}",
                             error: function(xhr, error, thrown) {
                                 var status = xhr.status; // Get the status code
                                 if(status == 401 || status == 419){
