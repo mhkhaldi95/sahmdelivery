@@ -410,7 +410,7 @@ class TripController extends Controller
     public function print(Request $request)
     {
         $ids = $request->get('ids');
-        $trips = Trip::query()->with(['captain'])->filterPrint()->get();
+        $trips = Trip::query()->with(['captain','owner'])->filterPrint()->get();
         $owner_name = '';
         if ($trips && count($trips) > 0  && false) {
 
