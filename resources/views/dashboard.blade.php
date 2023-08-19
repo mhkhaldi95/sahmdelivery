@@ -29,7 +29,7 @@
                             <!--end::Svg Icon-->
                             <div class="text-gray-900 fw-bolder fs-2 mb-2 mt-5">{{__('lang.customers')}}</div>
                             <div class="fw-bold text-gray-400">{{__('customers number')}}
-                                : {{\App\Models\User::query()->customers()->count()}}</div>
+                                : {{\App\Models\User::query()->customers()->active()->count()}}</div>
                         </div>
                         <!--end::Body-->
                     </a>
@@ -49,7 +49,7 @@
                             <!--end::Svg Icon-->
                             <div class="text-white fw-bolder fs-2 mb-2 mt-5"> الأماكن</div>
                             <div class="fw-bold text-white">عدد الأماكن :
-                                {{\App\Models\User::query()->places()->count()}}
+                                {{\App\Models\User::query()->places()->active()->count()}}
 
                             </div>
                         </div>
@@ -100,7 +100,7 @@
                             <!--end::Svg Icon-->
                             <div class="text-gray-100 fw-bolder fs-2 mb-2 mt-5">الكباتن</div>
                             <div class="fw-bold text-gray-100">عدد الكباتن :
-                                {{\App\Models\User::query()->captains()->count()}}
+                                {{\App\Models\User::query()->captains()->active()->count()}}
 
                             </div>
                         </div>
